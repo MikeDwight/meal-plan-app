@@ -1,4 +1,29 @@
+# Dependencies
 node_modules
+
+# Next.js build output
+.next
+
+# Git
 .git
+.gitignore
+
+# GitHub
 .github
+
+# Documentation
 *.md
+
+# Env files (secrets)
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea
+.vscode
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
