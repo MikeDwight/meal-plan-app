@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE: ghcr.io/${{ github.repository }}:latest
+  IMAGE: ghcr.io/${{ github.repository_owner }}/meal-plan-app:latest
 
 jobs:
   build-and-deploy:
@@ -45,7 +45,7 @@ jobs:
             name: meal-plan-app
             services:
               app:
-                image: ghcr.io/${{ github.repository }}:latest
+                image: ghcr.io/${{ github.repository_owner }}/meal-plan-app:latest
                 ports:
                   - "3000:3000"
                 restart: unless-stopped
