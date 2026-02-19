@@ -1,0 +1,67 @@
+# ============================================================================
+# PRODUCTION DOCKER COMPOSE - EXAMPLE
+# ============================================================================
+# 
+# Ce fichier est un EXEMPLE de configuration production.
+# À adapter selon votre environnement.
+#
+# Usage:
+#   1. Copier ce fichier: cp docker-compose.prod.example.yml docker-compose.prod.yml
+#   2. Créer un fichier .env.prod avec les vraies valeurs
+#   3. Lancer: docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
+#
+# ============================================================================
+
+services:
+  app:
+    # Image depuis GitHub Container Registry (remplacer par votre image)
+    image: ghcr.io/VOTRE_ORG/meal-plan-app:latest
+    ports:
+      - "3000:3000"
+    environment:
+      # ⚠️  REMPLACER par vos vraies valeurs en production
+      - DATABASE_URL=${DATABASE_URL:-postgresql://postgres:postgres@postgres:5432/mealplan?schema=public}
+      - NODE_ENV=production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://localhost:3000/health').then(r => process.exit(r.status === 200 ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      # ⚠️  REMPLACER par vos vraies valeurs en production
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      POSTGRES_DB: ${POSTGRES_DB:-mealplan}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    # ⚠️  En production, NE PAS exposer le port PostgreSQL publiquement
+    # ports:
+    #   - "127.0.0.1:5432:5432"
+
+volumes:
+  postgres_data:
+
+# ============================================================================
+# EXEMPLE DE FICHIER .env.prod
+# ============================================================================
+#
+# DATABASE_URL=postgresql://mealplan_user:STRONG_PASSWORD_HERE@postgres:5432/mealplan?schema=public
+# POSTGRES_USER=mealplan_user
+# POSTGRES_PASSWORD=STRONG_PASSWORD_HERE
+# POSTGRES_DB=mealplan
+#
+# ============================================================================
