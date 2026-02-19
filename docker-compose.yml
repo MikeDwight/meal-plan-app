@@ -24,8 +24,8 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
-    # ports:
-    #   - "5432:5432"  # Décommenter pour accès local (dev only)
+    ports:
+      - "127.0.0.1:5432:5432"
 
 volumes:
   postgres_data:
