@@ -6,3 +6,290 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ============================================================================
+// HOUSEHOLD
+// ============================================================================
+
+model Household {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  recipes         Recipe[]
+  ingredients     Ingredient[]
+  units           Unit[]
+  tags            Tag[]
+  aisles          Aisle[]
+  pantryItems     PantryItem[]
+  weekPlans       WeekPlan[]
+  shoppingItems   ShoppingItem[]
+  transitionItems TransitionItem[]
+}
+
+// ============================================================================
+// RECIPE & RELATED
+// ============================================================================
+
+model Recipe {
+  id          String   @id @default(cuid())
+  householdId String
+  title       String
+  sourceUrl   String?
+  servings    Int?
+  prepTime    Int?
+  cookTime    Int?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  household       Household          @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  tags            RecipeTag[]
+  ingredients     RecipeIngredient[]
+  weekPlanRecipes WeekPlanRecipe[]
+
+  @@index([householdId])
+}
+
+model RecipeIngredient {
+  id           String  @id @default(cuid())
+  recipeId     String
+  ingredientId String
+  quantity     Decimal @db.Decimal(10, 3)
+  unitId       String?
+  notes        String?
+
+  recipe     Recipe     @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  unit       Unit?      @relation(fields: [unitId], references: [id], onDelete: SetNull)
+
+  @@index([recipeId])
+  @@index([ingredientId])
+}
+
+model RecipeTag {
+  recipeId String
+  tagId    String
+
+  recipe Recipe @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([recipeId, tagId])
+}
+
+// ============================================================================
+// INGREDIENT
+// ============================================================================
+
+model Ingredient {
+  id             String   @id @default(cuid())
+  householdId    String
+  name           String
+  defaultUnitId  String?
+  defaultAisleId String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  household         Household          @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  defaultUnit       Unit?              @relation("IngredientDefaultUnit", fields: [defaultUnitId], references: [id], onDelete: SetNull)
+  defaultAisle      Aisle?             @relation("IngredientDefaultAisle", fields: [defaultAisleId], references: [id], onDelete: SetNull)
+  recipeIngredients RecipeIngredient[]
+  pantryItems       PantryItem[]
+  shoppingItems     ShoppingItem[]
+  transitionItems   TransitionItem[]
+
+  @@unique([householdId, name])
+  @@index([householdId])
+}
+
+// ============================================================================
+// UNIT
+// ============================================================================
+
+model Unit {
+  id          String   @id @default(cuid())
+  householdId String
+  name        String
+  abbr        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  household          Household          @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  ingredientsDefault Ingredient[]       @relation("IngredientDefaultUnit")
+  recipeIngredients  RecipeIngredient[]
+  pantryItems        PantryItem[]
+  shoppingItems      ShoppingItem[]
+  transitionItems    TransitionItem[]
+
+  @@unique([householdId, abbr])
+  @@index([householdId])
+}
+
+// ============================================================================
+// TAG
+// ============================================================================
+
+model Tag {
+  id          String   @id @default(cuid())
+  householdId String
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  household Household   @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  recipes   RecipeTag[]
+
+  @@unique([householdId, name])
+  @@index([householdId])
+}
+
+// ============================================================================
+// AISLE
+// ============================================================================
+
+model Aisle {
+  id          String   @id @default(cuid())
+  householdId String
+  name        String
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  household          Household        @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  ingredientsDefault Ingredient[]     @relation("IngredientDefaultAisle")
+  shoppingItems      ShoppingItem[]
+  transitionItems    TransitionItem[]
+
+  @@unique([householdId, name])
+  @@unique([householdId, sortOrder])
+  @@index([householdId])
+}
+
+// ============================================================================
+// PANTRY
+// ============================================================================
+
+model PantryItem {
+  id           String    @id @default(cuid())
+  householdId  String
+  ingredientId String
+  quantity     Decimal   @db.Decimal(10, 3)
+  unitId       String?
+  expiresAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  household  Household  @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+  unit       Unit?      @relation(fields: [unitId], references: [id], onDelete: SetNull)
+
+  @@index([householdId])
+  @@index([ingredientId])
+}
+
+// ============================================================================
+// WEEK PLAN
+// ============================================================================
+
+model WeekPlan {
+  id          String   @id @default(cuid())
+  householdId String
+  weekStart   DateTime @db.Date
+  label       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  household     Household        @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  recipes       WeekPlanRecipe[]
+  shoppingItems ShoppingItem[]
+
+  @@unique([householdId, weekStart])
+  @@index([householdId])
+  @@index([weekStart])
+}
+
+model WeekPlanRecipe {
+  id         String @id @default(cuid())
+  weekPlanId String
+  recipeId   String
+  dayIndex   Int
+  mealSlot   String
+  sortOrder  Int    @default(0)
+  servings   Int?
+
+  weekPlan WeekPlan @relation(fields: [weekPlanId], references: [id], onDelete: Cascade)
+  recipe   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@index([weekPlanId])
+  @@index([recipeId])
+}
+
+// ============================================================================
+// SHOPPING
+// ============================================================================
+
+enum ShoppingItemStatus {
+  TODO
+  DONE
+}
+
+enum ShoppingItemSource {
+  MEALPLAN
+  TRANSITION
+  MANUAL
+}
+
+model ShoppingItem {
+  id           String             @id @default(cuid())
+  householdId  String
+  ingredientId String?
+  label        String
+  quantity     Decimal?           @db.Decimal(10, 3)
+  unitId       String?
+  aisleId      String?
+  weekPlanId   String?
+  status       ShoppingItemStatus @default(TODO)
+  source       ShoppingItemSource @default(MANUAL)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  household  Household   @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  ingredient Ingredient? @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+  unit       Unit?       @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  aisle      Aisle?      @relation(fields: [aisleId], references: [id], onDelete: SetNull)
+  weekPlan   WeekPlan?   @relation(fields: [weekPlanId], references: [id], onDelete: SetNull)
+
+  @@index([householdId])
+  @@index([weekPlanId])
+  @@index([status])
+}
+
+// ============================================================================
+// TRANSITION (items needed during the week, outside meal plan)
+// ============================================================================
+
+enum TransitionItemStatus {
+  TODO
+  DONE
+}
+
+model TransitionItem {
+  id           String               @id @default(cuid())
+  householdId  String
+  ingredientId String?
+  label        String
+  quantity     Decimal?             @db.Decimal(10, 3)
+  unitId       String?
+  aisleId      String?
+  status       TransitionItemStatus @default(TODO)
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+
+  household  Household   @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  ingredient Ingredient? @relation(fields: [ingredientId], references: [id], onDelete: SetNull)
+  unit       Unit?       @relation(fields: [unitId], references: [id], onDelete: SetNull)
+  aisle      Aisle?      @relation(fields: [aisleId], references: [id], onDelete: SetNull)
+
+  @@index([householdId])
+  @@index([status])
+}
