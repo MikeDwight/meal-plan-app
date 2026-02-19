@@ -1,0 +1,57 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}:latest
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build & push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ env.IMAGE }}
+
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            mkdir -p /opt/meal-plan-app
+            cat > /opt/meal-plan-app/docker-compose.yml <<'EOF'
+            name: meal-plan-app
+            services:
+              app:
+                image: ghcr.io/${{ github.repository }}:latest
+                ports:
+                  - "3000:3000"
+                restart: unless-stopped
+            EOF
+            cd /opt/meal-plan-app
+            docker compose pull
+            docker compose up -d
+            sleep 3
+            curl -f http://localhost:3000/health | grep -q ok
