@@ -39,3 +39,8 @@ next-env.d.ts
 # OS
 .DS_Store
 Thumbs.db
+
+# Ignore build folder
+!src/app/api/shoppinglist/build/
+!src/app/api/shoppinglist/build/**
+
