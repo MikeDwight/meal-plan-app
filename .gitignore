@@ -8,7 +8,7 @@ node_modules
 out
 
 # Production
-build
+/build
 dist
 
 # Debug
@@ -40,7 +40,4 @@ next-env.d.ts
 .DS_Store
 Thumbs.db
 
-# Ignore build folder
-!src/app/api/shoppinglist/build/
-!src/app/api/shoppinglist/build/**
 
