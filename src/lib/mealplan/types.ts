@@ -84,6 +84,27 @@ export interface GenerateMealPlanResponse {
   };
 }
 
+// ---------------------------------------------------------------------------
+// GET /api/mealplan
+// ---------------------------------------------------------------------------
+
+export interface WeekPlanSlot {
+  dayIndex: number;
+  mealSlot: MealSlot;
+  sortOrder: number;
+  recipe: {
+    id: string;
+    title: string;
+    tags: string[];
+  };
+}
+
+export interface GetWeekPlanResponse {
+  weekPlanId: string;
+  weekStart: string;
+  slots: WeekPlanSlot[];
+}
+
 export interface RecipeWithRelations {
   id: string;
   title: string;
