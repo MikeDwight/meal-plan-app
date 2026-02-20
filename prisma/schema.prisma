@@ -250,6 +250,7 @@ model ShoppingItem {
   weekPlanId   String?
   status       ShoppingItemStatus @default(TODO)
   source       ShoppingItemSource @default(MANUAL)
+  archivedAt   DateTime?
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
 
@@ -262,6 +263,7 @@ model ShoppingItem {
   @@index([householdId])
   @@index([weekPlanId])
   @@index([status])
+  @@index([archivedAt])
 }
 
 // ============================================================================
