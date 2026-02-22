@@ -16,6 +16,8 @@ export interface AisleGroup {
   items: ShoppingItemProps[];
 }
 
+const HOUSEHOLD_ID = "home-household";
+
 export function ShoppingListClient({
   groups,
   weekStart,
@@ -69,8 +71,8 @@ export function ShoppingListClient({
                 >
                   <ToggleItemButton
                     itemId={item.id}
+                    householdId={HOUSEHOLD_ID}
                     currentStatus={item.status}
-                    weekStart={weekStart}
                   />
                   <span>
                     {item.label}
