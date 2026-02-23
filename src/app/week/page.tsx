@@ -1,4 +1,5 @@
 import type { GetWeekPlanResponse } from "@/lib/mealplan/types";
+import { GenerateButton } from "./generate-button";
 
 const HOUSEHOLD_ID = "home-household";
 
@@ -40,14 +41,15 @@ export default async function WeekPage({
   const res = await fetch(url, { cache: "no-store" });
 
   if (!res.ok) {
-    const body = await res.json().catch(() => null);
     return (
       <main>
         <h1>Semaine du {weekStart}</h1>
-        <p>
-          Aucun plan trouvé.{" "}
-          {body?.error && <em>({body.error})</em>}
-        </p>
+        <p>Aucun plan trouvé.</p>
+        <GenerateButton
+          householdId={HOUSEHOLD_ID}
+          weekStart={weekStart}
+          variant="generate"
+        />
       </main>
     );
   }
@@ -64,6 +66,12 @@ export default async function WeekPage({
   return (
     <main>
       <h1>Semaine du {data.weekStart}</h1>
+
+      <GenerateButton
+        householdId={HOUSEHOLD_ID}
+        weekStart={weekStart}
+        variant="regenerate"
+      />
 
       {DAY_LABELS.map((label, dayIndex) => {
         const daySlots = slotsByDay.get(dayIndex);
