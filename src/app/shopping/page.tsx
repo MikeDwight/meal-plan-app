@@ -1,6 +1,8 @@
 import type { GetShoppingListResponse, ShoppingItemRow } from "@/lib/shoppinglist/types";
 import { ShoppingListClient } from "./shopping-list-client";
 import type { AisleGroup } from "./shopping-list-client";
+import { TransitionListClient } from "./transition-list-client";
+import type { TransitionItemProps } from "./transition-list-client";
 
 const HOUSEHOLD_ID = "home-household";
 const NO_AISLE = "Sans rayon";
@@ -50,14 +52,36 @@ export default async function ShoppingPage({
     (typeof params.weekStart === "string" ? params.weekStart : undefined) ??
     getCurrentMonday();
 
-  const url = `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/shoppinglist?householdId=${HOUSEHOLD_ID}&weekStart=${weekStart}`;
-  const res = await fetch(url, { cache: "no-store" });
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
+
+  const [res, transitionRes] = await Promise.all([
+    fetch(
+      `${baseUrl}/api/shoppinglist?householdId=${HOUSEHOLD_ID}&weekStart=${weekStart}`,
+      { cache: "no-store" }
+    ),
+    fetch(
+      `${baseUrl}/api/transitionitems?householdId=${HOUSEHOLD_ID}&includeDone=true`,
+      { cache: "no-store" }
+    ),
+  ]);
+
+  const transitionItems: TransitionItemProps[] = transitionRes.ok
+    ? (await transitionRes.json()).map(
+        (ti: { id: string; label: string; quantity: string | number | null; status: string }) => ({
+          id: ti.id,
+          label: ti.label,
+          quantity: ti.quantity != null ? String(ti.quantity) : null,
+          status: ti.status as "TODO" | "DONE",
+        })
+      )
+    : [];
 
   if (!res.ok) {
     const body = await res.json().catch(() => null);
     return (
       <main>
         <h1>Liste de courses — {weekStart}</h1>
+        <TransitionListClient weekStart={weekStart} items={transitionItems} />
         <p>
           Aucune liste trouvée.{" "}
           {body?.error && <em>({body.error})</em>}
@@ -83,6 +107,8 @@ export default async function ShoppingPage({
   return (
     <main>
       <h1>Liste de courses — {data.weekStart}</h1>
+
+      <TransitionListClient weekStart={weekStart} items={transitionItems} />
 
       <p>
         {data.meta.done} / {data.meta.done + data.meta.todo} articles cochés
