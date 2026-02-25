@@ -117,7 +117,7 @@ export default async function ShoppingPage({
       {data.items.length === 0 ? (
         <p style={{ color: "#888" }}>La liste est vide.</p>
       ) : (
-        <ShoppingListClient groups={groups} weekStart={weekStart} />
+        <ShoppingListClient groups={groups} weekStart={weekStart} weekPlanId={data.weekPlanId} doneCount={data.meta.done} />
       )}
     </main>
   );
