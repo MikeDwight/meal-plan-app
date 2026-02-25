@@ -132,16 +132,16 @@ export async function GET(request: NextRequest) {
       archivedAt: item.archivedAt?.toISOString() ?? null,
     }));
 
-    // ----- meta counters (over ALL items of the weekPlan, unfiltered) -----
+    // ----- meta counters (non-archived items only) -----
 
-    const allItems = await prisma.shoppingItem.findMany({
-      where: { weekPlanId: weekPlan.id },
-      select: { status: true, archivedAt: true },
+    const activeItems = await prisma.shoppingItem.findMany({
+      where: { weekPlanId: weekPlan.id, archivedAt: null },
+      select: { status: true },
     });
 
-    const done = allItems.filter((i) => i.status === "DONE").length;
-    const todo = allItems.filter((i) => i.status === "TODO").length;
-    const archived = allItems.filter((i) => i.archivedAt !== null).length;
+    const done = activeItems.filter((i) => i.status === "DONE").length;
+    const todo = activeItems.filter((i) => i.status === "TODO").length;
+    const archived = 0;
 
     const weekStartStr =
       weekPlan.weekStart instanceof Date
