@@ -241,7 +241,7 @@ export async function buildShoppingList(
     }
   }
 
-  const toUpdate: { id: string; data: { label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; archivedAt: null } }[] = [];
+  const toUpdate: { id: string; data: { label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; status: "TODO"; archivedAt: null } }[] = [];
   const toCreate: { householdId: string; weekPlanId: string; ingredientId: string; label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; status: "TODO"; source: "MEALPLAN"; archivedAt: null }[] = [];
   const toArchiveIds: string[] = [];
 
@@ -258,6 +258,7 @@ export async function buildShoppingList(
           quantity: need.totalQuantity,
           unitId: need.unitId,
           aisleId: need.aisleId,
+          status: "TODO",
           archivedAt: null,
         },
       });
