@@ -1,15 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import type { GetWeekPlanResponse, WeekPlanSlot } from "@/lib/mealplan/types";
-
-function normalizeToMonday(dateStr: string): Date {
-  const [year, month, day] = dateStr.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-  const dow = date.getUTCDay();
-  const diff = dow === 0 ? -6 : 1 - dow;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
-}
+import { normalizeToMonday } from "@/lib/mealplan/utils";
 
 export async function GET(request: NextRequest) {
   try {

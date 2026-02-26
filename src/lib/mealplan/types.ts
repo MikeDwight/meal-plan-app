@@ -51,6 +51,7 @@ export interface GenerateMealPlanRequest {
   };
   tagQuotas?: TagQuota[];
   quotaBonus?: number;
+  preserveManualSlots?: boolean;
   debug?: boolean;
 }
 

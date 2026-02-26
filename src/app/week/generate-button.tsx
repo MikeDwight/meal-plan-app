@@ -29,7 +29,7 @@ export function GenerateButton({
       const genRes = await fetch("/api/mealplan/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ householdId, weekStart }),
+        body: JSON.stringify({ householdId, weekStart, preserveManualSlots: true }),
       });
 
       if (!genRes.ok) {

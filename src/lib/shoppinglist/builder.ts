@@ -202,10 +202,34 @@ export async function buildShoppingList(
   const weekPlanRecipes = await loadWeekPlanNeeds(weekPlan.id);
 
   if (weekPlanRecipes.length === 0) {
-    throw new ShoppingListBuilderError(
-      "WeekPlan has no recipes assigned",
-      409
-    );
+    const archived = await prisma.shoppingItem.updateMany({
+      where: {
+        weekPlanId: weekPlan.id,
+        source: "MEALPLAN",
+        status: "TODO",
+        archivedAt: null,
+      },
+      data: { archivedAt: new Date() },
+    });
+
+    const weekStartStr =
+      weekPlan.weekStart instanceof Date
+        ? weekPlan.weekStart.toISOString().split("T")[0]
+        : String(weekPlan.weekStart).split("T")[0];
+
+    return {
+      weekPlanId: weekPlan.id,
+      weekStart: weekStartStr,
+      items: [],
+      meta: {
+        totalActive: 0,
+        ingredientsAggregated: 0,
+        pantryDeductions: 0,
+        created: 0,
+        updated: 0,
+        archived: archived.count,
+      },
+    };
   }
 
   const needs = aggregateNeeds(weekPlanRecipes);
@@ -219,25 +243,30 @@ export async function buildShoppingList(
   );
 
   // -------------------------------------------------------------------------
-  // Merge logic
+  // Merge logic — DONE items are never touched; TODO = delta over DONE qty
   // -------------------------------------------------------------------------
 
   const existingItems = await prisma.shoppingItem.findMany({
-    where: { weekPlanId: weekPlan.id, source: "MEALPLAN" },
+    where: { weekPlanId: weekPlan.id, source: "MEALPLAN", archivedAt: null },
   });
 
-  const existingByKey = new Map<
-    string,
-    (typeof existingItems)[number]
-  >();
-  const unmatchedExisting: (typeof existingItems)[number][] = [];
+  const doneQtyByKey = new Map<string, Decimal>();
+  const todoByKey = new Map<string, (typeof existingItems)[number]>();
+  const unmatchedTodo: (typeof existingItems)[number][] = [];
 
   for (const item of existingItems) {
     const key = existingItemKey(item);
+    if (item.status === "DONE") {
+      if (key) {
+        const prev = doneQtyByKey.get(key) ?? new Decimal(0);
+        doneQtyByKey.set(key, prev.add(item.quantity ?? new Decimal(0)));
+      }
+      continue;
+    }
     if (key) {
-      existingByKey.set(key, item);
+      todoByKey.set(key, item);
     } else {
-      unmatchedExisting.push(item);
+      unmatchedTodo.push(item);
     }
   }
 
@@ -245,17 +274,29 @@ export async function buildShoppingList(
   const toCreate: { householdId: string; weekPlanId: string; ingredientId: string; label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; status: "TODO"; source: "MEALPLAN"; archivedAt: null }[] = [];
   const toArchiveIds: string[] = [];
 
-  const matchedKeys = new Set<string>();
+  const matchedTodoKeys = new Set<string>();
 
   for (const [key, need] of neededMap) {
-    const existing = existingByKey.get(key);
-    if (existing) {
-      matchedKeys.add(key);
+    const doneQty = doneQtyByKey.get(key);
+    const remaining = doneQty ? need.totalQuantity.sub(doneQty) : need.totalQuantity;
+
+    const existingTodo = todoByKey.get(key);
+
+    if (remaining.lte(0)) {
+      if (existingTodo) {
+        matchedTodoKeys.add(key);
+        toArchiveIds.push(existingTodo.id);
+      }
+      continue;
+    }
+
+    if (existingTodo) {
+      matchedTodoKeys.add(key);
       toUpdate.push({
-        id: existing.id,
+        id: existingTodo.id,
         data: {
           label: need.ingredientName,
-          quantity: need.totalQuantity,
+          quantity: remaining,
           unitId: need.unitId,
           aisleId: need.aisleId,
           status: "TODO",
@@ -268,7 +309,7 @@ export async function buildShoppingList(
         weekPlanId: weekPlan.id,
         ingredientId: need.ingredientId,
         label: need.ingredientName,
-        quantity: need.totalQuantity,
+        quantity: remaining,
         unitId: need.unitId,
         aisleId: need.aisleId,
         status: "TODO",
@@ -278,12 +319,12 @@ export async function buildShoppingList(
     }
   }
 
-  for (const [key, item] of existingByKey) {
-    if (!matchedKeys.has(key)) {
+  for (const [key, item] of todoByKey) {
+    if (!matchedTodoKeys.has(key)) {
       toArchiveIds.push(item.id);
     }
   }
-  for (const item of unmatchedExisting) {
+  for (const item of unmatchedTodo) {
     toArchiveIds.push(item.id);
   }
 

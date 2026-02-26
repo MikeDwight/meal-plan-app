@@ -230,6 +230,7 @@ export async function generateMealPlan(
     antiRepeat = {},
     tagQuotas = [],
     quotaBonus = DEFAULT_QUOTA_BONUS,
+    preserveManualSlots = false,
     debug = false,
   } = request;
 
@@ -321,15 +322,60 @@ export async function generateMealPlan(
     requiredPlacementsMap.set(key, placement.recipeId);
   }
 
+  const weekPlan = await prisma.weekPlan.upsert({
+    where: {
+      householdId_weekStart: {
+        householdId,
+        weekStart,
+      },
+    },
+    update: {
+      updatedAt: new Date(),
+    },
+    create: {
+      householdId,
+      weekStart,
+    },
+  });
+
+  // Load manual slots to preserve them during generation
+  const manualSlotsMap = new Map<string, string>();
+  if (preserveManualSlots) {
+    const manualSlots = await prisma.weekPlanRecipe.findMany({
+      where: { weekPlanId: weekPlan.id, isManual: true },
+    });
+    for (const ms of manualSlots) {
+      const key = slotKeyToString({ dayIndex: ms.dayIndex, mealSlot: ms.mealSlot as MealSlot });
+      manualSlotsMap.set(key, ms.recipeId);
+    }
+  }
+
   const assignments: SlotAssignment[] = [];
   const scoreBreakdowns: SlotScoreBreakdown[] = [];
   const usedRecipeIds = new Set<string>();
   const currentTagCounts = new Map<string, number>();
 
+  // Pre-seed scoring context with manual recipes so the generator
+  // avoids re-selecting them for other slots.
+  for (const [, recipeId] of manualSlotsMap) {
+    usedRecipeIds.add(recipeId);
+    const recipe = recipes.find((r) => r.id === recipeId);
+    if (recipe) {
+      incrementTagCounts(
+        recipe.tags.map((t) => t.tagId),
+        currentTagCounts
+      );
+    }
+  }
+
   let sortOrder = 0;
 
   for (const slot of allSlots) {
     const slotKey = slotKeyToString(slot);
+
+    if (manualSlotsMap.has(slotKey)) {
+      continue;
+    }
 
     if (requiredPlacementsMap.has(slotKey)) {
       const recipeId = requiredPlacementsMap.get(slotKey)!;
@@ -422,25 +468,15 @@ export async function generateMealPlan(
     }
   }
 
-  const weekPlan = await prisma.weekPlan.upsert({
-    where: {
-      householdId_weekStart: {
-        householdId,
-        weekStart,
-      },
-    },
-    update: {
-      updatedAt: new Date(),
-    },
-    create: {
-      householdId,
-      weekStart,
-    },
-  });
-
-  await prisma.weekPlanRecipe.deleteMany({
-    where: { weekPlanId: weekPlan.id },
-  });
+  if (preserveManualSlots) {
+    await prisma.weekPlanRecipe.deleteMany({
+      where: { weekPlanId: weekPlan.id, isManual: false },
+    });
+  } else {
+    await prisma.weekPlanRecipe.deleteMany({
+      where: { weekPlanId: weekPlan.id },
+    });
+  }
 
   await prisma.weekPlanRecipe.createMany({
     data: assignments.map((a) => ({
@@ -449,6 +485,7 @@ export async function generateMealPlan(
       dayIndex: a.dayIndex,
       mealSlot: a.mealSlot,
       sortOrder: a.sortOrder,
+      isManual: false,
     })),
   });
 

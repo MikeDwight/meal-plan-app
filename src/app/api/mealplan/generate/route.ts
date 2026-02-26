@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { generateMealPlan, MealPlanGeneratorError } from "@/lib/mealplan/generator";
 import type { GenerateMealPlanRequest } from "@/lib/mealplan/types";
+import { buildShoppingList } from "@/lib/shoppinglist/builder";
 
 const MealSlotSchema = z.enum(["lunch", "dinner"]);
 
@@ -51,6 +52,7 @@ const GenerateMealPlanRequestSchema = z.object({
   antiRepeat: AntiRepeatSchema.optional(),
   tagQuotas: z.array(TagQuotaSchema).optional(),
   quotaBonus: z.number().min(0).max(1).optional(),
+  preserveManualSlots: z.boolean().optional(),
   debug: z.boolean().optional(),
 });
 
@@ -81,6 +83,7 @@ function normalizeRequest(parsed: z.infer<typeof GenerateMealPlanRequestSchema>)
       antiRepeat: parsed.antiRepeat,
       tagQuotas: parsed.tagQuotas,
       quotaBonus: parsed.quotaBonus,
+      preserveManualSlots: parsed.preserveManualSlots,
       debug: parsed.debug,
     },
   };
@@ -104,6 +107,10 @@ export async function POST(request: NextRequest) {
     }
 
     const result = await generateMealPlan(normalizeResult.data);
+    await buildShoppingList({
+      householdId: normalizeResult.data.householdId,
+      weekPlanId: result.weekPlanId,
+    });
     return NextResponse.json(result, { status: 201 });
   } catch (error) {
     if (error instanceof MealPlanGeneratorError) {
