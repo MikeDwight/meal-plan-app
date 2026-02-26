@@ -13,7 +13,10 @@
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
     "prisma:seed": "prisma db seed",
-    "db:reset": "prisma migrate reset"
+    "db:reset": "prisma migrate reset",
+    "db:reset:recipes": "prisma migrate reset --force && npx tsx prisma/seed-recipes-only.ts",
+    "db:seed:recipes": "npx tsx prisma/seed-recipes-only.ts",
+    "db:purge:prod": "npx tsx prisma/purge-prod.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.4.1",
