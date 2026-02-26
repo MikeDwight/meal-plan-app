@@ -56,6 +56,7 @@ export function WeekGrid({
 }) {
   const [slotMap, setSlotMap] = useState(() => buildSlotMap(initialSlots));
   const [pickerTarget, setPickerTarget] = useState<PickerTarget | null>(null);
+  const [clearingKey, setClearingKey] = useState<string | null>(null);
 
   useEffect(() => {
     setSlotMap(buildSlotMap(initialSlots));
@@ -71,6 +72,42 @@ export function WeekGrid({
       setPickerTarget(null);
     },
     [],
+  );
+
+  const handleClear = useCallback(
+    async (dayIndex: number, mealSlot: MealSlot) => {
+      const key = slotKey(dayIndex, mealSlot);
+      setClearingKey(key);
+
+      try {
+        const res = await fetch("/api/mealplan/slot", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ householdId, weekStart, dayIndex, mealSlot }),
+        });
+
+        if (!res.ok) {
+          const body = await res.json().catch(() => null);
+          throw new Error(
+            (body as { error?: string } | null)?.error ??
+              `Erreur ${res.status}`,
+          );
+        }
+
+        setSlotMap((prev) => {
+          const next = new Map(prev);
+          next.delete(key);
+          return next;
+        });
+      } catch (e: unknown) {
+        alert(
+          e instanceof Error ? e.message : "Impossible de vider ce slot",
+        );
+      } finally {
+        setClearingKey(null);
+      }
+    },
+    [householdId, weekStart],
   );
 
   return (
@@ -96,6 +133,8 @@ export function WeekGrid({
                   mealLabel={MEAL_LABELS[meal]}
                   recipe={recipe}
                   onClick={() => setPickerTarget({ dayIndex, mealSlot: meal })}
+                  onClear={() => handleClear(dayIndex, meal)}
+                  isClearing={clearingKey === slotKey(dayIndex, meal)}
                 />
               );
             })}

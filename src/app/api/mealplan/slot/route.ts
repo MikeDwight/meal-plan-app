@@ -6,6 +6,15 @@ import { buildShoppingList } from "@/lib/shoppinglist/builder";
 
 const MealSlotSchema = z.enum(["lunch", "dinner"]);
 
+const SlotClearRequestSchema = z.object({
+  householdId: z.string().min(1, "householdId is required"),
+  weekStart: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "weekStart must be YYYY-MM-DD format"),
+  dayIndex: z.number().int().min(0).max(6),
+  mealSlot: MealSlotSchema,
+});
+
 const SlotSetRequestSchema = z.object({
   householdId: z.string().min(1, "householdId is required"),
   weekStart: z
@@ -15,6 +24,50 @@ const SlotSetRequestSchema = z.object({
   mealSlot: MealSlotSchema,
   recipeId: z.string().min(1, "recipeId is required"),
 });
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const parseResult = SlotClearRequestSchema.safeParse(body);
+
+    if (!parseResult.success) {
+      return NextResponse.json(
+        {
+          error: "Validation error",
+          details: parseResult.error.flatten().fieldErrors,
+        },
+        { status: 400 }
+      );
+    }
+
+    const { householdId, weekStart, dayIndex, mealSlot } = parseResult.data;
+    const monday = normalizeToMonday(weekStart);
+
+    const weekPlan = await prisma.weekPlan.findUnique({
+      where: {
+        householdId_weekStart: { householdId, weekStart: monday },
+      },
+    });
+
+    if (!weekPlan) {
+      return NextResponse.json({ ok: true, deleted: 0 }, { status: 200 });
+    }
+
+    const { count } = await prisma.weekPlanRecipe.deleteMany({
+      where: { weekPlanId: weekPlan.id, dayIndex, mealSlot },
+    });
+
+    await buildShoppingList({ householdId, weekPlanId: weekPlan.id });
+
+    return NextResponse.json({ ok: true, deleted: count }, { status: 200 });
+  } catch (error) {
+    console.error("Unexpected error in DELETE /api/mealplan/slot:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
 
 export async function PUT(request: NextRequest) {
   try {
