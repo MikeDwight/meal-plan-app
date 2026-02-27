@@ -5,22 +5,11 @@ import type {
   ShoppingItemRow,
 } from "@/lib/shoppinglist/types";
 
-function normalizeToMonday(dateStr: string): Date {
-  const [year, month, day] = dateStr.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-  const dow = date.getUTCDay();
-  const diff = dow === 0 ? -6 : 1 - dow;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
-}
-
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = request.nextUrl;
 
     const householdId = searchParams.get("householdId");
-    const weekPlanId = searchParams.get("weekPlanId");
-    const weekStart = searchParams.get("weekStart");
     const includeArchived = searchParams.get("includeArchived") === "true";
     const includeDone = searchParams.get("includeDone") !== "false";
 
@@ -31,69 +20,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    if (!weekPlanId && !weekStart) {
-      return NextResponse.json(
-        { error: "Either weekPlanId or weekStart must be provided" },
-        { status: 400 }
-      );
-    }
-
-    if (weekPlanId && weekStart) {
-      return NextResponse.json(
-        { error: "Provide weekPlanId or weekStart, not both" },
-        { status: 400 }
-      );
-    }
-
-    if (weekStart && !/^\d{4}-\d{2}-\d{2}$/.test(weekStart)) {
-      return NextResponse.json(
-        { error: "weekStart must be YYYY-MM-DD format" },
-        { status: 400 }
-      );
-    }
-
-    // ----- resolve WeekPlan -----
-
-    let weekPlan;
-
-    if (weekPlanId) {
-      weekPlan = await prisma.weekPlan.findUnique({
-        where: { id: weekPlanId },
-      });
-      if (!weekPlan) {
-        return NextResponse.json(
-          { error: `WeekPlan not found: ${weekPlanId}` },
-          { status: 404 }
-        );
-      }
-      if (weekPlan.householdId !== householdId) {
-        return NextResponse.json(
-          { error: "WeekPlan does not belong to this household" },
-          { status: 403 }
-        );
-      }
-    } else {
-      const monday = normalizeToMonday(weekStart!);
-      weekPlan = await prisma.weekPlan.findUnique({
-        where: {
-          householdId_weekStart: { householdId, weekStart: monday },
-        },
-      });
-      if (!weekPlan) {
-        return NextResponse.json(
-          {
-            error: `No WeekPlan found for household ${householdId} week ${weekStart}`,
-          },
-          { status: 404 }
-        );
-      }
-    }
-
-    // ----- build where clause -----
-
-    const where: Record<string, unknown> = {
-      weekPlanId: weekPlan.id,
-    };
+    const where: Record<string, unknown> = { householdId };
 
     if (!includeArchived) {
       where.archivedAt = null;
@@ -102,8 +29,6 @@ export async function GET(request: NextRequest) {
     if (!includeDone) {
       where.status = "TODO";
     }
-
-    // ----- query -----
 
     const rawItems = await prisma.shoppingItem.findMany({
       where,
@@ -132,31 +57,21 @@ export async function GET(request: NextRequest) {
       archivedAt: item.archivedAt?.toISOString() ?? null,
     }));
 
-    // ----- meta counters (non-archived items only) -----
-
     const activeItems = await prisma.shoppingItem.findMany({
-      where: { weekPlanId: weekPlan.id, archivedAt: null },
+      where: { householdId, archivedAt: null },
       select: { status: true },
     });
 
     const done = activeItems.filter((i) => i.status === "DONE").length;
     const todo = activeItems.filter((i) => i.status === "TODO").length;
-    const archived = 0;
-
-    const weekStartStr =
-      weekPlan.weekStart instanceof Date
-        ? weekPlan.weekStart.toISOString().split("T")[0]
-        : String(weekPlan.weekStart).split("T")[0];
 
     const response: GetShoppingListResponse = {
-      weekPlanId: weekPlan.id,
-      weekStart: weekStartStr,
       items,
       meta: {
         total: items.length,
         done,
         todo,
-        archived,
+        archived: 0,
       },
     };
 

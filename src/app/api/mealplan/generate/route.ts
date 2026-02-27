@@ -109,7 +109,6 @@ export async function POST(request: NextRequest) {
     const result = await generateMealPlan(normalizeResult.data);
     await buildShoppingList({
       householdId: normalizeResult.data.householdId,
-      weekPlanId: result.weekPlanId,
     });
     return NextResponse.json(result, { status: 201 });
   } catch (error) {

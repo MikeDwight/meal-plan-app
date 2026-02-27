@@ -5,21 +5,9 @@ import {
   ShoppingListBuilderError,
 } from "@/lib/shoppinglist/builder";
 
-const BuildShoppingListSchema = z
-  .object({
-    householdId: z.string().min(1, "householdId is required"),
-    weekPlanId: z.string().min(1).optional(),
-    weekStart: z
-      .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "weekStart must be YYYY-MM-DD format")
-      .optional(),
-  })
-  .refine((data) => data.weekPlanId || data.weekStart, {
-    message: "Either weekPlanId or weekStart must be provided",
-  })
-  .refine((data) => !(data.weekPlanId && data.weekStart), {
-    message: "Provide weekPlanId or weekStart, not both",
-  });
+const BuildShoppingListSchema = z.object({
+  householdId: z.string().min(1, "householdId is required"),
+});
 
 export async function POST(request: NextRequest) {
   try {

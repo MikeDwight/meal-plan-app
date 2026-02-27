@@ -4,46 +4,9 @@ import { Decimal } from "@prisma/client/runtime/library";
 import { prisma } from "@/lib/prisma";
 import type { ApplyTransitionResponse } from "@/lib/transition/types";
 
-function normalizeToMonday(dateStr: string): Date {
-  const [year, month, day] = dateStr.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-  const dow = date.getUTCDay();
-  const diff = dow === 0 ? -6 : 1 - dow;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
-}
-
-const ApplySchema = z
-  .object({
-    householdId: z.string().min(1, "householdId is required"),
-    weekPlanId: z.string().min(1).optional(),
-    weekStart: z
-      .string()
-      .regex(/^\d{4}-\d{2}-\d{2}$/, "weekStart must be YYYY-MM-DD format")
-      .optional(),
-  })
-  .refine((data) => data.weekPlanId || data.weekStart, {
-    message: "Either weekPlanId or weekStart must be provided",
-  })
-  .refine((data) => !(data.weekPlanId && data.weekStart), {
-    message: "Provide weekPlanId or weekStart, not both",
-  });
-
-async function resolveWeekPlan(householdId: string, weekPlanId?: string, weekStart?: string) {
-  if (weekPlanId) {
-    const wp = await prisma.weekPlan.findUnique({ where: { id: weekPlanId } });
-    if (!wp) return { error: `WeekPlan not found: ${weekPlanId}`, status: 404 } as const;
-    if (wp.householdId !== householdId) return { error: "WeekPlan does not belong to this household", status: 403 } as const;
-    return { weekPlan: wp } as const;
-  }
-
-  const monday = normalizeToMonday(weekStart!);
-  const wp = await prisma.weekPlan.findUnique({
-    where: { householdId_weekStart: { householdId, weekStart: monday } },
-  });
-  if (!wp) return { error: `No WeekPlan found for household ${householdId} week ${weekStart}`, status: 404 } as const;
-  return { weekPlan: wp } as const;
-}
+const ApplySchema = z.object({
+  householdId: z.string().min(1, "householdId is required"),
+});
 
 function addDecimalNullSafe(
   a: Decimal | null,
@@ -70,30 +33,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { householdId, weekPlanId, weekStart } = parseResult.data;
-
-    const wpResult = await resolveWeekPlan(householdId, weekPlanId, weekStart);
-    if ("error" in wpResult) {
-      return NextResponse.json(
-        { error: wpResult.error },
-        { status: wpResult.status }
-      );
-    }
-    const weekPlan = wpResult.weekPlan;
+    const { householdId } = parseResult.data;
 
     const todoItems = await prisma.transitionItem.findMany({
       where: { householdId, status: "TODO" },
     });
 
     if (todoItems.length === 0) {
-      const weekStartStr =
-        weekPlan.weekStart instanceof Date
-          ? weekPlan.weekStart.toISOString().split("T")[0]
-          : String(weekPlan.weekStart).split("T")[0];
-
       const response: ApplyTransitionResponse = {
-        weekPlanId: weekPlan.id,
-        weekStart: weekStartStr,
         applied: 0,
         merged: 0,
         created: 0,
@@ -113,7 +60,6 @@ export async function POST(request: NextRequest) {
           const existing = await tx.shoppingItem.findFirst({
             where: {
               householdId,
-              weekPlanId: weekPlan.id,
               ingredientId: ti.ingredientId,
               unitId: ti.unitId,
               archivedAt: null,
@@ -137,7 +83,7 @@ export async function POST(request: NextRequest) {
             await tx.shoppingItem.create({
               data: {
                 householdId,
-                weekPlanId: weekPlan.id,
+                weekPlanId: null,
                 ingredientId: ti.ingredientId,
                 label: ti.label,
                 quantity: ti.quantity,
@@ -154,7 +100,7 @@ export async function POST(request: NextRequest) {
           await tx.shoppingItem.create({
             data: {
               householdId,
-              weekPlanId: weekPlan.id,
+              weekPlanId: null,
               ingredientId: null,
               label: ti.label,
               quantity: ti.quantity,
@@ -177,14 +123,7 @@ export async function POST(request: NextRequest) {
       }
     });
 
-    const weekStartStr =
-      weekPlan.weekStart instanceof Date
-        ? weekPlan.weekStart.toISOString().split("T")[0]
-        : String(weekPlan.weekStart).split("T")[0];
-
     const response: ApplyTransitionResponse = {
-      weekPlanId: weekPlan.id,
-      weekStart: weekStartStr,
       applied: appliedIds.length,
       merged,
       created,

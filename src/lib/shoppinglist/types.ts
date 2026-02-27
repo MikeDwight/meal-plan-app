@@ -25,13 +25,9 @@ export interface ShoppingItemRow {
 
 export interface BuildShoppingListRequest {
   householdId: string;
-  weekPlanId?: string;
-  weekStart?: string;
 }
 
 export interface BuildShoppingListResponse {
-  weekPlanId: string;
-  weekStart: string;
   items: ShoppingItemRow[];
   meta: {
     totalActive: number;
@@ -49,15 +45,11 @@ export interface BuildShoppingListResponse {
 
 export interface GetShoppingListRequest {
   householdId: string;
-  weekPlanId?: string;
-  weekStart?: string;
   includeArchived: boolean;
   includeDone: boolean;
 }
 
 export interface GetShoppingListResponse {
-  weekPlanId: string;
-  weekStart: string;
   items: ShoppingItemRow[];
   meta: {
     total: number;

@@ -18,56 +18,30 @@ export class ShoppingListBuilderError extends Error {
   }
 }
 
-function normalizeToMonday(dateStr: string): Date {
-  const [year, month, day] = dateStr.split("-").map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-  const dow = date.getUTCDay();
+function currentMondayUTC(): Date {
+  const now = new Date();
+  const dow = now.getUTCDay();
   const diff = dow === 0 ? -6 : 1 - dow;
-  date.setUTCDate(date.getUTCDate() + diff);
-  return date;
+  const monday = new Date(
+    Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + diff)
+  );
+  return monday;
 }
 
-async function resolveWeekPlan(req: BuildShoppingListRequest) {
-  if (req.weekPlanId) {
-    const wp = await prisma.weekPlan.findUnique({
-      where: { id: req.weekPlanId },
-    });
-    if (!wp) {
-      throw new ShoppingListBuilderError(
-        `WeekPlan not found: ${req.weekPlanId}`,
-        404
-      );
-    }
-    if (wp.householdId !== req.householdId) {
-      throw new ShoppingListBuilderError(
-        "WeekPlan does not belong to this household",
-        403
-      );
-    }
-    return wp;
-  }
-
-  const weekStart = normalizeToMonday(req.weekStart!);
-  const wp = await prisma.weekPlan.findUnique({
+async function loadActiveWeekPlans(householdId: string) {
+  const monday = currentMondayUTC();
+  return prisma.weekPlan.findMany({
     where: {
-      householdId_weekStart: {
-        householdId: req.householdId,
-        weekStart,
-      },
+      householdId,
+      weekStart: { gte: monday },
     },
+    select: { id: true },
   });
-  if (!wp) {
-    throw new ShoppingListBuilderError(
-      `No WeekPlan found for household ${req.householdId} week ${req.weekStart}`,
-      404
-    );
-  }
-  return wp;
 }
 
-async function loadWeekPlanNeeds(weekPlanId: string) {
+async function loadWeekPlanNeeds(weekPlanIds: string[]) {
   return prisma.weekPlanRecipe.findMany({
-    where: { weekPlanId },
+    where: { weekPlanId: { in: weekPlanIds } },
     include: {
       recipe: {
         select: {
@@ -174,9 +148,6 @@ function subtractPantry(
   return { remaining, pantryDeductions };
 }
 
-/**
- * Reconstruit la clé d'agrégation à partir d'un ShoppingItem existant.
- */
 function existingItemKey(item: {
   ingredientId: string | null;
   unitId: string | null;
@@ -198,13 +169,13 @@ export async function buildShoppingList(
     );
   }
 
-  const weekPlan = await resolveWeekPlan(request);
-  const weekPlanRecipes = await loadWeekPlanNeeds(weekPlan.id);
+  const activeWeekPlans = await loadActiveWeekPlans(request.householdId);
+  const weekPlanIds = activeWeekPlans.map((wp) => wp.id);
 
-  if (weekPlanRecipes.length === 0) {
+  if (weekPlanIds.length === 0) {
     const archived = await prisma.shoppingItem.updateMany({
       where: {
-        weekPlanId: weekPlan.id,
+        householdId: request.householdId,
         source: "MEALPLAN",
         status: "TODO",
         archivedAt: null,
@@ -212,14 +183,33 @@ export async function buildShoppingList(
       data: { archivedAt: new Date() },
     });
 
-    const weekStartStr =
-      weekPlan.weekStart instanceof Date
-        ? weekPlan.weekStart.toISOString().split("T")[0]
-        : String(weekPlan.weekStart).split("T")[0];
+    return {
+      items: [],
+      meta: {
+        totalActive: 0,
+        ingredientsAggregated: 0,
+        pantryDeductions: 0,
+        created: 0,
+        updated: 0,
+        archived: archived.count,
+      },
+    };
+  }
+
+  const weekPlanRecipes = await loadWeekPlanNeeds(weekPlanIds);
+
+  if (weekPlanRecipes.length === 0) {
+    const archived = await prisma.shoppingItem.updateMany({
+      where: {
+        householdId: request.householdId,
+        source: "MEALPLAN",
+        status: "TODO",
+        archivedAt: null,
+      },
+      data: { archivedAt: new Date() },
+    });
 
     return {
-      weekPlanId: weekPlan.id,
-      weekStart: weekStartStr,
       items: [],
       meta: {
         totalActive: 0,
@@ -247,7 +237,11 @@ export async function buildShoppingList(
   // -------------------------------------------------------------------------
 
   const existingItems = await prisma.shoppingItem.findMany({
-    where: { weekPlanId: weekPlan.id, source: "MEALPLAN", archivedAt: null },
+    where: {
+      householdId: request.householdId,
+      source: "MEALPLAN",
+      archivedAt: null,
+    },
   });
 
   const doneQtyByKey = new Map<string, Decimal>();
@@ -270,8 +264,8 @@ export async function buildShoppingList(
     }
   }
 
-  const toUpdate: { id: string; data: { label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; status: "TODO"; archivedAt: null } }[] = [];
-  const toCreate: { householdId: string; weekPlanId: string; ingredientId: string; label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; status: "TODO"; source: "MEALPLAN"; archivedAt: null }[] = [];
+  const toUpdate: { id: string; data: { label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; status: "TODO"; archivedAt: null; weekPlanId: null } }[] = [];
+  const toCreate: { householdId: string; weekPlanId: null; ingredientId: string; label: string; quantity: Decimal; unitId: string | null; aisleId: string | null; status: "TODO"; source: "MEALPLAN"; archivedAt: null }[] = [];
   const toArchiveIds: string[] = [];
 
   const matchedTodoKeys = new Set<string>();
@@ -301,12 +295,13 @@ export async function buildShoppingList(
           aisleId: need.aisleId,
           status: "TODO",
           archivedAt: null,
+          weekPlanId: null,
         },
       });
     } else {
       toCreate.push({
         householdId: request.householdId,
-        weekPlanId: weekPlan.id,
+        weekPlanId: null,
         ingredientId: need.ingredientId,
         label: need.ingredientName,
         quantity: remaining,
@@ -353,13 +348,12 @@ export async function buildShoppingList(
   });
 
   // -------------------------------------------------------------------------
-  // Reload active items
+  // Reload active items (all sources, global)
   // -------------------------------------------------------------------------
 
   const activeItems = await prisma.shoppingItem.findMany({
     where: {
-      weekPlanId: weekPlan.id,
-      source: "MEALPLAN",
+      householdId: request.householdId,
       archivedAt: null,
     },
     include: {
@@ -383,18 +377,11 @@ export async function buildShoppingList(
     aisleName: item.aisle?.name ?? null,
     aisleSortOrder: item.aisle?.sortOrder ?? null,
     status: item.status as "TODO" | "DONE",
-    source: "MEALPLAN",
+    source: item.source as "MEALPLAN" | "MANUAL" | "TRANSITION",
     archivedAt: null,
   }));
 
-  const weekStartStr =
-    weekPlan.weekStart instanceof Date
-      ? weekPlan.weekStart.toISOString().split("T")[0]
-      : String(weekPlan.weekStart).split("T")[0];
-
   return {
-    weekPlanId: weekPlan.id,
-    weekStart: weekStartStr,
     items,
     meta: {
       totalActive: items.length,

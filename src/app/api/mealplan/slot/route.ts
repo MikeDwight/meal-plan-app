@@ -57,7 +57,7 @@ export async function DELETE(request: NextRequest) {
       where: { weekPlanId: weekPlan.id, dayIndex, mealSlot },
     });
 
-    await buildShoppingList({ householdId, weekPlanId: weekPlan.id });
+    await buildShoppingList({ householdId });
 
     return NextResponse.json({ ok: true, deleted: count }, { status: 200 });
   } catch (error) {
@@ -129,7 +129,7 @@ export async function PUT(request: NextRequest) {
       },
     });
 
-    await buildShoppingList({ householdId, weekPlanId: weekPlan.id });
+    await buildShoppingList({ householdId });
 
     const weekStartStr = monday.toISOString().split("T")[0];
 

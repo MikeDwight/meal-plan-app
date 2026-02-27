@@ -46,10 +46,7 @@ export function GenerateButton({
         await fetch("/api/shoppinglist/build", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            householdId,
-            weekPlanId: genData.weekPlanId,
-          }),
+          body: JSON.stringify({ householdId }),
         });
       } catch (e) {
         console.warn("Shopping list build failed (non-blocking):", e);

@@ -21,13 +21,9 @@ const HOUSEHOLD_ID = "home-household";
 
 export function ShoppingListClient({
   groups,
-  weekStart,
-  weekPlanId,
   doneCount,
 }: {
   groups: AisleGroup[];
-  weekStart: string;
-  weekPlanId: string;
   doneCount: number;
 }) {
   const router = useRouter();
@@ -41,7 +37,7 @@ export function ShoppingListClient({
       const res = await fetch("/api/shoppinglist/archive-done", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ householdId: HOUSEHOLD_ID, weekPlanId }),
+        body: JSON.stringify({ householdId: HOUSEHOLD_ID }),
       });
       if (!res.ok) {
         const body = await res.json().catch(() => null);

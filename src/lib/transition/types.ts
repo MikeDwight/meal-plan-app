@@ -14,8 +14,6 @@ export interface TransitionItemRow {
 }
 
 export interface ApplyTransitionResponse {
-  weekPlanId: string;
-  weekStart: string;
   applied: number;
   merged: number;
   created: number;

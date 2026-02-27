@@ -13,10 +13,8 @@ export interface TransitionItemProps {
 const HOUSEHOLD_ID = "home-household";
 
 export function TransitionListClient({
-  weekStart,
   items,
 }: {
-  weekStart: string;
   items: TransitionItemProps[];
 }) {
   const router = useRouter();
@@ -67,7 +65,7 @@ export function TransitionListClient({
     const res = await fetch("/api/transition/apply", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ householdId: HOUSEHOLD_ID, weekStart }),
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID }),
     });
 
     if (res.ok) {
@@ -94,7 +92,6 @@ export function TransitionListClient({
     >
       <h2 style={{ marginTop: 0 }}>Transition (permanent)</h2>
 
-      {/* --- Add form --- */}
       <div
         style={{
           display: "flex",
@@ -150,7 +147,6 @@ export function TransitionListClient({
         </button>
       </div>
 
-      {/* --- Filters --- */}
       <div
         style={{
           display: "flex",
@@ -192,7 +188,7 @@ export function TransitionListClient({
           >
             {isApplying
               ? "Application…"
-              : `Appliquer à cette semaine (${todoCount})`}
+              : `Appliquer (${todoCount})`}
           </button>
         )}
       </div>
@@ -203,7 +199,6 @@ export function TransitionListClient({
         </p>
       )}
 
-      {/* --- Item list --- */}
       {visibleItems.length === 0 ? (
         <p style={{ color: "#888", fontSize: "0.9rem" }}>
           {items.length === 0

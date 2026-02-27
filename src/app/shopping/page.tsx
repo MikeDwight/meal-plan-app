@@ -1,5 +1,4 @@
 import type { GetShoppingListResponse, ShoppingItemRow } from "@/lib/shoppinglist/types";
-import { getCurrentMondayString } from "@/lib/mealplan/utils";
 import { ShoppingListClient } from "./shopping-list-client";
 import type { AisleGroup } from "./shopping-list-client";
 import { TransitionListClient } from "./transition-list-client";
@@ -34,21 +33,12 @@ function groupByAisle(items: ShoppingItemRow[]) {
   });
 }
 
-export default async function ShoppingPage({
-  searchParams,
-}: {
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
-}) {
-  const params = await searchParams;
-  const weekStart =
-    (typeof params.weekStart === "string" ? params.weekStart : undefined) ??
-    getCurrentMondayString();
-
+export default async function ShoppingPage() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
   const [res, transitionRes] = await Promise.all([
     fetch(
-      `${baseUrl}/api/shoppinglist?householdId=${HOUSEHOLD_ID}&weekStart=${weekStart}`,
+      `${baseUrl}/api/shoppinglist?householdId=${HOUSEHOLD_ID}`,
       { cache: "no-store" }
     ),
     fetch(
@@ -72,8 +62,8 @@ export default async function ShoppingPage({
     const body = await res.json().catch(() => null);
     return (
       <main>
-        <h1>Liste de courses — {weekStart}</h1>
-        <TransitionListClient weekStart={weekStart} items={transitionItems} />
+        <h1>Liste de courses</h1>
+        <TransitionListClient items={transitionItems} />
         <p>
           Aucune liste trouvée.{" "}
           {body?.error && <em>({body.error})</em>}
@@ -98,9 +88,9 @@ export default async function ShoppingPage({
 
   return (
     <main>
-      <h1>Liste de courses — {data.weekStart}</h1>
+      <h1>Liste de courses</h1>
 
-      <TransitionListClient weekStart={weekStart} items={transitionItems} />
+      <TransitionListClient items={transitionItems} />
 
       <p>
         {data.meta.done} / {data.meta.done + data.meta.todo} articles cochés
@@ -109,7 +99,7 @@ export default async function ShoppingPage({
       {data.items.length === 0 ? (
         <p style={{ color: "#888" }}>La liste est vide.</p>
       ) : (
-        <ShoppingListClient groups={groups} weekStart={weekStart} weekPlanId={data.weekPlanId} doneCount={data.meta.done} />
+        <ShoppingListClient groups={groups} doneCount={data.meta.done} />
       )}
     </main>
   );
