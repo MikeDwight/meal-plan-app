@@ -21,3 +21,16 @@ export function getCurrentMondayString(): string {
   monday.setDate(now.getDate() + diff);
   return monday.toISOString().split("T")[0];
 }
+
+/**
+ * Ajoute `n` semaines (n * 7 jours) à une date "YYYY-MM-DD",
+ * en normalisant d'abord au lundi (UTC) pour garantir un résultat toujours lundi.
+ */
+export function addWeeks(dateStr: string, n: number): string {
+  const monday = normalizeToMonday(dateStr);
+  monday.setUTCDate(monday.getUTCDate() + n * 7);
+  const y = monday.getUTCFullYear();
+  const m = String(monday.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(monday.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}

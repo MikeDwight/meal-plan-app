@@ -2,6 +2,7 @@ import type { GetWeekPlanResponse } from "@/lib/mealplan/types";
 import { getCurrentMondayString } from "@/lib/mealplan/utils";
 import { GenerateButton } from "./generate-button";
 import { WeekGrid } from "./week-grid";
+import { WeekNav } from "./week-nav";
 
 const HOUSEHOLD_ID = "home-household";
 
@@ -25,7 +26,7 @@ export default async function WeekPage({
 
   return (
     <main>
-      <h1>Semaine du {data?.weekStart ?? weekStart}</h1>
+      <WeekNav weekStart={data?.weekStart ?? weekStart} />
 
       <GenerateButton
         householdId={HOUSEHOLD_ID}
