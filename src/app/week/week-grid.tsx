@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import type { MealSlot, WeekPlanSlot } from "@/lib/mealplan/types";
 import { SlotCard } from "./slot-card";
 import { RecipePicker } from "./recipe-picker";
@@ -54,6 +55,7 @@ export function WeekGrid({
   weekStart: string;
   initialSlots: WeekPlanSlot[];
 }) {
+  const router = useRouter();
   const [slotMap, setSlotMap] = useState(() => buildSlotMap(initialSlots));
   const [pickerTarget, setPickerTarget] = useState<PickerTarget | null>(null);
   const [clearingKey, setClearingKey] = useState<string | null>(null);
@@ -70,8 +72,9 @@ export function WeekGrid({
         return next;
       });
       setPickerTarget(null);
+      router.refresh();
     },
-    [],
+    [router],
   );
 
   const handleClear = useCallback(
@@ -99,6 +102,7 @@ export function WeekGrid({
           next.delete(key);
           return next;
         });
+        router.refresh();
       } catch (e: unknown) {
         alert(
           e instanceof Error ? e.message : "Impossible de vider ce slot",

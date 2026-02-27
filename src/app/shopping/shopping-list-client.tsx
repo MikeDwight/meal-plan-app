@@ -30,6 +30,40 @@ export function ShoppingListClient({
   const [hideDone, setHideDone] = useState(false);
   const [isArchiving, startArchiveTransition] = useTransition();
   const [archiveError, setArchiveError] = useState<string | null>(null);
+  const [isPurging, startPurgeTransition] = useTransition();
+  const [purging, setPurging] = useState(false);
+  const [purgeError, setPurgeError] = useState<string | null>(null);
+
+  const purgebusy = purging || isPurging;
+
+  async function handlePurge() {
+    if (!window.confirm("Vider toute la liste de courses ?")) return;
+    setPurging(true);
+    setPurgeError(null);
+
+    try {
+      const res = await fetch("/api/shoppinglist/purge", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ householdId: HOUSEHOLD_ID }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => null);
+        setPurgeError(body?.error ?? `Erreur ${res.status}`);
+        setPurging(false);
+        return;
+      }
+    } catch {
+      setPurgeError("Erreur réseau");
+      setPurging(false);
+      return;
+    }
+
+    setPurging(false);
+    startPurgeTransition(() => {
+      router.refresh();
+    });
+  }
 
   async function handleArchiveDone() {
     setArchiveError(null);
@@ -74,29 +108,54 @@ export function ShoppingListClient({
           Masquer les articles cochés
         </label>
 
-        {doneCount > 0 && (
+        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+          {doneCount > 0 && (
+            <button
+              onClick={handleArchiveDone}
+              disabled={isArchiving || purgebusy}
+              style={{
+                padding: "0.4rem 0.8rem",
+                border: "1px solid #c44",
+                borderRadius: "4px",
+                background: "#fff0f0",
+                cursor: isArchiving || purgebusy ? "wait" : "pointer",
+                fontSize: "0.85rem",
+                color: "#c44",
+                fontWeight: 600,
+              }}
+            >
+              {isArchiving ? "Suppression…" : `Supprimer les cochés (${doneCount})`}
+            </button>
+          )}
+
           <button
-            onClick={handleArchiveDone}
-            disabled={isArchiving}
+            onClick={handlePurge}
+            disabled={purgebusy || isArchiving}
             style={{
               padding: "0.4rem 0.8rem",
               border: "1px solid #c44",
               borderRadius: "4px",
-              background: "#fff0f0",
-              cursor: isArchiving ? "wait" : "pointer",
+              background: purgebusy ? "#ddd" : "#fff0f0",
+              cursor: purgebusy || isArchiving ? "wait" : "pointer",
               fontSize: "0.85rem",
               color: "#c44",
               fontWeight: 600,
             }}
           >
-            {isArchiving ? "Suppression…" : `Supprimer les cochés (${doneCount})`}
+            {purgebusy ? "Suppression…" : "Vider la liste"}
           </button>
-        )}
+        </div>
       </div>
 
       {archiveError && (
         <p style={{ color: "#c44", fontSize: "0.85rem", margin: "0 0 0.5rem" }}>
           {archiveError}
+        </p>
+      )}
+
+      {purgeError && (
+        <p style={{ color: "#c44", fontSize: "0.85rem", margin: "0 0 0.5rem" }}>
+          {purgeError}
         </p>
       )}
 
