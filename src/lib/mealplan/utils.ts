@@ -9,3 +9,15 @@ export function normalizeToMonday(dateStr: string): Date {
   date.setUTCDate(date.getUTCDate() + diff);
   return date;
 }
+
+/**
+ * Retourne le lundi de la semaine courante au format "YYYY-MM-DD" (heure locale).
+ */
+export function getCurrentMondayString(): string {
+  const now = new Date();
+  const dow = now.getDay();
+  const diff = dow === 0 ? -6 : 1 - dow;
+  const monday = new Date(now);
+  monday.setDate(now.getDate() + diff);
+  return monday.toISOString().split("T")[0];
+}

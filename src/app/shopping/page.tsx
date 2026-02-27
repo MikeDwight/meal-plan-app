@@ -1,4 +1,5 @@
 import type { GetShoppingListResponse, ShoppingItemRow } from "@/lib/shoppinglist/types";
+import { getCurrentMondayString } from "@/lib/mealplan/utils";
 import { ShoppingListClient } from "./shopping-list-client";
 import type { AisleGroup } from "./shopping-list-client";
 import { TransitionListClient } from "./transition-list-client";
@@ -6,15 +7,6 @@ import type { TransitionItemProps } from "./transition-list-client";
 
 const HOUSEHOLD_ID = "home-household";
 const NO_AISLE = "Sans rayon";
-
-function getCurrentMonday(): string {
-  const now = new Date();
-  const dow = now.getDay();
-  const diff = dow === 0 ? -6 : 1 - dow;
-  const monday = new Date(now);
-  monday.setDate(now.getDate() + diff);
-  return monday.toISOString().split("T")[0];
-}
 
 function groupByAisle(items: ShoppingItemRow[]) {
   const groups = new Map<string, ShoppingItemRow[]>();
@@ -50,7 +42,7 @@ export default async function ShoppingPage({
   const params = await searchParams;
   const weekStart =
     (typeof params.weekStart === "string" ? params.weekStart : undefined) ??
-    getCurrentMonday();
+    getCurrentMondayString();
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
