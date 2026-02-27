@@ -26,6 +26,7 @@ model Household {
   weekPlans       WeekPlan[]
   shoppingItems   ShoppingItem[]
   transitionItems TransitionItem[]
+  recipePools     WeekRecipePool[]
 }
 
 // ============================================================================
@@ -43,10 +44,11 @@ model Recipe {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  household       Household          @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  household       Household            @relation(fields: [householdId], references: [id], onDelete: Cascade)
   tags            RecipeTag[]
   ingredients     RecipeIngredient[]
   weekPlanRecipes WeekPlanRecipe[]
+  poolItems       WeekRecipePoolItem[]
 
   @@index([householdId])
 }
@@ -223,6 +225,40 @@ model WeekPlanRecipe {
 
   @@unique([weekPlanId, dayIndex, mealSlot])
   @@index([weekPlanId])
+  @@index([recipeId])
+}
+
+// ============================================================================
+// WEEK RECIPE POOL (generated recipes not yet assigned to slots)
+// ============================================================================
+
+model WeekRecipePool {
+  id          String   @id @default(cuid())
+  householdId String
+  weekStart   DateTime @db.Date
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  household Household            @relation(fields: [householdId], references: [id], onDelete: Cascade)
+  items     WeekRecipePoolItem[]
+
+  @@unique([householdId, weekStart])
+  @@index([householdId])
+}
+
+model WeekRecipePoolItem {
+  id        String   @id @default(cuid())
+  poolId    String
+  recipeId  String
+  score     Float?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  pool   WeekRecipePool @relation(fields: [poolId], references: [id], onDelete: Cascade)
+  recipe Recipe         @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+
+  @@unique([poolId, recipeId])
+  @@index([poolId])
   @@index([recipeId])
 }
 
