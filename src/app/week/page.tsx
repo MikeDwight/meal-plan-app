@@ -31,7 +31,7 @@ export default async function WeekPage({
       <GenerateButton
         householdId={HOUSEHOLD_ID}
         weekStart={weekStart}
-        variant={hasExistingPlan ? "regenerate" : "generate"}
+        variant={data?.slots?.length ? "regenerate" : "generate"}
       />
 
       <WeekGrid
