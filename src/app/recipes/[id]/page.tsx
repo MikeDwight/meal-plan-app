@@ -115,19 +115,32 @@ export default async function RecipeDetailPage({
         )}
       </section>
 
-      {/* --- Placeholders --- */}
+      {/* --- Instructions --- */}
       <section style={{ margin: "1rem 0" }}>
         <h2>Instructions</h2>
-        <p style={{ color: "#888", fontStyle: "italic" }}>
-          Non disponible dans ce MVP.
-        </p>
+        {recipe.instructions ? (
+          <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
+            {recipe.instructions}
+          </div>
+        ) : (
+          <p style={{ color: "#888", fontStyle: "italic" }}>
+            Aucune instruction renseignée.
+          </p>
+        )}
       </section>
 
+      {/* --- Notes --- */}
       <section style={{ margin: "1rem 0" }}>
         <h2>Notes</h2>
-        <p style={{ color: "#888", fontStyle: "italic" }}>
-          Non disponible dans ce MVP.
-        </p>
+        {recipe.notes ? (
+          <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.6 }}>
+            {recipe.notes}
+          </div>
+        ) : (
+          <p style={{ color: "#888", fontStyle: "italic" }}>
+            Aucune note renseignée.
+          </p>
+        )}
       </section>
     </main>
   );

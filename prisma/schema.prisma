@@ -34,15 +34,17 @@ model Household {
 // ============================================================================
 
 model Recipe {
-  id          String   @id @default(cuid())
-  householdId String
-  title       String
-  sourceUrl   String?
-  servings    Int?
-  prepTime    Int?
-  cookTime    Int?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(cuid())
+  householdId  String
+  title        String
+  sourceUrl    String?
+  servings     Int?
+  prepTime     Int?
+  cookTime     Int?
+  instructions String?
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   household       Household            @relation(fields: [householdId], references: [id], onDelete: Cascade)
   tags            RecipeTag[]
