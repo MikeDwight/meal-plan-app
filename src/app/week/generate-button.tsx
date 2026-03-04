@@ -17,10 +17,12 @@ export function GenerateButton({
   const [loading, setLoading] = useState(false);
   const [clearing, setClearing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [count, setCount] = useState<number | "">("");
 
   const busy = loading || isPending || clearing;
   const label =
-    variant === "regenerate" ? "Recalculer les repas" : "Générer les repas";
+    variant === "regenerate" ? "Regenerer les repas" : "Generer les repas";
+  const isCountValid = typeof count === "number" && count > 0;
 
   async function handleClearWeek() {
     if (!window.confirm("Vider tous les repas de cette semaine ?")) return;
@@ -41,7 +43,7 @@ export function GenerateButton({
         return;
       }
     } catch {
-      setError("Erreur réseau — impossible de contacter le serveur.");
+      setError("Erreur reseau - impossible de contacter le serveur.");
       setClearing(false);
       return;
     }
@@ -53,6 +55,8 @@ export function GenerateButton({
   }
 
   async function handleClick() {
+    if (!isCountValid) return;
+
     setLoading(true);
     setError(null);
 
@@ -60,7 +64,12 @@ export function GenerateButton({
       const genRes = await fetch("/api/mealplan/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ householdId, weekStart, preserveManualSlots: true }),
+        body: JSON.stringify({
+          householdId,
+          weekStart,
+          count,
+          preserveManualPositions: true,
+        }),
       });
 
       if (!genRes.ok) {
@@ -71,8 +80,6 @@ export function GenerateButton({
         return;
       }
 
-      const genData = await genRes.json();
-
       try {
         await fetch("/api/shoppinglist/build", {
           method: "POST",
@@ -82,8 +89,8 @@ export function GenerateButton({
       } catch (e) {
         console.warn("Shopping list build failed (non-blocking):", e);
       }
-    } catch (e) {
-      setError("Erreur réseau — impossible de contacter le serveur.");
+    } catch {
+      setError("Erreur reseau - impossible de contacter le serveur.");
       setLoading(false);
       return;
     }
@@ -96,21 +103,53 @@ export function GenerateButton({
 
   return (
     <div style={{ margin: "1rem 0" }}>
-      <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+      <div
+        style={{
+          display: "flex",
+          gap: "0.5rem",
+          alignItems: "center",
+          flexWrap: "wrap",
+        }}
+      >
+        <label
+          style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+        >
+          <span style={{ fontSize: "0.9rem" }}>Nombre de repas :</span>
+          <input
+            type="number"
+            min={1}
+            max={50}
+            placeholder="ex: 14"
+            value={count}
+            onChange={(e) =>
+              setCount(e.target.value === "" ? "" : Math.max(1, Math.min(50, Number(e.target.value))))
+            }
+            disabled={busy}
+            style={{
+              width: "5rem",
+              padding: "0.4rem",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "0.9rem",
+            }}
+          />
+        </label>
+
         <button
           onClick={handleClick}
-          disabled={busy}
+          disabled={busy || !isCountValid}
           style={{
             padding: "0.5rem 1.2rem",
             border: "1px solid #555",
             borderRadius: "4px",
-            background: busy ? "#ddd" : "#fff",
-            cursor: busy ? "wait" : "pointer",
+            background: busy || !isCountValid ? "#ddd" : "#fff",
+            cursor: busy || !isCountValid ? "not-allowed" : "pointer",
             fontWeight: 600,
             fontSize: "0.95rem",
+            opacity: isCountValid ? 1 : 0.6,
           }}
         >
-          {loading || isPending ? "Génération…" : label}
+          {loading || isPending ? "Generation..." : label}
         </button>
 
         {variant === "regenerate" && (
@@ -128,16 +167,10 @@ export function GenerateButton({
               color: "#c44",
             }}
           >
-            {clearing ? "Suppression…" : "Vider la semaine"}
+            {clearing ? "Suppression..." : "Vider la semaine"}
           </button>
         )}
       </div>
-
-      {variant === "regenerate" && (
-        <p style={{ color: "#999", marginTop: "0.35rem", fontSize: "0.8rem" }}>
-          Le résultat peut être identique si rien n'a changé.
-        </p>
-      )}
 
       {error && (
         <p style={{ color: "#c44", marginTop: "0.5rem", fontSize: "0.9rem" }}>

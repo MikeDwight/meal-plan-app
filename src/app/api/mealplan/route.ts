@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import type { GetWeekPlanResponse, WeekPlanSlot } from "@/lib/mealplan/types";
+import type { GetWeekPlanResponse, WeekPlanItem } from "@/lib/mealplan/types";
 import { normalizeToMonday } from "@/lib/mealplan/utils";
 
 export async function GET(request: NextRequest) {
@@ -50,7 +50,7 @@ export async function GET(request: NextRequest) {
               },
             },
           },
-          orderBy: [{ dayIndex: "asc" }, { sortOrder: "asc" }],
+          orderBy: { position: "asc" },
         },
       },
     });
@@ -76,10 +76,8 @@ export async function GET(request: NextRequest) {
         ? weekPlan.weekStart.toISOString().split("T")[0]
         : String(weekPlan.weekStart).split("T")[0];
 
-    const slots: WeekPlanSlot[] = weekPlan.recipes.map((wpr) => ({
-      dayIndex: wpr.dayIndex,
-      mealSlot: wpr.mealSlot as WeekPlanSlot["mealSlot"],
-      sortOrder: wpr.sortOrder,
+    const items: WeekPlanItem[] = weekPlan.recipes.map((wpr) => ({
+      position: wpr.position,
       recipe: {
         id: wpr.recipe.id,
         title: wpr.recipe.title,
@@ -90,7 +88,7 @@ export async function GET(request: NextRequest) {
     const response: GetWeekPlanResponse = {
       weekPlanId: weekPlan.id,
       weekStart: weekStartStr,
-      slots,
+      items,
     };
 
     return NextResponse.json(response, { status: 200 });

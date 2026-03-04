@@ -1,8 +1,7 @@
 import type { GetWeekPlanResponse } from "@/lib/mealplan/types";
 import { getCurrentMondayString } from "@/lib/mealplan/utils";
 import { GenerateButton } from "./generate-button";
-import { PoolSection } from "./pool-section";
-import { WeekGrid } from "./week-grid";
+import { MealList } from "./meal-list";
 import { WeekNav } from "./week-nav";
 
 const HOUSEHOLD_ID = "home-household";
@@ -32,15 +31,13 @@ export default async function WeekPage({
       <GenerateButton
         householdId={HOUSEHOLD_ID}
         weekStart={weekStart}
-        variant={data?.slots?.length ? "regenerate" : "generate"}
+        variant={data?.items?.length ? "regenerate" : "generate"}
       />
 
-      <PoolSection householdId={HOUSEHOLD_ID} weekStart={weekStart} />
-
-      <WeekGrid
+      <MealList
         householdId={HOUSEHOLD_ID}
         weekStart={weekStart}
-        initialSlots={data?.slots ?? []}
+        initialItems={data?.items ?? []}
       />
     </main>
   );

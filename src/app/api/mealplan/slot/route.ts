@@ -4,15 +4,12 @@ import { prisma } from "@/lib/prisma";
 import { normalizeToMonday } from "@/lib/mealplan/utils";
 import { buildShoppingList } from "@/lib/shoppinglist/builder";
 
-const MealSlotSchema = z.enum(["lunch", "dinner"]);
-
-const SlotClearRequestSchema = z.object({
+const SlotDeleteRequestSchema = z.object({
   householdId: z.string().min(1, "householdId is required"),
   weekStart: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "weekStart must be YYYY-MM-DD format"),
-  dayIndex: z.number().int().min(0).max(6),
-  mealSlot: MealSlotSchema,
+  position: z.number().int().min(0),
 });
 
 const SlotSetRequestSchema = z.object({
@@ -20,15 +17,15 @@ const SlotSetRequestSchema = z.object({
   weekStart: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "weekStart must be YYYY-MM-DD format"),
-  dayIndex: z.number().int().min(0).max(6),
-  mealSlot: MealSlotSchema,
+  position: z.number().int().min(0),
   recipeId: z.string().min(1, "recipeId is required"),
+  servings: z.number().int().min(1).optional(),
 });
 
 export async function DELETE(request: NextRequest) {
   try {
     const body = await request.json();
-    const parseResult = SlotClearRequestSchema.safeParse(body);
+    const parseResult = SlotDeleteRequestSchema.safeParse(body);
 
     if (!parseResult.success) {
       return NextResponse.json(
@@ -40,7 +37,7 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    const { householdId, weekStart, dayIndex, mealSlot } = parseResult.data;
+    const { householdId, weekStart, position } = parseResult.data;
     const monday = normalizeToMonday(weekStart);
 
     const weekPlan = await prisma.weekPlan.findUnique({
@@ -53,13 +50,33 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ ok: true, deleted: 0 }, { status: 200 });
     }
 
-    const { count } = await prisma.weekPlanRecipe.deleteMany({
-      where: { weekPlanId: weekPlan.id, dayIndex, mealSlot },
+    const deletedItem = await prisma.weekPlanRecipe.findFirst({
+      where: { weekPlanId: weekPlan.id, position },
+    });
+
+    if (!deletedItem) {
+      return NextResponse.json({ ok: true, deleted: 0 }, { status: 200 });
+    }
+
+    await prisma.$transaction(async (tx) => {
+      await tx.weekPlanRecipe.delete({
+        where: { id: deletedItem.id },
+      });
+
+      await tx.weekPlanRecipe.updateMany({
+        where: {
+          weekPlanId: weekPlan.id,
+          position: { gt: position },
+        },
+        data: {
+          position: { decrement: 1 },
+        },
+      });
     });
 
     await buildShoppingList({ householdId });
 
-    return NextResponse.json({ ok: true, deleted: count }, { status: 200 });
+    return NextResponse.json({ ok: true, deleted: 1 }, { status: 200 });
   } catch (error) {
     console.error("Unexpected error in DELETE /api/mealplan/slot:", error);
     return NextResponse.json(
@@ -84,7 +101,7 @@ export async function PUT(request: NextRequest) {
       );
     }
 
-    const { householdId, weekStart, dayIndex, mealSlot, recipeId } =
+    const { householdId, weekStart, position, recipeId, servings } =
       parseResult.data;
 
     const recipe = await prisma.recipe.findUnique({
@@ -114,20 +131,35 @@ export async function PUT(request: NextRequest) {
       create: { householdId, weekStart: monday },
     });
 
-    await prisma.weekPlanRecipe.deleteMany({
-      where: { weekPlanId: weekPlan.id, dayIndex, mealSlot },
-    });
-
-    await prisma.weekPlanRecipe.create({
-      data: {
-        weekPlanId: weekPlan.id,
-        recipeId,
-        dayIndex,
-        mealSlot,
-        sortOrder: 0,
-        isManual: true,
+    const existingItem = await prisma.weekPlanRecipe.findUnique({
+      where: {
+        weekPlanId_position: {
+          weekPlanId: weekPlan.id,
+          position,
+        },
       },
     });
+
+    if (existingItem) {
+      await prisma.weekPlanRecipe.update({
+        where: { id: existingItem.id },
+        data: {
+          recipeId,
+          servings: servings ?? null,
+          isManual: true,
+        },
+      });
+    } else {
+      await prisma.weekPlanRecipe.create({
+        data: {
+          weekPlanId: weekPlan.id,
+          recipeId,
+          position,
+          servings: servings ?? null,
+          isManual: true,
+        },
+      });
+    }
 
     await buildShoppingList({ householdId });
 
@@ -137,14 +169,14 @@ export async function PUT(request: NextRequest) {
       {
         weekPlanId: weekPlan.id,
         weekStart: weekStartStr,
-        slot: {
-          dayIndex,
-          mealSlot,
+        item: {
+          position,
           recipe: {
             id: recipe.id,
             title: recipe.title,
             tags: recipe.tags.map((rt) => rt.tag.name),
           },
+          isManual: true,
         },
       },
       { status: 200 }

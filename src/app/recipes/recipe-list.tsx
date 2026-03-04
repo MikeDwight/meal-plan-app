@@ -2,9 +2,8 @@
 
 import { useState, useCallback } from "react";
 import Link from "next/link";
-import type { MealSlot } from "@/lib/mealplan/types";
+import { useRouter } from "next/navigation";
 import { getCurrentMondayString } from "@/lib/mealplan/utils";
-import { SlotPicker } from "./slot-picker";
 
 const HOUSEHOLD_ID = "home-household";
 
@@ -25,46 +24,66 @@ function formatTime(minutes: number): string {
 }
 
 export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
-  const [pickerRecipe, setPickerRecipe] = useState<RecipeRow | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [feedback, setFeedback] = useState<{ recipeId: string; text: string } | null>(null);
+  const router = useRouter();
+  const [addingRecipeId, setAddingRecipeId] = useState<string | null>(null);
+  const [feedback, setFeedback] = useState<{
+    recipeId: string;
+    text: string;
+    isError?: boolean;
+  } | null>(null);
 
-  const handlePick = useCallback(
-    async (dayIndex: number, mealSlot: MealSlot) => {
-      if (!pickerRecipe) return;
-      setSaving(true);
+  const handleAddToList = useCallback(
+    async (recipe: RecipeRow) => {
+      setAddingRecipeId(recipe.id);
+      setFeedback(null);
+
+      const weekStart = getCurrentMondayString();
 
       try {
+        const planRes = await fetch(
+          `/api/mealplan?householdId=${encodeURIComponent(HOUSEHOLD_ID)}&weekStart=${encodeURIComponent(weekStart)}`
+        );
+
+        let position = 0;
+        if (planRes.ok) {
+          const planData = await planRes.json();
+          position = planData.items?.length ?? 0;
+        }
+
         const res = await fetch("/api/mealplan/slot", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             householdId: HOUSEHOLD_ID,
-            weekStart: getCurrentMondayString(),
-            dayIndex,
-            mealSlot,
-            recipeId: pickerRecipe.id,
+            weekStart,
+            position,
+            recipeId: recipe.id,
           }),
         });
 
         if (!res.ok) {
           const body = await res.json().catch(() => null);
           throw new Error(
-            (body as { error?: string } | null)?.error ?? `Erreur ${res.status}`,
+            (body as { error?: string } | null)?.error ?? `Erreur ${res.status}`
           );
         }
 
-        const savedId = pickerRecipe.id;
-        setPickerRecipe(null);
-        setFeedback({ recipeId: savedId, text: "Ajouté !" });
+        setFeedback({ recipeId: recipe.id, text: "Ajoute !" });
         setTimeout(() => setFeedback(null), 2500);
+
+        router.refresh();
       } catch (e: unknown) {
-        alert(e instanceof Error ? e.message : "Impossible d\u2019enregistrer");
+        setFeedback({
+          recipeId: recipe.id,
+          text: e instanceof Error ? e.message : "Erreur",
+          isError: true,
+        });
+        setTimeout(() => setFeedback(null), 3000);
       } finally {
-        setSaving(false);
+        setAddingRecipeId(null);
       }
     },
-    [pickerRecipe],
+    [router]
   );
 
   if (recipes.length === 0) {
@@ -72,86 +91,87 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   }
 
   return (
-    <>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        {recipes.map((recipe) => {
-          const totalTime =
-            (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0) || null;
+    <ul style={{ listStyle: "none", padding: 0 }}>
+      {recipes.map((recipe) => {
+        const totalTime =
+          (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0) || null;
+        const isAdding = addingRecipeId === recipe.id;
+        const recipeFeedback =
+          feedback?.recipeId === recipe.id ? feedback : null;
 
-          return (
-            <li
-              key={recipe.id}
-              style={{
-                padding: "0.75rem 0",
-                borderBottom: "1px solid #eee",
-                display: "flex",
-                alignItems: "flex-start",
-                justifyContent: "space-between",
-                gap: "0.5rem",
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <Link
-                  href={`/recipes/${recipe.id}`}
-                  style={{ fontWeight: 600, fontSize: "1.05rem" }}
-                >
-                  {recipe.title}
-                </Link>
+        return (
+          <li
+            key={recipe.id}
+            style={{
+              padding: "0.75rem 0",
+              borderBottom: "1px solid #eee",
+              display: "flex",
+              alignItems: "flex-start",
+              justifyContent: "space-between",
+              gap: "0.5rem",
+            }}
+          >
+            <div style={{ flex: 1 }}>
+              <Link
+                href={`/recipes/${recipe.id}`}
+                style={{ fontWeight: 600, fontSize: "1.05rem" }}
+              >
+                {recipe.title}
+              </Link>
 
-                <div
-                  style={{
-                    fontSize: "0.85rem",
-                    color: "#666",
-                    marginTop: "0.25rem",
-                  }}
-                >
-                  {recipe.tags.length > 0 && <span>{recipe.tags.join(", ")}</span>}
-                  {recipe.tags.length > 0 && totalTime && <span> · </span>}
-                  {totalTime && <span>{formatTime(totalTime)}</span>}
-                  {(recipe.tags.length > 0 || totalTime) && <span> · </span>}
-                  <span>
-                    {recipe.ingredientCount} ingrédient
-                    {recipe.ingredientCount !== 1 ? "s" : ""}
-                  </span>
-                </div>
-              </div>
-
-              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                {feedback?.recipeId === recipe.id && (
-                  <span style={{ fontSize: "0.8rem", color: "#2a7" }}>
-                    {feedback.text}
-                  </span>
+              <div
+                style={{
+                  fontSize: "0.85rem",
+                  color: "#666",
+                  marginTop: "0.25rem",
+                }}
+              >
+                {recipe.tags.length > 0 && (
+                  <span>{recipe.tags.join(", ")}</span>
                 )}
-                <button
-                  type="button"
-                  onClick={() => setPickerRecipe(recipe)}
+                {recipe.tags.length > 0 && totalTime && <span> · </span>}
+                {totalTime && <span>{formatTime(totalTime)}</span>}
+                {(recipe.tags.length > 0 || totalTime) && <span> · </span>}
+                <span>
+                  {recipe.ingredientCount} ingredient
+                  {recipe.ingredientCount !== 1 ? "s" : ""}
+                </span>
+              </div>
+            </div>
+
+            <div
+              style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            >
+              {recipeFeedback && (
+                <span
                   style={{
-                    padding: "0.3rem 0.7rem",
-                    fontSize: "0.85rem",
-                    border: "1px solid #ccc",
-                    borderRadius: "4px",
-                    background: "#fff",
-                    cursor: "pointer",
-                    whiteSpace: "nowrap",
+                    fontSize: "0.8rem",
+                    color: recipeFeedback.isError ? "#c44" : "#2a7",
                   }}
                 >
-                  + Ajouter
-                </button>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-
-      {pickerRecipe && (
-        <SlotPicker
-          recipeTitle={pickerRecipe.title}
-          weekStart={getCurrentMondayString()}
-          saving={saving}
-          onPick={handlePick}
-          onClose={() => setPickerRecipe(null)}
-        />
-      )}
-    </>
+                  {recipeFeedback.text}
+                </span>
+              )}
+              <button
+                type="button"
+                onClick={() => handleAddToList(recipe)}
+                disabled={isAdding}
+                style={{
+                  padding: "0.3rem 0.7rem",
+                  fontSize: "0.85rem",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  background: isAdding ? "#f5f5f5" : "#fff",
+                  cursor: isAdding ? "wait" : "pointer",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {isAdding ? "..." : "+ Ajouter"}
+              </button>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
   );
 }

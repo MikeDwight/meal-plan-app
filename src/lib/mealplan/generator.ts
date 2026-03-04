@@ -5,17 +5,14 @@ import type {
   RecipeWithRelations,
   PantryItemData,
   HistoryEntry,
-  SlotAssignment,
-  SlotScoreBreakdown,
+  MealPlanItem,
+  ItemScoreBreakdown,
   ScoredRecipe,
-  SlotKey,
-  MealSlot,
   TagQuota,
   LeftoversOverrideResolved,
 } from "./types";
 import {
-  MEAL_SLOTS,
-  DAYS_IN_WEEK,
+  DEFAULT_MEAL_COUNT,
   DEFAULT_ANTI_REPEAT,
   DEFAULT_QUOTA_BONUS,
 } from "./types";
@@ -33,24 +30,16 @@ export class MealPlanGeneratorError extends Error {
   }
 }
 
-/**
- * Normalise une date au lundi de sa semaine.
- * Retourne aussi la chaîne formatée YYYY-MM-DD pour la réponse.
- */
 function normalizeToMonday(dateStr: string): { date: Date; formatted: string } {
   const [year, month, day] = dateStr.split("-").map(Number);
   const date = new Date(Date.UTC(year, month - 1, day, 0, 0, 0, 0));
-  
+
   const dayOfWeek = date.getUTCDay();
   const diff = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
   date.setUTCDate(date.getUTCDate() + diff);
-  
+
   const formatted = date.toISOString().split("T")[0];
   return { date, formatted };
-}
-
-function slotKeyToString(slot: SlotKey): string {
-  return `${slot.dayIndex}-${slot.mealSlot}`;
 }
 
 async function fetchRecipes(householdId: string): Promise<RecipeWithRelations[]> {
@@ -223,14 +212,13 @@ export async function generateMealPlan(
   const {
     householdId,
     weekStart: weekStartStr,
-    days = DAYS_IN_WEEK,
-    mealSlots = MEAL_SLOTS,
+    count = DEFAULT_MEAL_COUNT,
     required = [],
     exclude = {},
     antiRepeat = {},
     tagQuotas = [],
     quotaBonus = DEFAULT_QUOTA_BONUS,
-    preserveManualSlots = false,
+    preserveManualPositions = false,
     debug = false,
   } = request;
 
@@ -288,26 +276,18 @@ export async function generateMealPlan(
     excludedTagIds
   );
 
-  const allSlots: SlotKey[] = [];
-  for (let dayIndex = 0; dayIndex < days; dayIndex++) {
-    for (const mealSlot of mealSlots) {
-      allSlots.push({ dayIndex, mealSlot });
-    }
+  const allPositions: number[] = [];
+  for (let pos = 0; pos < count; pos++) {
+    allPositions.push(pos);
   }
 
-  const totalSlots = allSlots.length;
+  const totalPositions = allPositions.length;
 
-  const requiredPlacementsMap = new Map<string, string>();
+  const requiredPlacementsMap = new Map<number, string>();
   for (const placement of required) {
-    if (placement.dayIndex < 0 || placement.dayIndex >= days) {
+    if (placement.position < 0 || placement.position >= count) {
       throw new MealPlanGeneratorError(
-        `Invalid dayIndex ${placement.dayIndex} in required`,
-        400
-      );
-    }
-    if (!mealSlots.includes(placement.mealSlot)) {
-      throw new MealPlanGeneratorError(
-        `Invalid mealSlot ${placement.mealSlot} in required`,
+        `Invalid position ${placement.position} in required (must be 0-${count - 1})`,
         400
       );
     }
@@ -318,8 +298,7 @@ export async function generateMealPlan(
         404
       );
     }
-    const key = slotKeyToString({ dayIndex: placement.dayIndex, mealSlot: placement.mealSlot });
-    requiredPlacementsMap.set(key, placement.recipeId);
+    requiredPlacementsMap.set(placement.position, placement.recipeId);
   }
 
   const weekPlan = await prisma.weekPlan.upsert({
@@ -338,26 +317,22 @@ export async function generateMealPlan(
     },
   });
 
-  // Load manual slots to preserve them during generation
-  const manualSlotsMap = new Map<string, string>();
-  if (preserveManualSlots) {
-    const manualSlots = await prisma.weekPlanRecipe.findMany({
+  const manualPositionsMap = new Map<number, string>();
+  if (preserveManualPositions) {
+    const manualItems = await prisma.weekPlanRecipe.findMany({
       where: { weekPlanId: weekPlan.id, isManual: true },
     });
-    for (const ms of manualSlots) {
-      const key = slotKeyToString({ dayIndex: ms.dayIndex, mealSlot: ms.mealSlot as MealSlot });
-      manualSlotsMap.set(key, ms.recipeId);
+    for (const item of manualItems) {
+      manualPositionsMap.set(item.position, item.recipeId);
     }
   }
 
-  const assignments: SlotAssignment[] = [];
-  const scoreBreakdowns: SlotScoreBreakdown[] = [];
+  const items: MealPlanItem[] = [];
+  const scoreBreakdowns: ItemScoreBreakdown[] = [];
   const usedRecipeIds = new Set<string>();
   const currentTagCounts = new Map<string, number>();
 
-  // Pre-seed scoring context with manual recipes so the generator
-  // avoids re-selecting them for other slots.
-  for (const [, recipeId] of manualSlotsMap) {
+  for (const [, recipeId] of manualPositionsMap) {
     usedRecipeIds.add(recipeId);
     const recipe = recipes.find((r) => r.id === recipeId);
     if (recipe) {
@@ -368,24 +343,18 @@ export async function generateMealPlan(
     }
   }
 
-  let sortOrder = 0;
-
-  for (const slot of allSlots) {
-    const slotKey = slotKeyToString(slot);
-
-    if (manualSlotsMap.has(slotKey)) {
+  for (const position of allPositions) {
+    if (manualPositionsMap.has(position)) {
       continue;
     }
 
-    if (requiredPlacementsMap.has(slotKey)) {
-      const recipeId = requiredPlacementsMap.get(slotKey)!;
+    if (requiredPlacementsMap.has(position)) {
+      const recipeId = requiredPlacementsMap.get(position)!;
       const recipe = recipes.find((r) => r.id === recipeId)!;
 
-      assignments.push({
-        dayIndex: slot.dayIndex,
-        mealSlot: slot.mealSlot,
+      items.push({
+        position,
         recipeId,
-        sortOrder: sortOrder++,
       });
 
       usedRecipeIds.add(recipeId);
@@ -407,8 +376,7 @@ export async function generateMealPlan(
           quotaBonus
         );
         scoreBreakdowns.push({
-          dayIndex: slot.dayIndex,
-          mealSlot: slot.mealSlot,
+          position,
           recipeId,
           recipeTitle: recipe.title,
           pantryCoverageRatio: scored.pantryCoverageRatio,
@@ -436,16 +404,14 @@ export async function generateMealPlan(
 
     if (!bestRecipe) {
       throw new MealPlanGeneratorError(
-        `Unable to fill all slots: not enough eligible recipes. Filled ${assignments.length}/${totalSlots}`,
+        `Unable to fill all positions: not enough eligible recipes. Filled ${items.length}/${totalPositions}`,
         409
       );
     }
 
-    assignments.push({
-      dayIndex: slot.dayIndex,
-      mealSlot: slot.mealSlot,
+    items.push({
+      position,
       recipeId: bestRecipe.recipe.id,
-      sortOrder: sortOrder++,
     });
 
     usedRecipeIds.add(bestRecipe.recipe.id);
@@ -456,8 +422,7 @@ export async function generateMealPlan(
 
     if (debug) {
       scoreBreakdowns.push({
-        dayIndex: slot.dayIndex,
-        mealSlot: slot.mealSlot,
+        position,
         recipeId: bestRecipe.recipe.id,
         recipeTitle: bestRecipe.recipe.title,
         pantryCoverageRatio: bestRecipe.pantryCoverageRatio,
@@ -468,7 +433,7 @@ export async function generateMealPlan(
     }
   }
 
-  if (preserveManualSlots) {
+  if (preserveManualPositions) {
     await prisma.weekPlanRecipe.deleteMany({
       where: { weekPlanId: weekPlan.id, isManual: false },
     });
@@ -479,12 +444,10 @@ export async function generateMealPlan(
   }
 
   await prisma.weekPlanRecipe.createMany({
-    data: assignments.map((a) => ({
+    data: items.map((item) => ({
       weekPlanId: weekPlan.id,
-      recipeId: a.recipeId,
-      dayIndex: a.dayIndex,
-      mealSlot: a.mealSlot,
-      sortOrder: a.sortOrder,
+      recipeId: item.recipeId,
+      position: item.position,
       isManual: false,
     })),
   });
@@ -492,10 +455,10 @@ export async function generateMealPlan(
   const response: GenerateMealPlanResponse = {
     weekPlanId: weekPlan.id,
     weekStart: weekStartFormatted,
-    slots: assignments,
+    items,
     meta: {
-      totalSlots,
-      filledSlots: assignments.length,
+      totalPositions,
+      filledPositions: items.length,
     },
   };
 

@@ -2,24 +2,31 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import { SlotPicker } from "@/app/recipes/slot-picker";
-import type { MealSlot } from "@/lib/mealplan/types";
 import type { GetPoolResponse, PoolRecipeResponse } from "@/app/api/mealplan/pool/route";
 
 interface PoolSectionProps {
   householdId: string;
   weekStart: string;
+  currentMealCount: number;
 }
 
-export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
+export function PoolSection({
+  householdId,
+  weekStart,
+  currentMealCount,
+}: PoolSectionProps) {
   const router = useRouter();
   const [recipes, setRecipes] = useState<PoolRecipeResponse[]>([]);
   const [count, setCount] = useState(5);
   const [loading, setLoading] = useState(false);
   const [clearing, setClearing] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pickerRecipe, setPickerRecipe] = useState<PoolRecipeResponse | null>(null);
-  const [saving, setSaving] = useState(false);
+  const [addingRecipeId, setAddingRecipeId] = useState<string | null>(null);
+  const [targetPosition, setTargetPosition] = useState<number>(currentMealCount);
+
+  useEffect(() => {
+    setTargetPosition(currentMealCount);
+  }, [currentMealCount]);
 
   const fetchPool = useCallback(async () => {
     try {
@@ -52,7 +59,7 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
 
       if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || "Erreur lors de la génération");
+        throw new Error(data.error || "Erreur lors de la generation");
       }
 
       const data = await res.json();
@@ -90,10 +97,8 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
     }
   };
 
-  const handlePick = async (dayIndex: number, mealSlot: MealSlot) => {
-    if (!pickerRecipe) return;
-
-    setSaving(true);
+  const handleAddToPosition = async (recipe: PoolRecipeResponse) => {
+    setAddingRecipeId(recipe.recipeId);
 
     try {
       const res = await fetch("/api/mealplan/slot", {
@@ -102,9 +107,8 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
         body: JSON.stringify({
           householdId,
           weekStart,
-          dayIndex,
-          mealSlot,
-          recipeId: pickerRecipe.recipeId,
+          position: targetPosition,
+          recipeId: recipe.recipeId,
         }),
       });
 
@@ -113,17 +117,16 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
         throw new Error(data.error || "Erreur lors de l'ajout");
       }
 
-      setPickerRecipe(null);
+      setTargetPosition((p) => p + 1);
       router.refresh();
     } catch (err) {
       alert(err instanceof Error ? err.message : "Erreur inconnue");
     } finally {
-      setSaving(false);
+      setAddingRecipeId(null);
     }
   };
 
   const busy = loading || clearing;
-  const estimatedMeals = recipes.length * 4;
 
   return (
     <section
@@ -136,7 +139,7 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
       }}
     >
       <h2 style={{ margin: "0 0 0.5rem", fontSize: "1.1rem" }}>
-        Pool de recettes
+        Pool de recettes (suggestions)
       </h2>
 
       <p
@@ -146,7 +149,7 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
           color: "#666",
         }}
       >
-        1 recette = 4 repas (2 midis + 2 soirs)
+        Generez des suggestions et ajoutez-les a votre liste de repas.
       </p>
 
       <div
@@ -159,13 +162,15 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
         }}
       >
         <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.9rem" }}>Nombre :</span>
+          <span style={{ fontSize: "0.9rem" }}>Suggestions :</span>
           <input
             type="number"
             min={1}
             max={20}
             value={count}
-            onChange={(e) => setCount(Math.max(1, Math.min(20, Number(e.target.value))))}
+            onChange={(e) =>
+              setCount(Math.max(1, Math.min(20, Number(e.target.value))))
+            }
             disabled={busy}
             style={{
               width: "4rem",
@@ -191,7 +196,7 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
             fontSize: "0.9rem",
           }}
         >
-          {loading ? "Génération…" : `Générer ${count} recettes`}
+          {loading ? "Generation..." : `Generer ${count} suggestions`}
         </button>
 
         {recipes.length > 0 && (
@@ -209,7 +214,7 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
               fontSize: "0.9rem",
             }}
           >
-            {clearing ? "Suppression…" : "Vider la pool"}
+            {clearing ? "Suppression..." : "Vider"}
           </button>
         )}
       </div>
@@ -222,16 +227,31 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
 
       {recipes.length > 0 && (
         <>
-          <p
+          <div
             style={{
-              margin: "0 0 0.75rem",
-              fontSize: "0.9rem",
-              fontWeight: 500,
+              display: "flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              marginBottom: "0.75rem",
             }}
           >
-            {recipes.length} recette{recipes.length > 1 ? "s" : ""} ≈{" "}
-            {estimatedMeals} repas
-          </p>
+            <span style={{ fontSize: "0.85rem", color: "#555" }}>
+              Ajouter a la position :
+            </span>
+            <input
+              type="number"
+              min={0}
+              value={targetPosition}
+              onChange={(e) => setTargetPosition(Math.max(0, Number(e.target.value)))}
+              style={{
+                width: "4rem",
+                padding: "0.3rem",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                fontSize: "0.85rem",
+              }}
+            />
+          </div>
 
           <ul
             style={{
@@ -273,18 +293,23 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
 
                 <button
                   type="button"
-                  onClick={() => setPickerRecipe(recipe)}
+                  onClick={() => handleAddToPosition(recipe)}
+                  disabled={addingRecipeId === recipe.recipeId}
                   style={{
                     padding: "0.35rem 0.75rem",
-                    background: "#28a745",
+                    background:
+                      addingRecipeId === recipe.recipeId ? "#ccc" : "#28a745",
                     color: "#fff",
                     border: "none",
                     borderRadius: "4px",
-                    cursor: "pointer",
+                    cursor:
+                      addingRecipeId === recipe.recipeId ? "wait" : "pointer",
                     fontSize: "0.85rem",
                   }}
                 >
-                  Ajouter à un slot
+                  {addingRecipeId === recipe.recipeId
+                    ? "..."
+                    : `Ajouter (#${targetPosition + 1})`}
                 </button>
               </li>
             ))}
@@ -294,18 +319,8 @@ export function PoolSection({ householdId, weekStart }: PoolSectionProps) {
 
       {recipes.length === 0 && !loading && (
         <p style={{ color: "#888", fontSize: "0.9rem", margin: 0 }}>
-          Aucune recette dans la pool. Générez-en pour commencer.
+          Aucune suggestion. Generez-en pour commencer.
         </p>
-      )}
-
-      {pickerRecipe && (
-        <SlotPicker
-          recipeTitle={pickerRecipe.title}
-          weekStart={weekStart}
-          saving={saving}
-          onPick={handlePick}
-          onClose={() => setPickerRecipe(null)}
-        />
       )}
     </section>
   );

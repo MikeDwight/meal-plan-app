@@ -214,16 +214,14 @@ model WeekPlanRecipe {
   id         String  @id @default(cuid())
   weekPlanId String
   recipeId   String
-  dayIndex   Int
-  mealSlot   String
-  sortOrder  Int     @default(0)
+  position   Int     @default(0)
   servings   Int?
   isManual   Boolean @default(false)
 
   weekPlan WeekPlan @relation(fields: [weekPlanId], references: [id], onDelete: Cascade)
   recipe   Recipe   @relation(fields: [recipeId], references: [id], onDelete: Cascade)
 
-  @@unique([weekPlanId, dayIndex, mealSlot])
+  @@unique([weekPlanId, position])
   @@index([weekPlanId])
   @@index([recipeId])
 }

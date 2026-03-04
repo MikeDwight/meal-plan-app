@@ -1,20 +1,32 @@
 import { Decimal } from "@prisma/client/runtime/library";
 
-export type MealSlot = "lunch" | "dinner";
+// ---------------------------------------------------------------------------
+// CONSTANTS
+// ---------------------------------------------------------------------------
 
-export const MEAL_SLOTS: MealSlot[] = ["lunch", "dinner"];
-export const DAYS_IN_WEEK = 7;
+export const DEFAULT_MEAL_COUNT = 14;
+
+// ---------------------------------------------------------------------------
+// REQUIRED PLACEMENT (position-based)
+// ---------------------------------------------------------------------------
 
 export interface RequiredPlacement {
-  dayIndex: number;
-  mealSlot: MealSlot;
+  position: number;
   recipeId: string;
 }
+
+// ---------------------------------------------------------------------------
+// TAG QUOTAS
+// ---------------------------------------------------------------------------
 
 export interface TagQuota {
   tagId: string;
   min: number;
 }
+
+// ---------------------------------------------------------------------------
+// LEFTOVERS OVERRIDE
+// ---------------------------------------------------------------------------
 
 export interface LeftoversOverride {
   enabled?: boolean;
@@ -28,16 +40,23 @@ export interface LeftoversOverrideResolved {
   penaltyMultiplierWhenCovered: number;
 }
 
+// ---------------------------------------------------------------------------
+// EXCLUSIONS
+// ---------------------------------------------------------------------------
+
 export interface Exclusions {
   recipeIds?: string[];
   tagIds?: string[];
 }
 
+// ---------------------------------------------------------------------------
+// GENERATE MEAL PLAN REQUEST (position-based)
+// ---------------------------------------------------------------------------
+
 export interface GenerateMealPlanRequest {
   householdId: string;
   weekStart: string;
-  days?: number;
-  mealSlots?: MealSlot[];
+  count?: number;
   required?: RequiredPlacement[];
   exclude?: {
     recipeIds?: string[];
@@ -51,21 +70,25 @@ export interface GenerateMealPlanRequest {
   };
   tagQuotas?: TagQuota[];
   quotaBonus?: number;
-  preserveManualSlots?: boolean;
+  preserveManualPositions?: boolean;
   debug?: boolean;
 }
 
+// ---------------------------------------------------------------------------
+// MEAL PLAN ITEM (single item in the plan)
+// ---------------------------------------------------------------------------
 
-export interface SlotAssignment {
-  dayIndex: number;
-  mealSlot: MealSlot;
+export interface MealPlanItem {
+  position: number;
   recipeId: string;
-  sortOrder: number;
 }
 
-export interface SlotScoreBreakdown {
-  dayIndex: number;
-  mealSlot: MealSlot;
+// ---------------------------------------------------------------------------
+// SCORE BREAKDOWN (for debug)
+// ---------------------------------------------------------------------------
+
+export interface ItemScoreBreakdown {
+  position: number;
   recipeId: string;
   recipeTitle: string;
   pantryCoverageRatio: number;
@@ -74,25 +97,27 @@ export interface SlotScoreBreakdown {
   finalScore: number;
 }
 
+// ---------------------------------------------------------------------------
+// GENERATE MEAL PLAN RESPONSE
+// ---------------------------------------------------------------------------
+
 export interface GenerateMealPlanResponse {
   weekPlanId: string;
   weekStart: string;
-  slots: SlotAssignment[];
+  items: MealPlanItem[];
   meta?: {
-    totalSlots: number;
-    filledSlots: number;
-    scoreBreakdown?: SlotScoreBreakdown[];
+    totalPositions: number;
+    filledPositions: number;
+    scoreBreakdown?: ItemScoreBreakdown[];
   };
 }
 
 // ---------------------------------------------------------------------------
-// GET /api/mealplan
+// GET /api/mealplan RESPONSE TYPES
 // ---------------------------------------------------------------------------
 
-export interface WeekPlanSlot {
-  dayIndex: number;
-  mealSlot: MealSlot;
-  sortOrder: number;
+export interface WeekPlanItem {
+  position: number;
   recipe: {
     id: string;
     title: string;
@@ -103,8 +128,12 @@ export interface WeekPlanSlot {
 export interface GetWeekPlanResponse {
   weekPlanId: string;
   weekStart: string;
-  slots: WeekPlanSlot[];
+  items: WeekPlanItem[];
 }
+
+// ---------------------------------------------------------------------------
+// INTERNAL TYPES (used by generator)
+// ---------------------------------------------------------------------------
 
 export interface RecipeWithRelations {
   id: string;
@@ -132,10 +161,9 @@ export interface ScoredRecipe {
   finalScore: number;
 }
 
-export interface SlotKey {
-  dayIndex: number;
-  mealSlot: MealSlot;
-}
+// ---------------------------------------------------------------------------
+// DEFAULTS
+// ---------------------------------------------------------------------------
 
 export const DEFAULT_ANTI_REPEAT = {
   lookbackWeeks: 4,
@@ -149,3 +177,55 @@ export const DEFAULT_ANTI_REPEAT = {
 };
 
 export const DEFAULT_QUOTA_BONUS = 0.1;
+
+// ---------------------------------------------------------------------------
+// LEGACY COMPAT (for API migration - Phase 3)
+// These types are DEPRECATED and will be removed after API migration.
+// ---------------------------------------------------------------------------
+
+/** @deprecated Use position-based types instead */
+export type MealSlot = "lunch" | "dinner";
+
+/** @deprecated Use DEFAULT_MEAL_COUNT instead */
+export const MEAL_SLOTS: MealSlot[] = ["lunch", "dinner"];
+
+/** @deprecated Use DEFAULT_MEAL_COUNT instead */
+export const DAYS_IN_WEEK = 7;
+
+/** @deprecated Use MealPlanItem instead */
+export interface SlotAssignment {
+  dayIndex: number;
+  mealSlot: MealSlot;
+  recipeId: string;
+  sortOrder: number;
+}
+
+/** @deprecated Use ItemScoreBreakdown instead */
+export interface SlotScoreBreakdown {
+  dayIndex: number;
+  mealSlot: MealSlot;
+  recipeId: string;
+  recipeTitle: string;
+  pantryCoverageRatio: number;
+  antiRepeatPenalty: number;
+  quotaBonus: number;
+  finalScore: number;
+}
+
+/** @deprecated Use WeekPlanItem instead */
+export interface WeekPlanSlot {
+  dayIndex: number;
+  mealSlot: MealSlot;
+  sortOrder: number;
+  recipe: {
+    id: string;
+    title: string;
+    tags: string[];
+  };
+}
+
+/** @deprecated Internal use only */
+export interface SlotKey {
+  dayIndex: number;
+  mealSlot: MealSlot;
+}

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import type { MealSlot } from "@/lib/mealplan/types";
 
 interface RecipeOption {
   id: string;
@@ -12,10 +11,7 @@ interface RecipeOption {
 interface RecipePickerProps {
   householdId: string;
   weekStart: string;
-  dayIndex: number;
-  mealSlot: MealSlot;
-  dayLabel: string;
-  mealLabel: string;
+  position: number;
   onSelect: (recipe: RecipeOption) => void;
   onClose: () => void;
 }
@@ -23,10 +19,7 @@ interface RecipePickerProps {
 export function RecipePicker({
   householdId,
   weekStart,
-  dayIndex,
-  mealSlot,
-  dayLabel,
-  mealLabel,
+  position,
   onSelect,
   onClose,
 }: RecipePickerProps) {
@@ -82,8 +75,7 @@ export function RecipePicker({
           body: JSON.stringify({
             householdId,
             weekStart,
-            dayIndex,
-            mealSlot,
+            position,
             recipeId: recipe.id,
           }),
         });
@@ -91,26 +83,23 @@ export function RecipePicker({
         if (!res.ok) {
           const body = await res.json().catch(() => null);
           throw new Error(
-            (body as { error?: string } | null)?.error ??
-              `Erreur ${res.status}`,
+            (body as { error?: string } | null)?.error ?? `Erreur ${res.status}`
           );
         }
 
         onSelect(recipe);
       } catch (e: unknown) {
-        setError(
-          e instanceof Error ? e.message : "Impossible d\u2019enregistrer",
-        );
+        setError(e instanceof Error ? e.message : "Impossible d'enregistrer");
       } finally {
         setSaving(false);
       }
     },
-    [householdId, weekStart, dayIndex, mealSlot, onSelect],
+    [householdId, weekStart, position, onSelect]
   );
 
   const filtered = filter
     ? recipes.filter((r) =>
-        r.title.toLowerCase().includes(filter.toLowerCase()),
+        r.title.toLowerCase().includes(filter.toLowerCase())
       )
     : recipes;
 
@@ -148,7 +137,7 @@ export function RecipePicker({
           }}
         >
           <h3 style={{ margin: 0, fontSize: "1rem" }}>
-            {dayLabel} — {mealLabel}
+            Repas #{position + 1}
           </h3>
           <button
             type="button"
@@ -167,7 +156,7 @@ export function RecipePicker({
 
         <input
           type="text"
-          placeholder="Filtrer…"
+          placeholder="Filtrer..."
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
           style={{
@@ -180,16 +169,18 @@ export function RecipePicker({
         />
 
         {error && (
-          <p style={{ color: "#c44", fontSize: "0.85rem", margin: "0 0 0.5rem" }}>
+          <p
+            style={{ color: "#c44", fontSize: "0.85rem", margin: "0 0 0.5rem" }}
+          >
             {error}
           </p>
         )}
 
         <div style={{ overflowY: "auto", flex: 1 }}>
-          {loading && <p style={{ color: "#888" }}>Chargement…</p>}
+          {loading && <p style={{ color: "#888" }}>Chargement...</p>}
 
           {!loading && filtered.length === 0 && (
-            <p style={{ color: "#888" }}>Aucune recette trouvée.</p>
+            <p style={{ color: "#888" }}>Aucune recette trouvee.</p>
           )}
 
           {!loading &&
