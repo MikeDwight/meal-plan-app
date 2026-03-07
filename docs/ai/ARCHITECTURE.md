@@ -109,8 +109,12 @@ meal-app/
 | PATCH/DELETE | `/api/transitionitem/[id]` | Modifier/supprimer un item |
 | POST | `/api/transition/apply` | Appliquer en liste de courses |
 | GET | `/api/ingredients` | Liste des ingrédients |
+| PATCH | `/api/ingredients/[id]` | Modifier nom/rayon/unité par défaut d'un ingrédient |
 | GET | `/api/units` | Liste des unités |
+| POST | `/api/units` | Créer une unité |
 | GET | `/api/tags` | Liste des tags |
+| GET | `/api/aisles` | Liste des rayons |
+| POST | `/api/aisles` | Créer un rayon |
 | GET | `/health` | Health check |
 
 ## Modules lib
@@ -136,6 +140,7 @@ meal-app/
 | `/recipes` | `recipe-list.tsx` | Liste des recettes |
 | `/recipes/new` | `recipe-form.tsx` | Formulaire création |
 | `/recipes/[id]` | `page.tsx` | Détail recette |
-| `/week` | `meal-list.tsx`, `pool-section.tsx` | Planning semaine |
+| `/week` | `meal-list.tsx` | Planning semaine |
 | `/shopping` | `shopping-list-client.tsx` | Liste de courses |
 | `/pantry` | `pantry-client.tsx` | Gestion du garde-manger |
+| `/ingredients` | `ingredients-client.tsx` | Gestion des ingrédients |

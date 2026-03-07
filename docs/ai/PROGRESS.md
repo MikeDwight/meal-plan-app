@@ -15,6 +15,8 @@
 - **Application transition → shopping** : transfert des items de transition vers la liste de courses
 - **Clear week / Purge shopping** : boutons de remise à zéro depuis l'UI
 - **Gestion du garde-manger** : page `/pantry` avec liste, ajout (inline ingredient create), modification, suppression
+- **Gestion des ingrédients** : page `/ingredients` — modification nom, rayon et unité par défaut
+- **Champs unité et rayon en autocomplete** : dans les formulaires recette (création et modification), remplacement du select unité par autocomplete + ajout champ rayon, avec création inline si inexistant
 - **Health check** : `GET /health`
 - **Multi-tenant** : tout est isolé par `householdId`
 - **Docker** : images dev et prod, docker-compose
@@ -27,8 +29,6 @@
 ## Planned
 
 - Authentification / gestion multi-utilisateurs par foyer
-- Gestion des rayons (Aisle) depuis l'UI
-- Gestion des unités depuis l'UI
 - Ajout manuel d'articles à la liste de courses
 - Vue calendrier pour le planning hebdomadaire
 - Historique des semaines passées
