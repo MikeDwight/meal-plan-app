@@ -12,9 +12,8 @@ const RecipeIngredientSchema = z.object({
 const UpdateRecipeSchema = z.object({
   householdId: z.string().min(1),
   title: z.string().min(1),
+  sourceUrl: z.string().url().nullish(),
   servings: z.number().int().min(1).nullish(),
-  prepTime: z.number().int().min(0).nullish(),
-  cookTime: z.number().int().min(0).nullish(),
   instructions: z.string().nullish(),
   notes: z.string().nullish(),
   tagIds: z.array(z.string()).optional(),
@@ -63,9 +62,8 @@ export async function GET(
     const result = {
       id: recipe.id,
       title: recipe.title,
+      sourceUrl: recipe.sourceUrl,
       servings: recipe.servings,
-      prepTime: recipe.prepTime,
-      cookTime: recipe.cookTime,
       instructions: recipe.instructions,
       notes: recipe.notes,
       tags: recipe.tags.map((rt) => ({ id: rt.tag.id, name: rt.tag.name })),
@@ -116,9 +114,8 @@ export async function PUT(
         where: { id },
         data: {
           title: data.title,
+          sourceUrl: data.sourceUrl ?? null,
           servings: data.servings ?? null,
-          prepTime: data.prepTime ?? null,
-          cookTime: data.cookTime ?? null,
           instructions: data.instructions ?? null,
           notes: data.notes ?? null,
         },

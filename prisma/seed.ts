@@ -175,8 +175,6 @@ async function main() {
     {
       title: "Pâtes à la carbonara",
       servings: 4,
-      prepTime: 10,
-      cookTime: 15,
       tags: ["Rapide", "Comfort food"],
       ingredients: [
         { name: "Pâtes", quantity: 400 },
@@ -188,8 +186,6 @@ async function main() {
     {
       title: "Poulet rôti aux légumes",
       servings: 4,
-      prepTime: 20,
-      cookTime: 60,
       tags: ["Sans gluten", "Comfort food"],
       ingredients: [
         { name: "Poulet", quantity: 800 },
@@ -201,8 +197,6 @@ async function main() {
     {
       title: "Risotto aux champignons",
       servings: 4,
-      prepTime: 15,
-      cookTime: 25,
       tags: ["Végétarien", "Comfort food"],
       ingredients: [
         { name: "Riz", quantity: 300 },
@@ -214,8 +208,6 @@ async function main() {
     {
       title: "Saumon grillé",
       servings: 2,
-      prepTime: 10,
-      cookTime: 15,
       tags: ["Rapide", "Sans gluten"],
       ingredients: [
         { name: "Saumon", quantity: 400 },
@@ -226,8 +218,6 @@ async function main() {
     {
       title: "Bolognaise maison",
       servings: 6,
-      prepTime: 20,
-      cookTime: 45,
       tags: ["Batch cooking", "Comfort food"],
       ingredients: [
         { name: "Bœuf haché", quantity: 500 },
@@ -240,8 +230,6 @@ async function main() {
     {
       title: "Curry de légumes",
       servings: 4,
-      prepTime: 15,
-      cookTime: 30,
       tags: ["Végan", "Végétarien"],
       ingredients: [
         { name: "Pois chiches", quantity: 400 },
@@ -254,8 +242,6 @@ async function main() {
     {
       title: "Omelette aux légumes",
       servings: 2,
-      prepTime: 10,
-      cookTime: 10,
       tags: ["Rapide", "Végétarien", "Sans gluten"],
       ingredients: [
         { name: "Œufs", quantity: 6 },
@@ -267,8 +253,6 @@ async function main() {
     {
       title: "Gratin de courgettes",
       servings: 4,
-      prepTime: 15,
-      cookTime: 35,
       tags: ["Végétarien", "Comfort food"],
       ingredients: [
         { name: "Courgettes", quantity: 4 },
@@ -280,8 +264,6 @@ async function main() {
     {
       title: "Salade de lentilles",
       servings: 4,
-      prepTime: 15,
-      cookTime: 20,
       tags: ["Végan", "Batch cooking"],
       ingredients: [
         { name: "Lentilles", quantity: 300 },
@@ -293,8 +275,6 @@ async function main() {
     {
       title: "Pâtes au pesto",
       servings: 4,
-      prepTime: 10,
-      cookTime: 12,
       tags: ["Rapide", "Végétarien"],
       ingredients: [
         { name: "Pâtes", quantity: 400 },
@@ -306,8 +286,6 @@ async function main() {
     {
       title: "Poulet curry coco",
       servings: 4,
-      prepTime: 15,
-      cookTime: 25,
       tags: ["Sans gluten"],
       ingredients: [
         { name: "Poulet", quantity: 600 },
@@ -320,8 +298,6 @@ async function main() {
     {
       title: "Pizza maison",
       servings: 4,
-      prepTime: 30,
-      cookTime: 15,
       tags: ["Comfort food"],
       ingredients: [
         { name: "Sauce tomate", quantity: 200 },
@@ -332,8 +308,6 @@ async function main() {
     {
       title: "Quiche lorraine",
       servings: 6,
-      prepTime: 20,
-      cookTime: 40,
       tags: ["Batch cooking", "Comfort food"],
       ingredients: [
         { name: "Œufs", quantity: 4 },
@@ -345,8 +319,6 @@ async function main() {
     {
       title: "Buddha bowl",
       servings: 2,
-      prepTime: 20,
-      cookTime: 15,
       tags: ["Végan", "Végétarien"],
       ingredients: [
         { name: "Riz", quantity: 200 },
@@ -375,8 +347,6 @@ async function main() {
         householdId: household.id,
         title: recipeDef.title,
         servings: recipeDef.servings,
-        prepTime: recipeDef.prepTime,
-        cookTime: recipeDef.cookTime,
       },
     });
 

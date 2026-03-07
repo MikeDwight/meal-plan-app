@@ -11,16 +11,7 @@ interface RecipeRow {
   id: string;
   title: string;
   tags: string[];
-  prepTime: number | null;
-  cookTime: number | null;
   ingredientCount: number;
-}
-
-function formatTime(minutes: number): string {
-  if (minutes < 60) return `${minutes} min`;
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return m > 0 ? `${h}h${String(m).padStart(2, "0")}` : `${h}h`;
 }
 
 export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
@@ -93,8 +84,6 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   return (
     <ul style={{ listStyle: "none", padding: 0 }}>
       {recipes.map((recipe) => {
-        const totalTime =
-          (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0) || null;
         const isAdding = addingRecipeId === recipe.id;
         const recipeFeedback =
           feedback?.recipeId === recipe.id ? feedback : null;
@@ -129,9 +118,7 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
                 {recipe.tags.length > 0 && (
                   <span>{recipe.tags.join(", ")}</span>
                 )}
-                {recipe.tags.length > 0 && totalTime && <span> · </span>}
-                {totalTime && <span>{formatTime(totalTime)}</span>}
-                {(recipe.tags.length > 0 || totalTime) && <span> · </span>}
+                {recipe.tags.length > 0 && <span> · </span>}
                 <span>
                   {recipe.ingredientCount} ingredient
                   {recipe.ingredientCount !== 1 ? "s" : ""}

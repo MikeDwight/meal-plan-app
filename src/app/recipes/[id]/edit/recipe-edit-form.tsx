@@ -29,9 +29,8 @@ interface IngredientSuggestion {
 interface InitialData {
   id: string;
   title: string;
+  sourceUrl: string;
   servings: number | null;
-  prepTime: number | null;
-  cookTime: number | null;
   instructions: string;
   notes: string;
   tagIds: string[];
@@ -66,12 +65,14 @@ export function RecipeEditForm({
   const [aisles, setAisles] = useState<Aisle[]>(initialAisles);
 
   const [title, setTitle] = useState(initialData.title);
+  const [sourceUrl, setSourceUrl] = useState(initialData.sourceUrl);
   const [servings, setServings] = useState(initialData.servings != null ? String(initialData.servings) : "");
-  const [prepTime, setPrepTime] = useState(initialData.prepTime != null ? String(initialData.prepTime) : "");
-  const [cookTime, setCookTime] = useState(initialData.cookTime != null ? String(initialData.cookTime) : "");
   const [instructions, setInstructions] = useState(initialData.instructions);
   const [notes, setNotes] = useState(initialData.notes);
-  const [selectedTagIds, setSelectedTagIds] = useState<Set<string>>(new Set(initialData.tagIds));
+  const [selectedTags, setSelectedTags] = useState<Tag[]>(
+    initialData.tagIds.map((id) => tags.find((t) => t.id === id)).filter((t): t is Tag => t != null)
+  );
+  const [tagInput, setTagInput] = useState("");
   const [ingredientLines, setIngredientLines] = useState<IngredientLine[]>(
     initialData.ingredients.length > 0
       ? initialData.ingredients.map((l) => ({ ...l, unitLabel: units.find((u) => u.id === l.unitId)?.abbr ?? "", aisleId: "", aisleName: "" }))
@@ -87,12 +88,26 @@ export function RecipeEditForm({
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const toggleTag = useCallback((tagId: string) => {
-    setSelectedTagIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(tagId)) next.delete(tagId); else next.add(tagId);
-      return next;
+  const handleSelectTag = useCallback((item: { id: string; label: string }) => {
+    setSelectedTags((prev) => prev.some((t) => t.id === item.id) ? prev : [...prev, { id: item.id, name: item.label }]);
+    setTagInput("");
+  }, []);
+
+  const handleCreateTag = useCallback(async (name: string) => {
+    const res = await fetch("/api/tags", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID_CLIENT, name }),
     });
+    if (res.ok) {
+      const created: Tag = await res.json();
+      setSelectedTags((prev) => prev.some((t) => t.id === created.id) ? prev : [...prev, created]);
+      setTagInput("");
+    }
+  }, []);
+
+  const removeTag = useCallback((tagId: string) => {
+    setSelectedTags((prev) => prev.filter((t) => t.id !== tagId));
   }, []);
 
   const updateIngredientLine = useCallback((index: number, field: keyof IngredientLine, value: string) => {
@@ -241,12 +256,11 @@ export function RecipeEditForm({
         body: JSON.stringify({
           householdId,
           title: trimmedTitle,
+          sourceUrl: sourceUrl.trim() || null,
           servings: servings === "" ? null : Number(servings),
-          prepTime: prepTime === "" ? null : Number(prepTime),
-          cookTime: cookTime === "" ? null : Number(cookTime),
           instructions: instructions.trim() || null,
           notes: notes.trim() || null,
-          tagIds: Array.from(selectedTagIds),
+          tagIds: selectedTags.map((t) => t.id),
           ingredients: validIngredients.map((line) => ({
             ingredientId: line.ingredientId,
             quantity: Number(line.quantity),
@@ -282,31 +296,36 @@ export function RecipeEditForm({
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} style={inputStyle} />
       </div>
 
-      <div style={{ ...sectionStyle, display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "1rem" }}>
+      <div style={{ ...sectionStyle, display: "grid", gridTemplateColumns: "1fr 2fr", gap: "1rem" }}>
         <div>
           <label style={labelStyle}>Portions</label>
           <input type="number" min="1" value={servings} onChange={(e) => setServings(e.target.value)} style={inputStyle} />
         </div>
         <div>
-          <label style={labelStyle}>Préparation (min)</label>
-          <input type="number" min="0" value={prepTime} onChange={(e) => setPrepTime(e.target.value)} style={inputStyle} />
-        </div>
-        <div>
-          <label style={labelStyle}>Cuisson (min)</label>
-          <input type="number" min="0" value={cookTime} onChange={(e) => setCookTime(e.target.value)} style={inputStyle} />
+          <label style={labelStyle}>URL source</label>
+          <input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} style={inputStyle} placeholder="https://..." />
         </div>
       </div>
 
       <div style={sectionStyle}>
         <label style={labelStyle}>Tags</label>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
-          {tags.map((tag) => (
-            <label key={tag.id} style={{ display: "flex", alignItems: "center", gap: "0.25rem", padding: "0.25rem 0.5rem", background: selectedTagIds.has(tag.id) ? "#dbeafe" : "#f3f4f6", borderRadius: "4px", cursor: "pointer", fontSize: "0.9rem" }}>
-              <input type="checkbox" checked={selectedTagIds.has(tag.id)} onChange={() => toggleTag(tag.id)} />
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.5rem" }}>
+          {selectedTags.map((tag) => (
+            <span key={tag.id} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", padding: "0.2rem 0.5rem", background: "#dbeafe", borderRadius: "4px", fontSize: "0.85rem" }}>
               {tag.name}
-            </label>
+              <button type="button" onClick={() => removeTag(tag.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#1d4ed8", fontWeight: 700, padding: 0, lineHeight: 1 }}>×</button>
+            </span>
           ))}
         </div>
+        <FieldAutocomplete
+          value={tagInput}
+          onChange={setTagInput}
+          items={tags.filter((t) => !selectedTags.some((s) => s.id === t.id)).map((t) => ({ id: t.id, label: t.name }))}
+          onSelect={handleSelectTag}
+          onCreate={handleCreateTag}
+          placeholder="Ajouter un tag..."
+          style={inputStyle}
+        />
       </div>
 
       <div style={sectionStyle}>

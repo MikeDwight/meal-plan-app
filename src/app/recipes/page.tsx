@@ -20,8 +20,6 @@ export default async function RecipesPage() {
     id: r.id,
     title: r.title,
     tags: r.tags.map((rt) => rt.tag.name),
-    prepTime: r.prepTime,
-    cookTime: r.cookTime,
     ingredientCount: r._count.ingredients,
   }));
 

@@ -39,8 +39,6 @@ model Recipe {
   title        String
   sourceUrl    String?
   servings     Int?
-  prepTime     Int?
-  cookTime     Int?
   instructions String?
   notes        String?
   createdAt    DateTime @default(now())

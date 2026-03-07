@@ -38,9 +38,8 @@ export default async function RecipeEditPage({
   const initialData = {
     id: recipe.id,
     title: recipe.title,
+    sourceUrl: recipe.sourceUrl ?? "",
     servings: recipe.servings,
-    prepTime: recipe.prepTime,
-    cookTime: recipe.cookTime,
     instructions: recipe.instructions ?? "",
     notes: recipe.notes ?? "",
     tagIds: recipe.tags.map((rt) => rt.tag.id),

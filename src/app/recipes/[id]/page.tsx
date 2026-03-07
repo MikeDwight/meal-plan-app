@@ -7,13 +7,6 @@ export const dynamic = "force-dynamic";
 
 const HOUSEHOLD_ID = "home-household";
 
-function formatTime(minutes: number): string {
-  if (minutes < 60) return `${minutes} min`;
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  return m > 0 ? `${h}h${String(m).padStart(2, "0")}` : `${h}h`;
-}
-
 export default async function RecipeDetailPage({
   params,
 }: {
@@ -39,7 +32,6 @@ export default async function RecipeDetailPage({
   }
 
   const tags = recipe.tags.map((rt) => rt.tag.name);
-  const totalTime = (recipe.prepTime ?? 0) + (recipe.cookTime ?? 0) || null;
 
   const sortedIngredients = [...recipe.ingredients].sort((a, b) =>
     a.ingredient.name.localeCompare(b.ingredient.name, "fr")
@@ -74,17 +66,6 @@ export default async function RecipeDetailPage({
         <ul style={{ listStyle: "none", padding: 0, lineHeight: 1.8 }}>
           {recipe.servings != null && (
             <li>Portions : {recipe.servings}</li>
-          )}
-          {recipe.prepTime != null && (
-            <li>Préparation : {formatTime(recipe.prepTime)}</li>
-          )}
-          {recipe.cookTime != null && (
-            <li>Cuisson : {formatTime(recipe.cookTime)}</li>
-          )}
-          {totalTime && (
-            <li>
-              <strong>Total : {formatTime(totalTime)}</strong>
-            </li>
           )}
           {recipe.sourceUrl && (
             <li>
