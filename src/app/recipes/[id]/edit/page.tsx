@@ -13,7 +13,7 @@ export default async function RecipeEditPage({
 }) {
   const { id } = await params;
 
-  const [recipe, tags, units] = await Promise.all([
+  const [recipe, tags, units, aisles] = await Promise.all([
     prisma.recipe.findUnique({
       where: { id },
       include: {
@@ -28,6 +28,7 @@ export default async function RecipeEditPage({
     }),
     prisma.tag.findMany({ where: { householdId: HOUSEHOLD_ID }, orderBy: { name: "asc" } }),
     prisma.unit.findMany({ where: { householdId: HOUSEHOLD_ID }, orderBy: { abbr: "asc" } }),
+    prisma.aisle.findMany({ where: { householdId: HOUSEHOLD_ID }, orderBy: { sortOrder: "asc" } }),
   ]);
 
   if (!recipe || recipe.householdId !== HOUSEHOLD_ID) {
@@ -60,6 +61,7 @@ export default async function RecipeEditPage({
         initialData={initialData}
         tags={tags.map((t) => ({ id: t.id, name: t.name }))}
         units={units.map((u) => ({ id: u.id, abbr: u.abbr }))}
+        aisles={aisles.map((a) => ({ id: a.id, name: a.name }))}
       />
     </main>
   );

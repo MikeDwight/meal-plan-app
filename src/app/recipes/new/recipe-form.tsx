@@ -2,31 +2,23 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { FieldAutocomplete } from "../field-autocomplete";
 
 const HOUSEHOLD_ID = "home-household";
 
-interface Tag {
-  id: string;
-  name: string;
-}
-
-interface Unit {
-  id: string;
-  name: string;
-  abbr: string;
-}
-
-interface Ingredient {
-  id: string;
-  name: string;
-  defaultUnitId: string | null;
-}
+interface Tag { id: string; name: string; }
+interface Unit { id: string; name: string; abbr: string; }
+interface Aisle { id: string; name: string; }
+interface Ingredient { id: string; name: string; defaultUnitId: string | null; defaultAisleId: string | null; }
 
 interface IngredientLine {
   ingredientId: string;
   ingredientName: string;
   quantity: string;
   unitId: string;
+  unitLabel: string;
+  aisleId: string;
+  aisleName: string;
   notes: string;
 }
 
@@ -43,11 +35,6 @@ const inputStyle: React.CSSProperties = {
   borderRadius: "4px",
   fontSize: "0.95rem",
   width: "100%",
-};
-
-const selectStyle: React.CSSProperties = {
-  ...inputStyle,
-  background: "#fff",
 };
 
 const labelStyle: React.CSSProperties = {
@@ -71,9 +58,8 @@ export function RecipeForm() {
   const [instructions, setInstructions] = useState("");
   const [notes, setNotes] = useState("");
   const [selectedTagIds, setSelectedTagIds] = useState<Set<string>>(new Set());
-  const [ingredientLines, setIngredientLines] = useState<IngredientLine[]>([
-    { ingredientId: "", ingredientName: "", quantity: "", unitId: "", notes: "" },
-  ]);
+  const emptyLine = (): IngredientLine => ({ ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "", notes: "" });
+  const [ingredientLines, setIngredientLines] = useState<IngredientLine[]>([emptyLine()]);
 
   const [ingredientSuggestions, setIngredientSuggestions] = useState<IngredientSuggestion[]>([]);
   const [activeLineIndex, setActiveLineIndex] = useState<number | null>(null);
@@ -83,6 +69,7 @@ export function RecipeForm() {
 
   const [tags, setTags] = useState<Tag[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
+  const [aisles, setAisles] = useState<Aisle[]>([]);
   const [ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [loadingMeta, setLoadingMeta] = useState(true);
 
@@ -92,14 +79,16 @@ export function RecipeForm() {
   useEffect(() => {
     async function loadMeta() {
       try {
-        const [tagsRes, unitsRes, ingredientsRes] = await Promise.all([
+        const [tagsRes, unitsRes, aislesRes, ingredientsRes] = await Promise.all([
           fetch(`/api/tags?householdId=${HOUSEHOLD_ID}`),
           fetch(`/api/units?householdId=${HOUSEHOLD_ID}`),
+          fetch(`/api/aisles?householdId=${HOUSEHOLD_ID}`),
           fetch(`/api/ingredients?householdId=${HOUSEHOLD_ID}&limit=200`),
         ]);
 
         if (tagsRes.ok) setTags(await tagsRes.json());
         if (unitsRes.ok) setUnits(await unitsRes.json());
+        if (aislesRes.ok) setAisles(await aislesRes.json());
         if (ingredientsRes.ok) setIngredients(await ingredientsRes.json());
       } catch (e) {
         console.error("Failed to load metadata:", e);
@@ -142,10 +131,7 @@ export function RecipeForm() {
   );
 
   const addIngredientLine = useCallback(() => {
-    setIngredientLines((prev) => [
-      ...prev,
-      { ingredientId: "", ingredientName: "", quantity: "", unitId: "", notes: "" },
-    ]);
+    setIngredientLines((prev) => [...prev, emptyLine()]);
   }, []);
 
   const searchIngredients = useCallback(async (query: string) => {
@@ -193,18 +179,23 @@ export function RecipeForm() {
     (index: number, suggestion: IngredientSuggestion) => {
       setIngredientLines((prev) => {
         const next = [...prev];
+        const currentUnit = units.find((u) => u.id === suggestion.defaultUnitId);
+        const currentAisle = aisles.find((a) => a.id === suggestion.defaultAisleId);
         next[index] = {
           ...next[index],
           ingredientId: suggestion.id,
           ingredientName: suggestion.name,
           unitId: next[index].unitId || suggestion.defaultUnitId || "",
+          unitLabel: next[index].unitLabel || currentUnit?.abbr || "",
+          aisleId: next[index].aisleId || suggestion.defaultAisleId || "",
+          aisleName: next[index].aisleName || currentAisle?.name || "",
         };
         return next;
       });
       setActiveLineIndex(null);
       setIngredientSuggestions([]);
     },
-    []
+    [units, aisles]
   );
 
   const handleCreateIngredient = useCallback(
@@ -213,10 +204,16 @@ export function RecipeForm() {
       if (!trimmedName) return;
 
       try {
+        const line = ingredientLines[index];
         const res = await fetch("/api/ingredients", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ householdId: HOUSEHOLD_ID, name: trimmedName }),
+          body: JSON.stringify({
+            householdId: HOUSEHOLD_ID,
+            name: trimmedName,
+            defaultUnitId: line.unitId || undefined,
+            defaultAisleId: line.aisleId || undefined,
+          }),
         });
 
         if (res.ok) {
@@ -227,7 +224,6 @@ export function RecipeForm() {
               ...next[index],
               ingredientId: created.id,
               ingredientName: created.name,
-              unitId: next[index].unitId || created.defaultUnitId || "",
             };
             return next;
           });
@@ -240,8 +236,58 @@ export function RecipeForm() {
         setIngredientSuggestions([]);
       }
     },
-    []
+    [ingredientLines]
   );
+
+  const handleSelectUnit = useCallback((index: number, item: { id: string; label: string }) => {
+    setIngredientLines((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], unitId: item.id, unitLabel: item.label };
+      return next;
+    });
+  }, []);
+
+  const handleCreateUnit = useCallback(async (index: number, label: string) => {
+    const res = await fetch("/api/units", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID, abbr: label, name: label }),
+    });
+    if (res.ok) {
+      const created: Unit = await res.json();
+      setUnits((prev) => [...prev, created].sort((a, b) => a.abbr.localeCompare(b.abbr)));
+      setIngredientLines((prev) => {
+        const next = [...prev];
+        next[index] = { ...next[index], unitId: created.id, unitLabel: created.abbr };
+        return next;
+      });
+    }
+  }, []);
+
+  const handleSelectAisle = useCallback((index: number, item: { id: string; label: string }) => {
+    setIngredientLines((prev) => {
+      const next = [...prev];
+      next[index] = { ...next[index], aisleId: item.id, aisleName: item.label };
+      return next;
+    });
+  }, []);
+
+  const handleCreateAisle = useCallback(async (index: number, label: string) => {
+    const res = await fetch("/api/aisles", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID, name: label }),
+    });
+    if (res.ok) {
+      const created: Aisle = await res.json();
+      setAisles((prev) => [...prev, created]);
+      setIngredientLines((prev) => {
+        const next = [...prev];
+        next[index] = { ...next[index], aisleId: created.id, aisleName: created.name };
+        return next;
+      });
+    }
+  }, []);
 
   const handleIngredientInputFocus = useCallback((index: number) => {
     if (blurTimeoutRef.current) {
@@ -445,7 +491,7 @@ export function RecipeForm() {
               key={index}
               style={{
                 display: "grid",
-                gridTemplateColumns: "2fr 1fr 1fr 1.5fr auto",
+                gridTemplateColumns: "2fr 1fr 1fr 1fr 1.5fr auto",
                 gap: "0.5rem",
                 alignItems: "center",
               }}
@@ -545,26 +591,29 @@ export function RecipeForm() {
                 step="any"
                 placeholder="Qté"
                 value={line.quantity}
-                onChange={(e) =>
-                  updateIngredientLine(index, "quantity", e.target.value)
-                }
+                onChange={(e) => updateIngredientLine(index, "quantity", e.target.value)}
                 style={inputStyle}
               />
 
-              <select
-                value={line.unitId}
-                onChange={(e) =>
-                  updateIngredientLine(index, "unitId", e.target.value)
-                }
-                style={selectStyle}
-              >
-                <option value="">-- Unité --</option>
-                {units.map((unit) => (
-                  <option key={unit.id} value={unit.id}>
-                    {unit.abbr}
-                  </option>
-                ))}
-              </select>
+              <FieldAutocomplete
+                value={line.aisleName}
+                onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], aisleName: v, aisleId: "" }; return next; })}
+                items={aisles.map((a) => ({ id: a.id, label: a.name }))}
+                onSelect={(item) => handleSelectAisle(index, item)}
+                onCreate={(label) => handleCreateAisle(index, label)}
+                placeholder="Rayon..."
+                style={inputStyle}
+              />
+
+              <FieldAutocomplete
+                value={line.unitLabel}
+                onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], unitLabel: v, unitId: "" }; return next; })}
+                items={units.map((u) => ({ id: u.id, label: u.abbr }))}
+                onSelect={(item) => handleSelectUnit(index, item)}
+                onCreate={(label) => handleCreateUnit(index, label)}
+                placeholder="Unité..."
+                style={inputStyle}
+              />
 
               <input
                 type="text"
