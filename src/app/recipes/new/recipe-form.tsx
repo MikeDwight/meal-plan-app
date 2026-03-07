@@ -19,7 +19,6 @@ interface IngredientLine {
   unitLabel: string;
   aisleId: string;
   aisleName: string;
-  notes: string;
 }
 
 interface IngredientSuggestion {
@@ -58,7 +57,7 @@ export function RecipeForm() {
   const [notes, setNotes] = useState("");
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [tagInput, setTagInput] = useState("");
-  const emptyLine = (): IngredientLine => ({ ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "", notes: "" });
+  const emptyLine = (): IngredientLine => ({ ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "" });
   const [ingredientLines, setIngredientLines] = useState<IngredientLine[]>([emptyLine()]);
 
   const [ingredientSuggestions, setIngredientSuggestions] = useState<IngredientSuggestion[]>([]);
@@ -356,7 +355,6 @@ export function RecipeForm() {
           ingredientId: line.ingredientId,
           quantity: Number(line.quantity),
           unitId: line.unitId === "" ? null : line.unitId,
-          notes: line.notes.trim() || null,
         })),
       };
 
@@ -586,14 +584,6 @@ export function RecipeForm() {
                 style={inputStyle}
               />
 
-              <input
-                type="text"
-                placeholder="Notes (opt.)"
-                value={line.notes}
-                onChange={(e) =>
-                  updateIngredientLine(index, "notes", e.target.value)
-                }
-                style={inputStyle}
               />
 
               <button

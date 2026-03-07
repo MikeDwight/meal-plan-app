@@ -98,9 +98,6 @@ export default async function RecipeDetailPage({
                   {qty && <>{qty} </>}
                   {unit && <>{unit} </>}
                   {ri.ingredient.name}
-                  {ri.notes && (
-                    <span style={{ color: "#888" }}> ({ri.notes})</span>
-                  )}
                 </li>
               );
             })}

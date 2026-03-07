@@ -17,7 +17,6 @@ interface IngredientLine {
   unitLabel: string;
   aisleId: string;
   aisleName: string;
-  notes: string;
 }
 interface IngredientSuggestion {
   id: string;
@@ -76,7 +75,7 @@ export function RecipeEditForm({
   const [ingredientLines, setIngredientLines] = useState<IngredientLine[]>(
     initialData.ingredients.length > 0
       ? initialData.ingredients.map((l) => ({ ...l, unitLabel: units.find((u) => u.id === l.unitId)?.abbr ?? "", aisleId: "", aisleName: "" }))
-      : [{ ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "", notes: "" }]
+      : [{ ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "" }]
   );
 
   const [ingredientSuggestions, setIngredientSuggestions] = useState<IngredientSuggestion[]>([]);
@@ -119,7 +118,7 @@ export function RecipeEditForm({
   }, []);
 
   const addIngredientLine = useCallback(() => {
-    setIngredientLines((prev) => [...prev, { ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "", notes: "" }]);
+    setIngredientLines((prev) => [...prev, { ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "" }]);
   }, []);
 
   const removeIngredientLine = useCallback((index: number) => {
@@ -265,7 +264,6 @@ export function RecipeEditForm({
             ingredientId: line.ingredientId,
             quantity: Number(line.quantity),
             unitId: line.unitId === "" ? null : line.unitId,
-            notes: line.notes.trim() || null,
           })),
         }),
       });
@@ -390,7 +388,7 @@ export function RecipeEditForm({
                 style={inputStyle}
               />
 
-              <input type="text" placeholder="Notes (opt.)" value={line.notes} onChange={(e) => updateIngredientLine(index, "notes", e.target.value)} style={inputStyle} />
+
 
               <button type="button" onClick={() => removeIngredientLine(index)} disabled={ingredientLines.length <= 1}
                 style={{ padding: "0.4rem 0.6rem", background: ingredientLines.length <= 1 ? "#e5e7eb" : "#fee2e2", color: ingredientLines.length <= 1 ? "#9ca3af" : "#b91c1c", border: "none", borderRadius: "4px", cursor: ingredientLines.length <= 1 ? "not-allowed" : "pointer", fontSize: "0.85rem" }}
