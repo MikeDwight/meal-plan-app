@@ -31,9 +31,11 @@ const HOUSEHOLD_ID = "home-household";
 // Normalize accented characters for key matching (e.g. "Pâtes" → "Pates")
 function normalize(str: string): string {
   return str
+    .toLowerCase()
+    .replace(/œ/g, "oe")
+    .replace(/æ/g, "ae")
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
     .trim();
 }
 
