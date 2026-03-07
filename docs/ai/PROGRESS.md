@@ -2,8 +2,7 @@
 
 ## Completed
 
-- **Gestion des recettes** : CRUD complet (titre, ingrédients, tags, temps, instructions, notes)
-- **Création de recette avec inline ingredient create** : création d'ingrédient à la volée depuis le formulaire
+- **Gestion des recettes** : CRUD complet (titre, ingrédients, tags, temps, instructions, notes) — création, modification, suppression avec inline ingredient create
 - **Plan de repas hebdomadaire** : génération automatique avec scoring (pantry coverage + anti-repeat + quotas tags)
 - **Positionnement par index** : les recettes sont assignées à des positions (0-N), sans notion de jour/slot fixe
 - **Pool de recettes** : génération d'un pool de suggestions pour la semaine, assignation manuelle vers les slots
@@ -30,7 +29,6 @@
 - Authentification / gestion multi-utilisateurs par foyer
 - Gestion des rayons (Aisle) depuis l'UI
 - Gestion des unités depuis l'UI
-- ~~Gestion du garde-manger (PantryItem) depuis l'UI~~ → terminé
 - Ajout manuel d'articles à la liste de courses
 - Vue calendrier pour le planning hebdomadaire
 - Historique des semaines passées
