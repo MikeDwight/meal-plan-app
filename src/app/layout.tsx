@@ -19,6 +19,7 @@ export default function RootLayout({
           <Link href="/shopping">Courses</Link>
           <Link href="/recipes">Recettes</Link>
           <Link href="/pantry">Garde-manger</Link>
+          <Link href="/ingredients">Ingrédients</Link>
         </nav>
         <div style={{ padding: "1rem" }}>{children}</div>
       </body>
