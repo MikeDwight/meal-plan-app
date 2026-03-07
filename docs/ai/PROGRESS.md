@@ -15,6 +15,7 @@
 - **TransitionItems** : items de courses ponctuels hors plan de repas
 - **Application transition → shopping** : transfert des items de transition vers la liste de courses
 - **Clear week / Purge shopping** : boutons de remise à zéro depuis l'UI
+- **Gestion du garde-manger** : page `/pantry` avec liste, ajout (inline ingredient create), modification, suppression
 - **Health check** : `GET /health`
 - **Multi-tenant** : tout est isolé par `householdId`
 - **Docker** : images dev et prod, docker-compose
@@ -29,7 +30,7 @@
 - Authentification / gestion multi-utilisateurs par foyer
 - Gestion des rayons (Aisle) depuis l'UI
 - Gestion des unités depuis l'UI
-- Gestion du garde-manger (PantryItem) depuis l'UI
+- ~~Gestion du garde-manger (PantryItem) depuis l'UI~~ → terminé
 - Ajout manuel d'articles à la liste de courses
 - Vue calendrier pour le planning hebdomadaire
 - Historique des semaines passées

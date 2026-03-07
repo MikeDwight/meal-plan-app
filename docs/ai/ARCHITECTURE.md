@@ -94,6 +94,14 @@ meal-app/
 | PATCH | `/api/shoppingitem/[id]` | Toggle/set status d'un article |
 | DELETE | `/api/shoppingitem/[id]` | Supprimer un article |
 
+### Garde-manger
+| Méthode | Route | Description |
+|---------|-------|-------------|
+| GET | `/api/pantry` | Liste des items du garde-manger |
+| POST | `/api/pantry` | Ajouter un item |
+| PATCH | `/api/pantry/[id]` | Modifier quantité/unité |
+| DELETE | `/api/pantry/[id]` | Supprimer un item |
+
 ### Transition & Référentiels
 | Méthode | Route | Description |
 |---------|-------|-------------|
@@ -130,3 +138,4 @@ meal-app/
 | `/recipes/[id]` | `page.tsx` | Détail recette |
 | `/week` | `meal-list.tsx`, `pool-section.tsx` | Planning semaine |
 | `/shopping` | `shopping-list-client.tsx` | Liste de courses |
+| `/pantry` | `pantry-client.tsx` | Gestion du garde-manger |
