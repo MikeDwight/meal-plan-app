@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { RecipeActions } from "./recipe-actions";
 
 export const dynamic = "force-dynamic";
 
@@ -50,7 +51,18 @@ export default async function RecipeDetailPage({
         ← Retour aux recettes
       </Link>
 
-      <h1 style={{ marginTop: "0.5rem" }}>{recipe.title}</h1>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: "0.5rem", flexWrap: "wrap", gap: "0.5rem" }}>
+        <h1 style={{ margin: 0 }}>{recipe.title}</h1>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <Link
+            href={`/recipes/${id}/edit`}
+            style={{ padding: "0.45rem 0.9rem", background: "#eff6ff", color: "#1d4ed8", border: "1px solid #bfdbfe", borderRadius: "4px", textDecoration: "none", fontSize: "0.9rem", fontWeight: 500 }}
+          >
+            Modifier
+          </Link>
+          <RecipeActions id={id} householdId={HOUSEHOLD_ID} />
+        </div>
+      </div>
 
       {tags.length > 0 && (
         <p style={{ color: "#666" }}>{tags.join(", ")}</p>
