@@ -11,15 +11,17 @@ export function normalizeToMonday(dateStr: string): Date {
 }
 
 /**
- * Retourne le lundi de la semaine courante au format "YYYY-MM-DD" (heure locale).
+ * Retourne le lundi de la semaine courante au format "YYYY-MM-DD" (UTC).
  */
 export function getCurrentMondayString(): string {
   const now = new Date();
-  const dow = now.getDay();
+  const dow = now.getUTCDay();
   const diff = dow === 0 ? -6 : 1 - dow;
-  const monday = new Date(now);
-  monday.setDate(now.getDate() + diff);
-  return monday.toISOString().split("T")[0];
+  const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + diff));
+  const y = monday.getUTCFullYear();
+  const m = String(monday.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(monday.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
 }
 
 /**

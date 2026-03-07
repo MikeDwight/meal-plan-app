@@ -31,10 +31,6 @@ export async function POST(request: NextRequest) {
     });
 
     if (pool) {
-      await prisma.weekRecipePoolItem.deleteMany({
-        where: { poolId: pool.id },
-      });
-
       await prisma.weekRecipePool.delete({
         where: { id: pool.id },
       });

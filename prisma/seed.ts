@@ -394,7 +394,8 @@ async function main() {
 
     for (const ing of recipeDef.ingredients) {
       const ingredientId = ingredientMap.get(ing.name);
-      const unitId = unitMap.get("g") || unitMap.get("pcs");
+      const ingDef = ingredientDefs.find((d) => d.name === ing.name);
+      const unitId = ingDef ? unitMap.get(ingDef.defaultUnit) : unitMap.get("g");
       if (ingredientId && unitId) {
         await prisma.recipeIngredient.create({
           data: {

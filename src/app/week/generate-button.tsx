@@ -80,15 +80,6 @@ export function GenerateButton({
         return;
       }
 
-      try {
-        await fetch("/api/shoppinglist/build", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ householdId }),
-        });
-      } catch (e) {
-        console.warn("Shopping list build failed (non-blocking):", e);
-      }
     } catch {
       setError("Erreur reseau - impossible de contacter le serveur.");
       setLoading(false);

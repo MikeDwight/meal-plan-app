@@ -2,6 +2,7 @@ import type { GetWeekPlanResponse } from "@/lib/mealplan/types";
 import { getCurrentMondayString } from "@/lib/mealplan/utils";
 import { GenerateButton } from "./generate-button";
 import { MealList } from "./meal-list";
+import { PoolSection } from "./pool-section";
 import { WeekNav } from "./week-nav";
 
 const HOUSEHOLD_ID = "home-household";
@@ -38,6 +39,12 @@ export default async function WeekPage({
         householdId={HOUSEHOLD_ID}
         weekStart={weekStart}
         initialItems={data?.items ?? []}
+      />
+
+      <PoolSection
+        householdId={HOUSEHOLD_ID}
+        weekStart={weekStart}
+        currentMealCount={data?.items?.length ?? 0}
       />
     </main>
   );

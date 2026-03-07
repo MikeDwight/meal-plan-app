@@ -57,10 +57,15 @@ export async function GET(request: NextRequest) {
       archivedAt: item.archivedAt?.toISOString() ?? null,
     }));
 
-    const activeItems = await prisma.shoppingItem.findMany({
-      where: { householdId, archivedAt: null },
-      select: { status: true },
-    });
+    const [activeItems, archivedCount] = await Promise.all([
+      prisma.shoppingItem.findMany({
+        where: { householdId, archivedAt: null },
+        select: { status: true },
+      }),
+      prisma.shoppingItem.count({
+        where: { householdId, archivedAt: { not: null } },
+      }),
+    ]);
 
     const done = activeItems.filter((i) => i.status === "DONE").length;
     const todo = activeItems.filter((i) => i.status === "TODO").length;
@@ -71,7 +76,7 @@ export async function GET(request: NextRequest) {
         total: items.length,
         done,
         todo,
-        archived: 0,
+        archived: archivedCount,
       },
     };
 
