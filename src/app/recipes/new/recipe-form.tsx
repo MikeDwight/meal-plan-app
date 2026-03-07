@@ -584,7 +584,6 @@ export function RecipeForm() {
                 style={inputStyle}
               />
 
-              />
 
               <button
                 type="button"
