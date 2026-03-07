@@ -1,5 +1,7 @@
 "use client";
 
+import Link from "next/link";
+
 interface MealCardProps {
   position: number;
   recipe: { id: string; title: string; tags: string[] };
@@ -55,7 +57,12 @@ export function MealCard({
             whiteSpace: "nowrap",
           }}
         >
-          {recipe.title}
+          <Link
+            href={`/recipes/${recipe.id}`}
+            style={{ color: "inherit", textDecoration: "none" }}
+          >
+            {recipe.title}
+          </Link>
         </div>
         {recipe.tags.length > 0 && (
           <div
