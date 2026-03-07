@@ -21,6 +21,10 @@
 - **Multi-tenant** : tout est isolé par `householdId`
 - **Docker** : images dev et prod, docker-compose
 - **CI/CD** : GitHub Actions → déploiement VPS
+- **Scripts d'import données** : `prisma/import-recipes.ts`, `prisma/import-ingredients.ts`, `prisma/infer-default-units.ts` — import depuis exports Notion
+- **Migrations auto au démarrage** : Dockerfile lance `prisma migrate deploy` avant `node server.js`
+- **Recettes cliquables depuis /week** : les titres de recettes dans le plan hebdomadaire linkent vers `/recipes/[id]`
+- **Suppression notes ingrédients** : champ "note" retiré des lignes d'ingrédients (création et édition)
 
 ## In Progress
 
