@@ -19,7 +19,7 @@ Règles :
 - "servings" est un entier ou null si non trouvé
 - "quantity" est un nombre (pas une chaîne), ou null si non trouvé
 - "unit" est une chaîne courte (g, kg, ml, L, c. à soupe, c. à café, pincée, etc.) ou null
-- "instructions" est le texte brut des étapes, ou null si non trouvé
+- "instructions" est le texte brut des étapes. Si elles ne sont pas lisibles sur la photo, rédige des instructions de préparation cohérentes en français en te basant sur le titre de la recette et la liste des ingrédients. Ne laisse jamais "instructions" à null.
 - Les noms d'ingrédients sont en minuscules, sans quantité ni unité
 - Si l'image n'est pas une recette, retourne { "error": "Pas une recette" }`;
 
