@@ -226,15 +226,33 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
       });
       if (res.ok) {
         const created: ArticleSuggestion = await res.json();
-        setArticleId(created.id);
-        setSelectedUnitId(unitIdCreate || created.defaultUnitId);
-        setSelectedAisleId(aisleIdCreate || created.defaultAisleId);
+        const resolvedUnitId = unitIdCreate || created.defaultUnitId;
+        const resolvedAisleId = aisleIdCreate || created.defaultAisleId;
+
+        // Auto-add to transition list immediately
+        const body: Record<string, unknown> = {
+          householdId: HOUSEHOLD_ID,
+          label: trimmed,
+          ingredientId: created.id,
+        };
+        if (newQuantity.trim() !== "") body.quantity = Number(newQuantity);
+        if (resolvedUnitId) body.unitId = resolvedUnitId;
+        if (resolvedAisleId) body.aisleId = resolvedAisleId;
+
+        await fetch("/api/transitionitems", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        });
+
+        resetForm();
+        startAddTransition(() => router.refresh());
       }
     } catch { /* ignore */ } finally {
       setCreating(false);
       setShowCreatePanel(false);
     }
-  }, [articleName, aisleIdCreate, unitIdCreate]);
+  }, [articleName, aisleIdCreate, unitIdCreate, newQuantity]);
 
   function resetForm() {
     setArticleName("");
@@ -435,7 +453,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
 
       {articleId && !showCreatePanel && (
         <div style={{ fontSize: "0.75rem", color: "#47ebbf", fontWeight: 600, paddingLeft: "0.25rem" }}>
-          ✓ Article connu — rayon et unité seront appliqués
+          ✓ Article connu
         </div>
       )}
     </div>
