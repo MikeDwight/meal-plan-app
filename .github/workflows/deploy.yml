@@ -41,42 +41,37 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             mkdir -p /opt/meal-plan-app
-            printf '%s\n' \
-              'DATABASE_URL=postgresql://postgres:postgres@postgres:5432/mealplan?schema=public' \
-              'OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}' \
-              > /opt/meal-plan-app/.env
-            python3 -c "
-content = '''name: meal-plan-app
-services:
-  app:
-    image: ghcr.io/mikedwight/meal-plan-app:latest
-    ports:
-      - \"3000:3000\"
-    restart: unless-stopped
-    env_file:
-      - /opt/meal-plan-app/.env
-    depends_on:
-      postgres:
-        condition: service_healthy
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: mealplan
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: [\"CMD-SHELL\", \"pg_isready -U postgres\"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-volumes:
-  postgres_data:
-'''
-open('/opt/meal-plan-app/docker-compose.yml', 'w').write(content)
-"
+            echo 'DATABASE_URL=postgresql://postgres:postgres@postgres:5432/mealplan?schema=public' > /opt/meal-plan-app/.env
+            echo 'OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}' >> /opt/meal-plan-app/.env
+            F=/opt/meal-plan-app/docker-compose.yml
+            echo 'name: meal-plan-app' > $F
+            echo 'services:' >> $F
+            echo '  app:' >> $F
+            echo '    image: ghcr.io/mikedwight/meal-plan-app:latest' >> $F
+            echo '    ports:' >> $F
+            echo '      - "3000:3000"' >> $F
+            echo '    restart: unless-stopped' >> $F
+            echo '    env_file:' >> $F
+            echo '      - /opt/meal-plan-app/.env' >> $F
+            echo '    depends_on:' >> $F
+            echo '      postgres:' >> $F
+            echo '        condition: service_healthy' >> $F
+            echo '  postgres:' >> $F
+            echo '    image: postgres:16-alpine' >> $F
+            echo '    environment:' >> $F
+            echo '      POSTGRES_USER: postgres' >> $F
+            echo '      POSTGRES_PASSWORD: postgres' >> $F
+            echo '      POSTGRES_DB: mealplan' >> $F
+            echo '    volumes:' >> $F
+            echo '      - postgres_data:/var/lib/postgresql/data' >> $F
+            echo '    healthcheck:' >> $F
+            echo '      test: ["CMD-SHELL", "pg_isready -U postgres"]' >> $F
+            echo '      interval: 5s' >> $F
+            echo '      timeout: 5s' >> $F
+            echo '      retries: 5' >> $F
+            echo '    restart: unless-stopped' >> $F
+            echo 'volumes:' >> $F
+            echo '  postgres_data:' >> $F
             cd /opt/meal-plan-app
             docker compose pull
             docker compose up -d
