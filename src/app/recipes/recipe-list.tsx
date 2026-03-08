@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCurrentMondayString } from "@/lib/mealplan/utils";
@@ -16,6 +16,7 @@ interface RecipeRow {
 
 export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   const router = useRouter();
+  const [search, setSearch] = useState("");
   const [addingRecipeId, setAddingRecipeId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{
     recipeId: string;
@@ -77,13 +78,42 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
     [router]
   );
 
+  const filtered = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    if (!q) return recipes;
+    return recipes.filter(
+      (r) =>
+        r.title.toLowerCase().includes(q) ||
+        r.tags.some((t) => t.toLowerCase().includes(q))
+    );
+  }, [recipes, search]);
+
   if (recipes.length === 0) {
     return <p style={{ color: "#888" }}>Aucune recette disponible.</p>;
   }
 
   return (
-    <ul style={{ listStyle: "none", padding: 0 }}>
-      {recipes.map((recipe) => {
+    <>
+      <input
+        type="search"
+        placeholder="Rechercher par titre ou tag…"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{
+          width: "100%",
+          padding: "0.5rem 0.75rem",
+          fontSize: "0.95rem",
+          border: "1px solid #ccc",
+          borderRadius: "6px",
+          marginBottom: "1rem",
+          boxSizing: "border-box",
+        }}
+      />
+      {filtered.length === 0 && (
+        <p style={{ color: "#888" }}>Aucune recette ne correspond à la recherche.</p>
+      )}
+      <ul style={{ listStyle: "none", padding: 0 }}>
+      {filtered.map((recipe) => {
         const isAdding = addingRecipeId === recipe.id;
         const recipeFeedback =
           feedback?.recipeId === recipe.id ? feedback : null;
@@ -160,5 +190,6 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
         );
       })}
     </ul>
+    </>
   );
 }

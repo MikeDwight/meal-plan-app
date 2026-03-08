@@ -20,7 +20,7 @@ export default async function RecipeEditPage({
         tags: { select: { tag: { select: { id: true, name: true } } } },
         ingredients: {
           include: {
-            ingredient: { select: { id: true, name: true } },
+            ingredient: { select: { id: true, name: true, defaultAisleId: true, defaultAisle: { select: { name: true } } } },
             unit: { select: { id: true, abbr: true } },
           },
         },
@@ -48,6 +48,8 @@ export default async function RecipeEditPage({
       ingredientName: ri.ingredient.name,
       quantity: ri.quantity.toString(),
       unitId: ri.unit?.id ?? "",
+      aisleId: ri.ingredient.defaultAisleId ?? "",
+      aisleName: ri.ingredient.defaultAisle?.name ?? "",
       notes: ri.notes ?? "",
     })),
   };

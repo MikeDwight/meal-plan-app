@@ -33,7 +33,7 @@ interface InitialData {
   instructions: string;
   notes: string;
   tagIds: string[];
-  ingredients: Omit<IngredientLine, "unitLabel" | "aisleId" | "aisleName">[];
+  ingredients: Omit<IngredientLine, "unitLabel">[];
 }
 
 const inputStyle: React.CSSProperties = {
@@ -74,7 +74,7 @@ export function RecipeEditForm({
   const [tagInput, setTagInput] = useState("");
   const [ingredientLines, setIngredientLines] = useState<IngredientLine[]>(
     initialData.ingredients.length > 0
-      ? initialData.ingredients.map((l) => ({ ...l, unitLabel: units.find((u) => u.id === l.unitId)?.abbr ?? "", aisleId: "", aisleName: "" }))
+      ? initialData.ingredients.map((l) => ({ ...l, unitLabel: units.find((u) => u.id === l.unitId)?.abbr ?? "" }))
       : [{ ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "" }]
   );
 
