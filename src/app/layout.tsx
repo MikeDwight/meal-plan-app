@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { BottomNav } from "./bottom-nav";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -46,30 +47,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {children}
         </div>
 
-        <footer className="md:hidden sticky bottom-0 bg-white border-t border-primary/10 px-4 pb-6 pt-2">
-          <div className="flex items-center justify-around max-w-lg mx-auto">
-            <Link href="/" className="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-              <span className="material-symbols-outlined text-2xl">home</span>
-              <span className="text-[10px] font-medium">Accueil</span>
-            </Link>
-            <Link href="/week" className="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-              <span className="material-symbols-outlined text-2xl">calendar_month</span>
-              <span className="text-[10px] font-medium">Semaine</span>
-            </Link>
-            <Link href="/shopping" className="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-              <span className="material-symbols-outlined text-2xl">shopping_cart</span>
-              <span className="text-[10px] font-medium">Courses</span>
-            </Link>
-            <Link href="/recipes" className="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-              <span className="material-symbols-outlined text-2xl">menu_book</span>
-              <span className="text-[10px] font-medium">Recettes</span>
-            </Link>
-            <Link href="/pantry" className="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors">
-              <span className="material-symbols-outlined text-2xl">more_horiz</span>
-              <span className="text-[10px] font-medium">Plus</span>
-            </Link>
-          </div>
-        </footer>
+        <BottomNav />
       </body>
     </html>
   );
