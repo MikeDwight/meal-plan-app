@@ -283,26 +283,28 @@ export function IngredientsClient({
       {/* New ingredient form */}
       {showNew && (
         <div style={{ background: "rgba(71,235,191,0.07)", borderRadius: "0.75rem", borderLeft: "4px solid #47ebbf", padding: "1.25rem", marginBottom: "1rem" }}>
-          <div className="ing-edit-grid" style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "0.75rem", alignItems: "end" }}>
-            <div className="ing-edit-col-name">
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+            <div>
               <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'ingrédient</label>
               <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Ex: Farine T55" style={baseInputStyle} autoFocus />
             </div>
-            <div className="ing-col-rayon">
-              <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Rayon</label>
-              <Autocomplete value={newAisleLabel} onChange={(v) => { setNewAisleLabel(v); setNewAisleId(null); }} items={aisleItems} onSelect={handleSelectNewAisle} onCreate={handleCreateNewAisle} placeholder="Rayon…" />
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem" }}>
+              <div>
+                <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Rayon</label>
+                <Autocomplete value={newAisleLabel} onChange={(v) => { setNewAisleLabel(v); setNewAisleId(null); }} items={aisleItems} onSelect={handleSelectNewAisle} onCreate={handleCreateNewAisle} placeholder="Rayon…" />
+              </div>
+              <div>
+                <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Unité</label>
+                <Autocomplete value={newUnitLabel} onChange={(v) => { setNewUnitLabel(v); setNewUnitId(null); }} items={unitItems} onSelect={handleSelectNewUnit} onCreate={handleCreateNewUnit} placeholder="Unité…" />
+              </div>
             </div>
-            <div className="ing-col-unite">
-              <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Unité</label>
-              <Autocomplete value={newUnitLabel} onChange={(v) => { setNewUnitLabel(v); setNewUnitId(null); }} items={unitItems} onSelect={handleSelectNewUnit} onCreate={handleCreateNewUnit} placeholder="Unité…" />
-            </div>
-            <div className="ing-edit-col-actions" style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+            <div style={{ display: "flex", gap: "0.625rem" }}>
               <button type="button" onClick={handleCreate} disabled={creating}
-                style={{ width: "100%", background: creating ? "#a7f3d0" : "#47ebbf", color: "#0f172a", fontWeight: 700, fontSize: "0.8rem", border: "none", borderRadius: "0.5rem", padding: "0.5rem", cursor: creating ? "wait" : "pointer" }}>
+                style={{ flex: 1, height: "2.75rem", background: creating ? "#a7f3d0" : "#47ebbf", color: "#0f172a", fontWeight: 700, fontSize: "0.875rem", border: "none", borderRadius: "0.625rem", cursor: creating ? "wait" : "pointer" }}>
                 {creating ? "…" : "Sauver"}
               </button>
               <button type="button" onClick={() => { setShowNew(false); setCreateError(null); }}
-                style={{ width: "100%", background: "#e2e8f0", color: "#475569", fontWeight: 700, fontSize: "0.8rem", border: "none", borderRadius: "0.5rem", padding: "0.5rem", cursor: "pointer" }}>
+                style={{ flex: 1, height: "2.75rem", background: "#f8fafc", color: "#64748b", fontWeight: 600, fontSize: "0.875rem", border: "1px solid #e2e8f0", borderRadius: "0.625rem", cursor: "pointer" }}>
                 Annuler
               </button>
             </div>
@@ -333,26 +335,28 @@ export function IngredientsClient({
             editingId === item.id ? (
               /* Edit row */
               <div key={item.id} style={{ padding: "1rem 1.5rem", background: "rgba(71,235,191,0.07)", borderLeft: "4px solid #47ebbf", borderTop: idx > 0 ? "1px solid rgba(71,235,191,0.1)" : "none" }}>
-                <div className="ing-edit-grid" style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "0.75rem", alignItems: "end" }}>
-                  <div className="ing-edit-col-name">
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  <div>
                     <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'ingrédient</label>
                     <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} style={baseInputStyle} />
                   </div>
-                  <div className="ing-col-rayon">
-                    <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Rayon</label>
-                    <Autocomplete value={editAisleLabel} onChange={(v) => { setEditAisleLabel(v); setEditAisleId(null); }} items={aisleItems} onSelect={handleSelectAisle} onCreate={handleCreateAisle} placeholder="Rayon…" />
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem" }}>
+                    <div>
+                      <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Rayon</label>
+                      <Autocomplete value={editAisleLabel} onChange={(v) => { setEditAisleLabel(v); setEditAisleId(null); }} items={aisleItems} onSelect={handleSelectAisle} onCreate={handleCreateAisle} placeholder="Rayon…" />
+                    </div>
+                    <div>
+                      <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Unité</label>
+                      <Autocomplete value={editUnitLabel} onChange={(v) => { setEditUnitLabel(v); setEditUnitId(null); }} items={unitItems} onSelect={handleSelectUnit} onCreate={handleCreateUnit} placeholder="Unité…" />
+                    </div>
                   </div>
-                  <div className="ing-col-unite">
-                    <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Unité</label>
-                    <Autocomplete value={editUnitLabel} onChange={(v) => { setEditUnitLabel(v); setEditUnitId(null); }} items={unitItems} onSelect={handleSelectUnit} onCreate={handleCreateUnit} placeholder="Unité…" />
-                  </div>
-                  <div className="ing-edit-col-actions" style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+                  <div style={{ display: "flex", gap: "0.625rem" }}>
                     <button type="button" onClick={() => handleSave(item.id)} disabled={saving}
-                      style={{ width: "100%", background: saving ? "#a7f3d0" : "#47ebbf", color: "#0f172a", fontWeight: 700, fontSize: "0.8rem", border: "none", borderRadius: "0.5rem", padding: "0.5rem", cursor: saving ? "wait" : "pointer" }}>
+                      style={{ flex: 1, height: "2.75rem", background: saving ? "#a7f3d0" : "#47ebbf", color: "#0f172a", fontWeight: 700, fontSize: "0.875rem", border: "none", borderRadius: "0.625rem", cursor: saving ? "wait" : "pointer" }}>
                       {saving ? "…" : "Sauver"}
                     </button>
                     <button type="button" onClick={cancelEdit}
-                      style={{ width: "100%", background: "#e2e8f0", color: "#475569", fontWeight: 700, fontSize: "0.8rem", border: "none", borderRadius: "0.5rem", padding: "0.5rem", cursor: "pointer" }}>
+                      style={{ flex: 1, height: "2.75rem", background: "#f8fafc", color: "#64748b", fontWeight: 600, fontSize: "0.875rem", border: "1px solid #e2e8f0", borderRadius: "0.625rem", cursor: "pointer" }}>
                       Annuler
                     </button>
                   </div>
