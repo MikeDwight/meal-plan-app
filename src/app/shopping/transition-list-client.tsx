@@ -10,7 +10,7 @@ export interface TransitionItemProps {
   status: "TODO" | "DONE";
 }
 
-interface IngredientSuggestion {
+interface ArticleSuggestion {
   id: string;
   name: string;
   defaultUnitId: string | null;
@@ -20,6 +20,12 @@ interface IngredientSuggestion {
 interface Aisle {
   id: string;
   name: string;
+}
+
+interface Unit {
+  id: string;
+  name: string;
+  abbr: string;
 }
 
 const HOUSEHOLD_ID = "home-household";
@@ -32,19 +38,21 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
   const [isApplying, startApplyTransition] = useTransition();
 
   // Add form state
-  const [ingredientName, setIngredientName] = useState("");
-  const [ingredientId, setIngredientId] = useState<string | null>(null);
+  const [articleName, setArticleName] = useState("");
+  const [articleId, setArticleId] = useState<string | null>(null);
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [selectedAisleId, setSelectedAisleId] = useState<string | null>(null);
   const [newQuantity, setNewQuantity] = useState("");
-  const [suggestions, setSuggestions] = useState<IngredientSuggestion[]>([]);
+  const [suggestions, setSuggestions] = useState<ArticleSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [searching, setSearching] = useState(false);
 
-  // Create ingredient panel
+  // Create panel
   const [showCreatePanel, setShowCreatePanel] = useState(false);
   const [aisles, setAisles] = useState<Aisle[]>([]);
-  const [aisleForCreate, setAisleForCreate] = useState("");
+  const [units, setUnits] = useState<Unit[]>([]);
+  const [aisleNameForCreate, setAisleNameForCreate] = useState("");
+  const [unitForCreate, setUnitForCreate] = useState("");
   const [creating, setCreating] = useState(false);
 
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -53,7 +61,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
   const visibleItems = showDone ? items : items.filter((i) => i.status !== "DONE");
   const todoCount = items.filter((i) => i.status === "TODO").length;
 
-  const searchIngredients = useCallback(async (q: string) => {
+  const searchArticles = useCallback(async (q: string) => {
     if (!q.trim()) { setSuggestions([]); return; }
     setSearching(true);
     try {
@@ -64,20 +72,20 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     }
   }, []);
 
-  const handleIngredientChange = useCallback((value: string) => {
-    setIngredientName(value);
-    setIngredientId(null);
+  const handleArticleNameChange = useCallback((value: string) => {
+    setArticleName(value);
+    setArticleId(null);
     setSelectedUnitId(null);
     setSelectedAisleId(null);
     setShowSuggestions(true);
     setShowCreatePanel(false);
     if (searchTimeout.current) clearTimeout(searchTimeout.current);
-    searchTimeout.current = setTimeout(() => searchIngredients(value), 300);
-  }, [searchIngredients]);
+    searchTimeout.current = setTimeout(() => searchArticles(value), 300);
+  }, [searchArticles]);
 
-  const handleSelectSuggestion = useCallback((s: IngredientSuggestion) => {
-    setIngredientName(s.name);
-    setIngredientId(s.id);
+  const handleSelectSuggestion = useCallback((s: ArticleSuggestion) => {
+    setArticleName(s.name);
+    setArticleId(s.id);
     setSelectedUnitId(s.defaultUnitId);
     setSelectedAisleId(s.defaultAisleId);
     setSuggestions([]);
@@ -88,62 +96,90 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     if (blurTimeout.current) clearTimeout(blurTimeout.current);
     setShowSuggestions(false);
     setSuggestions([]);
-    setAisleForCreate("");
+    setAisleNameForCreate("");
+    setUnitForCreate("");
     setShowCreatePanel(true);
-    if (aisles.length === 0) {
-      try {
-        const res = await fetch(`/api/aisles?householdId=${HOUSEHOLD_ID}`);
-        if (res.ok) setAisles(await res.json());
-      } catch { /* ignore */ }
-    }
-  }, [aisles.length]);
+    try {
+      const [aislesRes, unitsRes] = await Promise.all([
+        aisles.length === 0 ? fetch(`/api/aisles?householdId=${HOUSEHOLD_ID}`) : Promise.resolve(null),
+        units.length === 0 ? fetch(`/api/units?householdId=${HOUSEHOLD_ID}`) : Promise.resolve(null),
+      ]);
+      if (aislesRes?.ok) setAisles(await aislesRes.json());
+      if (unitsRes?.ok) setUnits(await unitsRes.json());
+    } catch { /* ignore */ }
+  }, [aisles.length, units.length]);
 
-  const handleCreateIngredient = useCallback(async () => {
-    const trimmed = ingredientName.trim();
+  const handleCreate = useCallback(async () => {
+    const trimmed = articleName.trim();
     if (!trimmed) return;
     setCreating(true);
     try {
+      // Resolve aisle: find existing by name or create
+      let resolvedAisleId: string | null = null;
+      if (aisleNameForCreate.trim()) {
+        const existing = aisles.find(
+          (a) => a.name.toLowerCase() === aisleNameForCreate.trim().toLowerCase()
+        );
+        if (existing) {
+          resolvedAisleId = existing.id;
+        } else {
+          const res = await fetch("/api/aisles", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ householdId: HOUSEHOLD_ID, name: aisleNameForCreate.trim() }),
+          });
+          if (res.ok) {
+            const created: Aisle = await res.json();
+            resolvedAisleId = created.id;
+            setAisles((prev) => [...prev, created]);
+          }
+        }
+      }
+
+      // Create article (stored as ingredient in DB)
       const res = await fetch("/api/ingredients", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           householdId: HOUSEHOLD_ID,
           name: trimmed,
-          defaultAisleId: aisleForCreate || null,
+          defaultAisleId: resolvedAisleId,
+          defaultUnitId: unitForCreate || null,
         }),
       });
       if (res.ok) {
-        const created: IngredientSuggestion = await res.json();
-        setIngredientId(created.id);
-        setSelectedUnitId(created.defaultUnitId);
-        setSelectedAisleId(aisleForCreate || created.defaultAisleId);
+        const created: ArticleSuggestion = await res.json();
+        setArticleId(created.id);
+        setSelectedUnitId(unitForCreate || created.defaultUnitId);
+        setSelectedAisleId(resolvedAisleId ?? created.defaultAisleId);
       }
     } catch { /* ignore */ } finally {
       setCreating(false);
       setShowCreatePanel(false);
     }
-  }, [ingredientName, aisleForCreate]);
+  }, [articleName, aisleNameForCreate, unitForCreate, aisles]);
 
   function resetForm() {
-    setIngredientName("");
-    setIngredientId(null);
+    setArticleName("");
+    setArticleId(null);
     setSelectedUnitId(null);
     setSelectedAisleId(null);
     setNewQuantity("");
     setSuggestions([]);
     setShowSuggestions(false);
     setShowCreatePanel(false);
-    setAisleForCreate("");
+    setAisleNameForCreate("");
+    setUnitForCreate("");
   }
 
   async function handleAdd() {
-    const trimmed = ingredientName.trim();
+    const trimmed = articleName.trim();
     if (!trimmed) return;
 
     const body: Record<string, unknown> = { householdId: HOUSEHOLD_ID, label: trimmed };
     if (newQuantity.trim() !== "") body.quantity = Number(newQuantity);
-    if (ingredientId) {
-      body.ingredientId = ingredientId;
+    if (articleId) {
+      body.ingredientId = articleId;
       if (selectedUnitId) body.unitId = selectedUnitId;
       if (selectedAisleId) body.aisleId = selectedAisleId;
     }
@@ -178,15 +214,15 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
           <input
             type="text"
             placeholder="Ajouter un article…"
-            value={ingredientName}
-            onChange={(e) => handleIngredientChange(e.target.value)}
-            onFocus={() => { if (ingredientName.trim() && !showCreatePanel) setShowSuggestions(true); }}
+            value={articleName}
+            onChange={(e) => handleArticleNameChange(e.target.value)}
+            onFocus={() => { if (articleName.trim() && !showCreatePanel) setShowSuggestions(true); }}
             onBlur={() => { blurTimeout.current = setTimeout(() => setShowSuggestions(false), 150); }}
             onKeyDown={(e) => { if (e.key === "Enter" && !showCreatePanel) handleAdd(); }}
             disabled={isAdding}
             style={inputStyle}
           />
-          {showSuggestions && ingredientName.trim() && (
+          {showSuggestions && articleName.trim() && (
             <div style={{
               position: "absolute",
               top: "calc(100% + 4px)",
@@ -221,7 +257,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
                 onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f0fdf9"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
               >
-                + Créer &ldquo;{ingredientName.trim()}&rdquo; comme ingrédient
+                + Ajouter &ldquo;{articleName.trim()}&rdquo; avec rayon / unité
               </button>
             </div>
           )}
@@ -235,80 +271,96 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
           disabled={isAdding}
           style={{ ...inputStyle, width: "5rem", flex: "none" }}
         />
-        <AddButton onClick={handleAdd} disabled={isAdding || ingredientName.trim() === "" || showCreatePanel} />
+        <AddButton onClick={handleAdd} disabled={isAdding || articleName.trim() === "" || showCreatePanel} />
       </div>
 
       {showCreatePanel && (
         <div style={{
           display: "flex",
+          flexDirection: "column",
           gap: "0.5rem",
-          alignItems: "center",
-          padding: "0.625rem 0.75rem",
+          padding: "0.75rem",
           background: "#f0fdf9",
           border: "1px solid rgba(71,235,191,0.3)",
           borderRadius: "0.625rem",
-          flexWrap: "wrap",
         }}>
-          <span style={{ fontSize: "0.8rem", color: "#334155", fontWeight: 600, whiteSpace: "nowrap" }}>
-            Rayon pour &ldquo;{ingredientName.trim()}&rdquo; :
+          <span style={{ fontSize: "0.8rem", color: "#334155", fontWeight: 600 }}>
+            Détails pour &ldquo;{articleName.trim()}&rdquo;
           </span>
-          <select
-            value={aisleForCreate}
-            onChange={(e) => setAisleForCreate(e.target.value)}
-            style={{
-              flex: 1,
-              minWidth: "8rem",
-              padding: "0.375rem 0.5rem",
-              border: "1px solid #e2e8f0",
-              borderRadius: "0.5rem",
-              fontSize: "0.8rem",
-              background: "#fff",
-              outline: "none",
-            }}
-          >
-            <option value="">— Sans rayon —</option>
-            {aisles.map((a) => (
-              <option key={a.id} value={a.id}>{a.name}</option>
-            ))}
-          </select>
-          <button
-            type="button"
-            onClick={handleCreateIngredient}
-            disabled={creating}
-            style={{
-              padding: "0.375rem 0.75rem",
-              background: "#47ebbf",
-              color: "#0f172a",
-              fontWeight: 700,
-              fontSize: "0.8rem",
-              border: "none",
-              borderRadius: "0.5rem",
-              cursor: creating ? "wait" : "pointer",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {creating ? "…" : "Créer"}
-          </button>
-          <button
-            type="button"
-            onClick={() => setShowCreatePanel(false)}
-            style={{
-              padding: "0.375rem 0.5rem",
-              background: "transparent",
-              color: "#94a3b8",
-              fontSize: "0.8rem",
-              border: "none",
-              cursor: "pointer",
-            }}
-          >
-            Annuler
-          </button>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
+            <div>
+              <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "0.25rem" }}>
+                Rayon
+              </label>
+              <input
+                type="text"
+                list="aisles-datalist"
+                placeholder="Ex: Hygiène…"
+                value={aisleNameForCreate}
+                onChange={(e) => setAisleNameForCreate(e.target.value)}
+                style={{ ...inputStyle, background: "#fff" }}
+              />
+              <datalist id="aisles-datalist">
+                {aisles.map((a) => <option key={a.id} value={a.name} />)}
+              </datalist>
+            </div>
+            <div>
+              <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "0.25rem" }}>
+                Unité
+              </label>
+              <select
+                value={unitForCreate}
+                onChange={(e) => setUnitForCreate(e.target.value)}
+                style={{ ...inputStyle, background: "#fff" }}
+              >
+                <option value="">— Sans unité —</option>
+                {units.map((u) => (
+                  <option key={u.id} value={u.id}>{u.name} ({u.abbr})</option>
+                ))}
+              </select>
+            </div>
+          </div>
+          <div style={{ display: "flex", gap: "0.5rem" }}>
+            <button
+              type="button"
+              onClick={handleCreate}
+              disabled={creating}
+              style={{
+                flex: 1,
+                padding: "0.4rem 0.75rem",
+                background: "#47ebbf",
+                color: "#0f172a",
+                fontWeight: 700,
+                fontSize: "0.8rem",
+                border: "none",
+                borderRadius: "0.5rem",
+                cursor: creating ? "wait" : "pointer",
+              }}
+            >
+              {creating ? "…" : "Confirmer"}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowCreatePanel(false)}
+              style={{
+                padding: "0.4rem 0.75rem",
+                background: "transparent",
+                color: "#94a3b8",
+                fontSize: "0.8rem",
+                border: "1px solid #e2e8f0",
+                borderRadius: "0.5rem",
+                cursor: "pointer",
+              }}
+            >
+              Annuler
+            </button>
+          </div>
         </div>
       )}
 
-      {ingredientId && (
+      {articleId && !showCreatePanel && (
         <div style={{ fontSize: "0.75rem", color: "#47ebbf", fontWeight: 600, paddingLeft: "0.25rem" }}>
-          ✓ Ingrédient lié — rayon et unité seront appliqués
+          ✓ Article connu — rayon et unité seront appliqués
         </div>
       )}
     </div>
