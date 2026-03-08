@@ -347,8 +347,15 @@ export function RecipeForm() {
     setImportError(null);
     setImporting(true);
     try {
-      const arrayBuffer = await file.arrayBuffer();
-      const base64 = Buffer.from(arrayBuffer).toString("base64");
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          resolve(result.split(",")[1]);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
 
       const res = await fetch("/api/recipes/import-photo", {
         method: "POST",
