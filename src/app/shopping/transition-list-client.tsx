@@ -17,6 +17,11 @@ interface IngredientSuggestion {
   defaultAisleId: string | null;
 }
 
+interface Aisle {
+  id: string;
+  name: string;
+}
+
 const HOUSEHOLD_ID = "home-household";
 
 export function TransitionListClient({ items }: { items: TransitionItemProps[] }) {
@@ -35,6 +40,12 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
   const [suggestions, setSuggestions] = useState<IngredientSuggestion[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [searching, setSearching] = useState(false);
+
+  // Create ingredient panel
+  const [showCreatePanel, setShowCreatePanel] = useState(false);
+  const [aisles, setAisles] = useState<Aisle[]>([]);
+  const [aisleForCreate, setAisleForCreate] = useState("");
+  const [creating, setCreating] = useState(false);
 
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
   const blurTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -59,6 +70,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     setSelectedUnitId(null);
     setSelectedAisleId(null);
     setShowSuggestions(true);
+    setShowCreatePanel(false);
     if (searchTimeout.current) clearTimeout(searchTimeout.current);
     searchTimeout.current = setTimeout(() => searchIngredients(value), 300);
   }, [searchIngredients]);
@@ -72,6 +84,46 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     setShowSuggestions(false);
   }, []);
 
+  const handleOpenCreatePanel = useCallback(async () => {
+    if (blurTimeout.current) clearTimeout(blurTimeout.current);
+    setShowSuggestions(false);
+    setSuggestions([]);
+    setAisleForCreate("");
+    setShowCreatePanel(true);
+    if (aisles.length === 0) {
+      try {
+        const res = await fetch(`/api/aisles?householdId=${HOUSEHOLD_ID}`);
+        if (res.ok) setAisles(await res.json());
+      } catch { /* ignore */ }
+    }
+  }, [aisles.length]);
+
+  const handleCreateIngredient = useCallback(async () => {
+    const trimmed = ingredientName.trim();
+    if (!trimmed) return;
+    setCreating(true);
+    try {
+      const res = await fetch("/api/ingredients", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          householdId: HOUSEHOLD_ID,
+          name: trimmed,
+          defaultAisleId: aisleForCreate || null,
+        }),
+      });
+      if (res.ok) {
+        const created: IngredientSuggestion = await res.json();
+        setIngredientId(created.id);
+        setSelectedUnitId(created.defaultUnitId);
+        setSelectedAisleId(aisleForCreate || created.defaultAisleId);
+      }
+    } catch { /* ignore */ } finally {
+      setCreating(false);
+      setShowCreatePanel(false);
+    }
+  }, [ingredientName, aisleForCreate]);
+
   function resetForm() {
     setIngredientName("");
     setIngredientId(null);
@@ -80,6 +132,8 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     setNewQuantity("");
     setSuggestions([]);
     setShowSuggestions(false);
+    setShowCreatePanel(false);
+    setAisleForCreate("");
   }
 
   async function handleAdd() {
@@ -118,75 +172,145 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
   }
 
   const addForm = (
-    <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
-      <div style={{ flex: 1, position: "relative" }}>
-        <input
-          type="text"
-          placeholder="Ajouter un article…"
-          value={ingredientName}
-          onChange={(e) => handleIngredientChange(e.target.value)}
-          onFocus={() => { if (ingredientName.trim()) setShowSuggestions(true); }}
-          onBlur={() => { blurTimeout.current = setTimeout(() => setShowSuggestions(false), 150); }}
-          onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
-          disabled={isAdding}
-          style={inputStyle}
-        />
-        {showSuggestions && ingredientName.trim() && (
-          <div style={{
-            position: "absolute",
-            top: "calc(100% + 4px)",
-            left: 0,
-            right: 0,
-            background: "#fff",
-            border: "1px solid #e2e8f0",
-            borderRadius: "0.625rem",
-            boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-            zIndex: 50,
-            overflow: "hidden",
-          }}>
-            {searching && (
-              <div style={{ padding: "0.5rem 0.75rem", fontSize: "0.8rem", color: "#94a3b8" }}>…</div>
-            )}
-            {!searching && suggestions.map((s) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+      <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+        <div style={{ flex: 1, position: "relative" }}>
+          <input
+            type="text"
+            placeholder="Ajouter un article…"
+            value={ingredientName}
+            onChange={(e) => handleIngredientChange(e.target.value)}
+            onFocus={() => { if (ingredientName.trim() && !showCreatePanel) setShowSuggestions(true); }}
+            onBlur={() => { blurTimeout.current = setTimeout(() => setShowSuggestions(false), 150); }}
+            onKeyDown={(e) => { if (e.key === "Enter" && !showCreatePanel) handleAdd(); }}
+            disabled={isAdding}
+            style={inputStyle}
+          />
+          {showSuggestions && ingredientName.trim() && (
+            <div style={{
+              position: "absolute",
+              top: "calc(100% + 4px)",
+              left: 0,
+              right: 0,
+              background: "#fff",
+              border: "1px solid #e2e8f0",
+              borderRadius: "0.625rem",
+              boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+              zIndex: 50,
+              overflow: "hidden",
+            }}>
+              {searching && (
+                <div style={{ padding: "0.5rem 0.75rem", fontSize: "0.8rem", color: "#94a3b8" }}>…</div>
+              )}
+              {!searching && suggestions.map((s) => (
+                <button
+                  key={s.id}
+                  type="button"
+                  onMouseDown={() => { if (blurTimeout.current) clearTimeout(blurTimeout.current); handleSelectSuggestion(s); }}
+                  style={suggestionBtnStyle}
+                  onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f0fdf9"; }}
+                  onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+                >
+                  {s.name}
+                </button>
+              ))}
               <button
-                key={s.id}
                 type="button"
-                onMouseDown={() => { if (blurTimeout.current) clearTimeout(blurTimeout.current); handleSelectSuggestion(s); }}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  textAlign: "left",
-                  padding: "0.5rem 0.75rem",
-                  background: "transparent",
-                  border: "none",
-                  fontSize: "0.875rem",
-                  cursor: "pointer",
-                  color: "#0f172a",
-                }}
+                onMouseDown={handleOpenCreatePanel}
+                style={{ ...suggestionBtnStyle, color: "#47ebbf", fontWeight: 600 }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f0fdf9"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
               >
-                {s.name}
+                + Créer &ldquo;{ingredientName.trim()}&rdquo; comme ingrédient
               </button>
-            ))}
-            {!searching && suggestions.length === 0 && (
-              <div style={{ padding: "0.5rem 0.75rem", fontSize: "0.8rem", color: "#94a3b8" }}>
-                Article libre — appuie sur Entrée pour ajouter
-              </div>
-            )}
-          </div>
-        )}
+            </div>
+          )}
+        </div>
+        <input
+          type="number"
+          placeholder="Qté"
+          value={newQuantity}
+          onChange={(e) => setNewQuantity(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter" && !showCreatePanel) handleAdd(); }}
+          disabled={isAdding}
+          style={{ ...inputStyle, width: "5rem", flex: "none" }}
+        />
+        <AddButton onClick={handleAdd} disabled={isAdding || ingredientName.trim() === "" || showCreatePanel} />
       </div>
-      <input
-        type="number"
-        placeholder="Qté"
-        value={newQuantity}
-        onChange={(e) => setNewQuantity(e.target.value)}
-        onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
-        disabled={isAdding}
-        style={{ ...inputStyle, width: "5rem", flex: "none" }}
-      />
-      <AddButton onClick={handleAdd} disabled={isAdding || ingredientName.trim() === ""} />
+
+      {showCreatePanel && (
+        <div style={{
+          display: "flex",
+          gap: "0.5rem",
+          alignItems: "center",
+          padding: "0.625rem 0.75rem",
+          background: "#f0fdf9",
+          border: "1px solid rgba(71,235,191,0.3)",
+          borderRadius: "0.625rem",
+          flexWrap: "wrap",
+        }}>
+          <span style={{ fontSize: "0.8rem", color: "#334155", fontWeight: 600, whiteSpace: "nowrap" }}>
+            Rayon pour &ldquo;{ingredientName.trim()}&rdquo; :
+          </span>
+          <select
+            value={aisleForCreate}
+            onChange={(e) => setAisleForCreate(e.target.value)}
+            style={{
+              flex: 1,
+              minWidth: "8rem",
+              padding: "0.375rem 0.5rem",
+              border: "1px solid #e2e8f0",
+              borderRadius: "0.5rem",
+              fontSize: "0.8rem",
+              background: "#fff",
+              outline: "none",
+            }}
+          >
+            <option value="">— Sans rayon —</option>
+            {aisles.map((a) => (
+              <option key={a.id} value={a.id}>{a.name}</option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={handleCreateIngredient}
+            disabled={creating}
+            style={{
+              padding: "0.375rem 0.75rem",
+              background: "#47ebbf",
+              color: "#0f172a",
+              fontWeight: 700,
+              fontSize: "0.8rem",
+              border: "none",
+              borderRadius: "0.5rem",
+              cursor: creating ? "wait" : "pointer",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {creating ? "…" : "Créer"}
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowCreatePanel(false)}
+            style={{
+              padding: "0.375rem 0.5rem",
+              background: "transparent",
+              color: "#94a3b8",
+              fontSize: "0.8rem",
+              border: "none",
+              cursor: "pointer",
+            }}
+          >
+            Annuler
+          </button>
+        </div>
+      )}
+
+      {ingredientId && (
+        <div style={{ fontSize: "0.75rem", color: "#47ebbf", fontWeight: 600, paddingLeft: "0.25rem" }}>
+          ✓ Ingrédient lié — rayon et unité seront appliqués
+        </div>
+      )}
     </div>
   );
 
@@ -277,6 +401,18 @@ const inputStyle: React.CSSProperties = {
   background: "#fff",
   outline: "none",
   boxSizing: "border-box",
+};
+
+const suggestionBtnStyle: React.CSSProperties = {
+  display: "block",
+  width: "100%",
+  textAlign: "left",
+  padding: "0.5rem 0.75rem",
+  background: "transparent",
+  border: "none",
+  fontSize: "0.875rem",
+  cursor: "pointer",
+  color: "#0f172a",
 };
 
 function AddButton({ onClick, disabled }: { onClick: () => void; disabled: boolean }) {
