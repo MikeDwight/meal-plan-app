@@ -94,6 +94,9 @@ export function RecipeForm() {
 
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [importing, setImporting] = useState(false);
+  const [importError, setImportError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     async function loadMeta() {
@@ -340,6 +343,71 @@ export function RecipeForm() {
     });
   }, []);
 
+  const handleImportPhoto = useCallback(async (file: File) => {
+    setImportError(null);
+    setImporting(true);
+    try {
+      const arrayBuffer = await file.arrayBuffer();
+      const base64 = Buffer.from(arrayBuffer).toString("base64");
+
+      const res = await fetch("/api/recipes/import-photo", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ imageBase64: base64, mimeType: file.type }),
+      });
+
+      const data = await res.json() as {
+        error?: string;
+        title?: string;
+        servings?: number | null;
+        instructions?: string | null;
+        ingredients?: { name: string; quantity: number | null; unit: string | null }[];
+      };
+
+      if (!res.ok || data.error) {
+        setImportError(data.error ?? "Échec de l'extraction");
+        return;
+      }
+
+      if (data.title) setTitle(data.title);
+      if (data.servings) setServings(String(data.servings));
+      if (data.instructions) setInstructions(data.instructions);
+
+      if (data.ingredients && data.ingredients.length > 0) {
+        const lines: IngredientLine[] = data.ingredients.map((ing) => {
+          const matched = ingredients.find(
+            (i) => i.name.toLowerCase() === ing.name.toLowerCase()
+          );
+          const unit = matched?.defaultUnitId
+            ? units.find((u) => u.id === matched.defaultUnitId)
+            : ing.unit
+            ? units.find((u) => u.abbr.toLowerCase() === ing.unit!.toLowerCase())
+            : undefined;
+          const aisle = matched?.defaultAisleId
+            ? aisles.find((a) => a.id === matched.defaultAisleId)
+            : undefined;
+
+          return {
+            ingredientId: matched?.id ?? "",
+            ingredientName: matched?.name ?? ing.name,
+            quantity: ing.quantity != null ? String(ing.quantity) : "",
+            unitId: unit?.id ?? "",
+            unitLabel: unit?.abbr ?? ing.unit ?? "",
+            aisleId: aisle?.id ?? "",
+            aisleName: aisle?.name ?? "",
+          };
+        });
+        setIngredientLines(lines.length > 0 ? lines : [emptyLine()]);
+      }
+    } catch (e) {
+      console.error("Import photo error:", e);
+      setImportError("Erreur inattendue lors de l'import");
+    } finally {
+      setImporting(false);
+      if (fileInputRef.current) fileInputRef.current.value = "";
+    }
+  }, [ingredients, units, aisles]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -406,6 +474,56 @@ export function RecipeForm() {
 
   return (
     <form onSubmit={handleSubmit} style={{ paddingBottom: "8rem" }}>
+      {/* Import depuis photo */}
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) handleImportPhoto(file);
+        }}
+      />
+      <div style={{ marginBottom: "1.5rem" }}>
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={importing || loadingMeta}
+          style={{
+            width: "100%",
+            height: "3rem",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "0.5rem",
+            background: importing ? "#f1f5f9" : "rgba(71,235,191,0.12)",
+            border: "1.5px dashed #47ebbf",
+            borderRadius: "0.75rem",
+            cursor: importing ? "wait" : "pointer",
+            color: "#0f766e",
+            fontWeight: 600,
+            fontSize: "0.875rem",
+          }}
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: "1.2rem" }}>
+            {importing ? "hourglass_empty" : "add_a_photo"}
+          </span>
+          {importing ? "Analyse en cours…" : "Importer depuis une photo"}
+        </button>
+        {importError && (
+          <p style={{ marginTop: "0.5rem", color: "#b91c1c", fontSize: "0.8rem", paddingLeft: "0.25rem" }}>
+            {importError}
+          </p>
+        )}
+        {importing && (
+          <p style={{ marginTop: "0.5rem", color: "#64748b", fontSize: "0.8rem", paddingLeft: "0.25rem" }}>
+            GPT-4o analyse la photo, ça prend quelques secondes…
+          </p>
+        )}
+      </div>
+
       {error && (
         <div style={{ padding: "0.75rem 1rem", background: "#fee2e2", color: "#b91c1c", borderRadius: "0.625rem", marginBottom: "1.25rem", fontSize: "0.875rem" }}>
           {error}

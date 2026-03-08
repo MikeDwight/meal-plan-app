@@ -35,13 +35,16 @@ jobs:
 
       - name: Deploy to VPS
         uses: appleboy/ssh-action@v1
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          envs: OPENAI_API_KEY
           script: |
             mkdir -p /opt/meal-plan-app
-            cat > /opt/meal-plan-app/docker-compose.yml <<'EOF'
+            cat > /opt/meal-plan-app/docker-compose.yml <<EOF
             name: meal-plan-app
             services:
               app:
@@ -49,6 +52,8 @@ jobs:
                 ports:
                   - "3000:3000"
                 restart: unless-stopped
+                environment:
+                  - OPENAI_API_KEY=${OPENAI_API_KEY}
             EOF
             cd /opt/meal-plan-app
             docker compose pull
