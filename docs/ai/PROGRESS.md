@@ -34,6 +34,7 @@
 - **Suppression d'articles** : bouton supprimer avec confirmation 2 étapes, protection si article utilisé en recette/garde-manger/courses
 - **Nettoyage repo** : suppression maquettes HTML et scripts d'import one-shot (données déjà en prod)
 - **Import recette depuis photo** : bouton "Importer depuis une photo" sur `/recipes/new` — upload image ou prise de vue mobile, envoi à GPT-4o vision (`POST /api/recipes/import-photo`), extraction titre/portions/ingrédients/instructions, pré-remplissage du formulaire avec matching automatique sur le catalogue existant. Instructions générées si non lisibles. Clé `OPENAI_API_KEY` injectée via GitHub Secret → `.env` sur VPS.
+- **Persistance rayon/unité à la création inline** : quand un ingrédient est créé inline depuis le formulaire recette, ses `defaultUnitId` et `defaultAisleId` sont PATCHés au submit avec les valeurs saisies dans la ligne.
 
 ## In Progress
 
