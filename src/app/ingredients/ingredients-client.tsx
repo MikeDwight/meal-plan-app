@@ -283,20 +283,20 @@ export function IngredientsClient({
       {/* New ingredient form */}
       {showNew && (
         <div style={{ background: "rgba(71,235,191,0.07)", borderRadius: "0.75rem", borderLeft: "4px solid #47ebbf", padding: "1.25rem", marginBottom: "1rem" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "0.75rem", alignItems: "end" }}>
-            <div>
+          <div className="ing-edit-grid" style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "0.75rem", alignItems: "end" }}>
+            <div className="ing-edit-col-name">
               <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'ingrédient</label>
               <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Ex: Farine T55" style={baseInputStyle} autoFocus />
             </div>
-            <div>
+            <div className="ing-col-rayon">
               <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Rayon</label>
               <Autocomplete value={newAisleLabel} onChange={(v) => { setNewAisleLabel(v); setNewAisleId(null); }} items={aisleItems} onSelect={handleSelectNewAisle} onCreate={handleCreateNewAisle} placeholder="Rayon…" />
             </div>
-            <div>
+            <div className="ing-col-unite">
               <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Unité</label>
               <Autocomplete value={newUnitLabel} onChange={(v) => { setNewUnitLabel(v); setNewUnitId(null); }} items={unitItems} onSelect={handleSelectNewUnit} onCreate={handleCreateNewUnit} placeholder="Unité…" />
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+            <div className="ing-edit-col-actions" style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
               <button type="button" onClick={handleCreate} disabled={creating}
                 style={{ width: "100%", background: creating ? "#a7f3d0" : "#47ebbf", color: "#0f172a", fontWeight: 700, fontSize: "0.8rem", border: "none", borderRadius: "0.5rem", padding: "0.5rem", cursor: creating ? "wait" : "pointer" }}>
                 {creating ? "…" : "Sauver"}
@@ -317,10 +317,10 @@ export function IngredientsClient({
       {/* Table card */}
       <div style={{ background: "#fff", borderRadius: "0.75rem", overflow: "hidden", boxShadow: "0 4px 20px -2px rgba(71,235,191,0.1)", border: "1px solid rgba(71,235,191,0.08)" }}>
         {/* Header row */}
-        <div style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "1rem", padding: "0.75rem 1.5rem", background: "rgba(71,235,191,0.06)", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#94a3b8" }}>
+        <div className="ing-read-grid" style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "1rem", padding: "0.75rem 1.5rem", background: "rgba(71,235,191,0.06)", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#94a3b8" }}>
           <div>Nom</div>
-          <div>Rayon</div>
-          <div>Unité</div>
+          <div className="ing-col-rayon">Rayon</div>
+          <div className="ing-col-unite">Unité</div>
           <div style={{ textAlign: "right" }}>Actions</div>
         </div>
 
@@ -333,20 +333,20 @@ export function IngredientsClient({
             editingId === item.id ? (
               /* Edit row */
               <div key={item.id} style={{ padding: "1rem 1.5rem", background: "rgba(71,235,191,0.07)", borderLeft: "4px solid #47ebbf", borderTop: idx > 0 ? "1px solid rgba(71,235,191,0.1)" : "none" }}>
-                <div style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "0.75rem", alignItems: "end" }}>
-                  <div>
+                <div className="ing-edit-grid" style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "0.75rem", alignItems: "end" }}>
+                  <div className="ing-edit-col-name">
                     <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'ingrédient</label>
                     <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} style={baseInputStyle} />
                   </div>
-                  <div>
+                  <div className="ing-col-rayon">
                     <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Rayon</label>
                     <Autocomplete value={editAisleLabel} onChange={(v) => { setEditAisleLabel(v); setEditAisleId(null); }} items={aisleItems} onSelect={handleSelectAisle} onCreate={handleCreateAisle} placeholder="Rayon…" />
                   </div>
-                  <div>
+                  <div className="ing-col-unite">
                     <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Unité</label>
                     <Autocomplete value={editUnitLabel} onChange={(v) => { setEditUnitLabel(v); setEditUnitId(null); }} items={unitItems} onSelect={handleSelectUnit} onCreate={handleCreateUnit} placeholder="Unité…" />
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
+                  <div className="ing-edit-col-actions" style={{ display: "flex", flexDirection: "column", gap: "0.375rem" }}>
                     <button type="button" onClick={() => handleSave(item.id)} disabled={saving}
                       style={{ width: "100%", background: saving ? "#a7f3d0" : "#47ebbf", color: "#0f172a", fontWeight: 700, fontSize: "0.8rem", border: "none", borderRadius: "0.5rem", padding: "0.5rem", cursor: saving ? "wait" : "pointer" }}>
                       {saving ? "…" : "Sauver"}
@@ -361,18 +361,19 @@ export function IngredientsClient({
             ) : (
               /* Read row */
               <div key={item.id}
+                className="ing-read-grid"
                 style={{ display: "grid", gridTemplateColumns: "5fr 3fr 2fr 2fr", gap: "1rem", padding: "1rem 1.5rem", alignItems: "center", borderTop: idx > 0 ? "1px solid rgba(71,235,191,0.07)" : "none", transition: "background 0.15s" }}
                 onMouseOver={(e) => (e.currentTarget.style.background = "rgba(71,235,191,0.04)")}
                 onMouseOut={(e) => (e.currentTarget.style.background = "transparent")}
               >
                 <div style={{ fontWeight: 600, color: "#1e293b", fontSize: "0.9rem" }}>{item.name}</div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.375rem", fontSize: "0.875rem", color: item.defaultAisleName ? "#475569" : "#cbd5e1" }}>
+                <div className="ing-col-rayon" style={{ display: "flex", alignItems: "center", gap: "0.375rem", fontSize: "0.875rem", color: item.defaultAisleName ? "#475569" : "#cbd5e1" }}>
                   {item.defaultAisleName && (
                     <span className="material-symbols-outlined" style={{ fontSize: "0.875rem", color: "#94a3b8" }}>store</span>
                   )}
                   {item.defaultAisleName ?? "—"}
                 </div>
-                <div style={{ fontSize: "0.875rem", color: item.defaultUnitAbbr ? "#475569" : "#cbd5e1" }}>{item.defaultUnitAbbr ?? "—"}</div>
+                <div className="ing-col-unite" style={{ fontSize: "0.875rem", color: item.defaultUnitAbbr ? "#475569" : "#cbd5e1" }}>{item.defaultUnitAbbr ?? "—"}</div>
                 <div style={{ textAlign: "right" }}>
                   <button type="button" onClick={() => startEdit(item)}
                     style={{ background: "none", border: "none", color: "#47ebbf", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer", padding: 0 }}

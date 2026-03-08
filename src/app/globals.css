@@ -21,3 +21,37 @@ body {
 .material-symbols-outlined {
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
+
+/* ── Responsive: ingredients table ── */
+@media (max-width: 640px) {
+  .ing-read-grid {
+    grid-template-columns: 1fr auto !important;
+  }
+  .ing-col-rayon,
+  .ing-col-unite {
+    display: none !important;
+  }
+  .ing-edit-grid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .ing-edit-col-name,
+  .ing-edit-col-actions {
+    grid-column: 1 / -1;
+  }
+  .ing-edit-col-actions {
+    flex-direction: row !important;
+  }
+  .ing-edit-col-actions button {
+    flex: 1;
+  }
+}
+
+/* ── Responsive: recipe form ingredient row ── */
+@media (max-width: 640px) {
+  .recipe-ing-subgrid {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  .recipe-ing-rayon {
+    grid-column: 1 / -1;
+  }
+}

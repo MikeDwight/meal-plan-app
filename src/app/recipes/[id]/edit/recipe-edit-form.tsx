@@ -412,7 +412,7 @@ export function RecipeEditForm({
                   <span className="material-symbols-outlined" style={{ fontSize: "1.2rem" }}>delete</span>
                 </button>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
+              <div className="recipe-ing-subgrid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
                 <input type="number" min="0" step="any" placeholder="Qté" value={line.quantity} onChange={(e) => updateIngredientLine(index, "quantity", e.target.value)} style={inputStyle} />
                 <FieldAutocomplete
                   value={line.unitLabel}
@@ -423,15 +423,17 @@ export function RecipeEditForm({
                   placeholder="Unité…"
                   style={inputStyle}
                 />
-                <FieldAutocomplete
-                  value={line.aisleName}
-                  onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], aisleName: v, aisleId: "" }; return next; })}
-                  items={aisles.map((a) => ({ id: a.id, label: a.name }))}
-                  onSelect={(item) => handleSelectAisle(index, item)}
-                  onCreate={(label) => handleCreateAisle(index, label)}
-                  placeholder="Rayon…"
-                  style={inputStyle}
-                />
+                <div className="recipe-ing-rayon">
+                  <FieldAutocomplete
+                    value={line.aisleName}
+                    onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], aisleName: v, aisleId: "" }; return next; })}
+                    items={aisles.map((a) => ({ id: a.id, label: a.name }))}
+                    onSelect={(item) => handleSelectAisle(index, item)}
+                    onCreate={(label) => handleCreateAisle(index, label)}
+                    placeholder="Rayon…"
+                    style={inputStyle}
+                  />
+                </div>
               </div>
             </div>
           ))}
