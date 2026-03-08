@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-bg-light text-slate-900 min-h-screen flex flex-col">
-        <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-primary/10">
+        <header className="hidden md:block sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-primary/10">
           <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="bg-primary rounded-lg p-1.5 flex items-center justify-center">
