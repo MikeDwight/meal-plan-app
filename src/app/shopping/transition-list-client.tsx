@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 export interface TransitionItemProps {
@@ -10,32 +10,96 @@ export interface TransitionItemProps {
   status: "TODO" | "DONE";
 }
 
+interface IngredientSuggestion {
+  id: string;
+  name: string;
+  defaultUnitId: string | null;
+  defaultAisleId: string | null;
+}
+
 const HOUSEHOLD_ID = "home-household";
 
 export function TransitionListClient({ items }: { items: TransitionItemProps[] }) {
   const router = useRouter();
   const [showDone, setShowDone] = useState(false);
   const [applyMessage, setApplyMessage] = useState<string | null>(null);
-  const [newLabel, setNewLabel] = useState("");
-  const [newQuantity, setNewQuantity] = useState("");
   const [isAdding, startAddTransition] = useTransition();
   const [isApplying, startApplyTransition] = useTransition();
+
+  // Add form state
+  const [ingredientName, setIngredientName] = useState("");
+  const [ingredientId, setIngredientId] = useState<string | null>(null);
+  const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
+  const [selectedAisleId, setSelectedAisleId] = useState<string | null>(null);
+  const [newQuantity, setNewQuantity] = useState("");
+  const [suggestions, setSuggestions] = useState<IngredientSuggestion[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [searching, setSearching] = useState(false);
+
+  const searchTimeout = useRef<NodeJS.Timeout | null>(null);
+  const blurTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const visibleItems = showDone ? items : items.filter((i) => i.status !== "DONE");
   const todoCount = items.filter((i) => i.status === "TODO").length;
 
+  const searchIngredients = useCallback(async (q: string) => {
+    if (!q.trim()) { setSuggestions([]); return; }
+    setSearching(true);
+    try {
+      const res = await fetch(`/api/ingredients?householdId=${HOUSEHOLD_ID}&q=${encodeURIComponent(q.trim())}&limit=8`);
+      if (res.ok) setSuggestions(await res.json());
+    } catch { /* ignore */ } finally {
+      setSearching(false);
+    }
+  }, []);
+
+  const handleIngredientChange = useCallback((value: string) => {
+    setIngredientName(value);
+    setIngredientId(null);
+    setSelectedUnitId(null);
+    setSelectedAisleId(null);
+    setShowSuggestions(true);
+    if (searchTimeout.current) clearTimeout(searchTimeout.current);
+    searchTimeout.current = setTimeout(() => searchIngredients(value), 300);
+  }, [searchIngredients]);
+
+  const handleSelectSuggestion = useCallback((s: IngredientSuggestion) => {
+    setIngredientName(s.name);
+    setIngredientId(s.id);
+    setSelectedUnitId(s.defaultUnitId);
+    setSelectedAisleId(s.defaultAisleId);
+    setSuggestions([]);
+    setShowSuggestions(false);
+  }, []);
+
+  function resetForm() {
+    setIngredientName("");
+    setIngredientId(null);
+    setSelectedUnitId(null);
+    setSelectedAisleId(null);
+    setNewQuantity("");
+    setSuggestions([]);
+    setShowSuggestions(false);
+  }
+
   async function handleAdd() {
-    const trimmed = newLabel.trim();
+    const trimmed = ingredientName.trim();
     if (!trimmed) return;
+
     const body: Record<string, unknown> = { householdId: HOUSEHOLD_ID, label: trimmed };
     if (newQuantity.trim() !== "") body.quantity = Number(newQuantity);
+    if (ingredientId) {
+      body.ingredientId = ingredientId;
+      if (selectedUnitId) body.unitId = selectedUnitId;
+      if (selectedAisleId) body.aisleId = selectedAisleId;
+    }
+
     await fetch("/api/transitionitems", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    setNewLabel("");
-    setNewQuantity("");
+    resetForm();
     startAddTransition(() => router.refresh());
   }
 
@@ -53,22 +117,84 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     startApplyTransition(() => router.refresh());
   }
 
+  const addForm = (
+    <div style={{ display: "flex", gap: "0.5rem", alignItems: "flex-start" }}>
+      <div style={{ flex: 1, position: "relative" }}>
+        <input
+          type="text"
+          placeholder="Ajouter un article…"
+          value={ingredientName}
+          onChange={(e) => handleIngredientChange(e.target.value)}
+          onFocus={() => { if (ingredientName.trim()) setShowSuggestions(true); }}
+          onBlur={() => { blurTimeout.current = setTimeout(() => setShowSuggestions(false), 150); }}
+          onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
+          disabled={isAdding}
+          style={inputStyle}
+        />
+        {showSuggestions && ingredientName.trim() && (
+          <div style={{
+            position: "absolute",
+            top: "calc(100% + 4px)",
+            left: 0,
+            right: 0,
+            background: "#fff",
+            border: "1px solid #e2e8f0",
+            borderRadius: "0.625rem",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+            zIndex: 50,
+            overflow: "hidden",
+          }}>
+            {searching && (
+              <div style={{ padding: "0.5rem 0.75rem", fontSize: "0.8rem", color: "#94a3b8" }}>…</div>
+            )}
+            {!searching && suggestions.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                onMouseDown={() => { if (blurTimeout.current) clearTimeout(blurTimeout.current); handleSelectSuggestion(s); }}
+                style={{
+                  display: "block",
+                  width: "100%",
+                  textAlign: "left",
+                  padding: "0.5rem 0.75rem",
+                  background: "transparent",
+                  border: "none",
+                  fontSize: "0.875rem",
+                  cursor: "pointer",
+                  color: "#0f172a",
+                }}
+                onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f0fdf9"; }}
+                onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
+              >
+                {s.name}
+              </button>
+            ))}
+            {!searching && suggestions.length === 0 && (
+              <div style={{ padding: "0.5rem 0.75rem", fontSize: "0.8rem", color: "#94a3b8" }}>
+                Article libre — appuie sur Entrée pour ajouter
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+      <input
+        type="number"
+        placeholder="Qté"
+        value={newQuantity}
+        onChange={(e) => setNewQuantity(e.target.value)}
+        onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
+        disabled={isAdding}
+        style={{ ...inputStyle, width: "5rem", flex: "none" }}
+      />
+      <AddButton onClick={handleAdd} disabled={isAdding || ingredientName.trim() === ""} />
+    </div>
+  );
+
   if (items.length === 0 && !isAdding) {
     return (
       <div style={{ marginBottom: "2rem" }}>
         <SectionHeader label="Articles ponctuels" />
-        <div style={{ display: "flex", gap: "0.5rem" }}>
-          <input
-            type="text"
-            placeholder="Ajouter un article…"
-            value={newLabel}
-            onChange={(e) => setNewLabel(e.target.value)}
-            onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
-            style={inputStyle}
-          />
-          <input type="number" placeholder="Qté" value={newQuantity} onChange={(e) => setNewQuantity(e.target.value)} style={{ ...inputStyle, width: "5rem" }} />
-          <AddButton onClick={handleAdd} disabled={newLabel.trim() === ""} />
-        </div>
+        <div style={{ marginTop: "0.75rem" }}>{addForm}</div>
       </div>
     );
   }
@@ -111,28 +237,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
         <p style={{ color: "#16a34a", fontSize: "0.8rem", marginBottom: "0.75rem" }}>{applyMessage}</p>
       )}
 
-      {/* Add form */}
-      <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
-        <input
-          type="text"
-          placeholder="Ajouter un article…"
-          value={newLabel}
-          onChange={(e) => setNewLabel(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
-          disabled={isAdding}
-          style={inputStyle}
-        />
-        <input
-          type="number"
-          placeholder="Qté"
-          value={newQuantity}
-          onChange={(e) => setNewQuantity(e.target.value)}
-          onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
-          disabled={isAdding}
-          style={{ ...inputStyle, width: "5rem" }}
-        />
-        <AddButton onClick={handleAdd} disabled={isAdding || newLabel.trim() === ""} />
-      </div>
+      <div style={{ marginBottom: "0.75rem" }}>{addForm}</div>
 
       {visibleItems.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
@@ -164,13 +269,14 @@ function SectionHeader({ label }: { label: string }) {
 }
 
 const inputStyle: React.CSSProperties = {
-  flex: 1,
+  width: "100%",
   padding: "0.55rem 0.75rem",
   border: "1px solid #e2e8f0",
   borderRadius: "0.625rem",
   fontSize: "0.875rem",
   background: "#fff",
   outline: "none",
+  boxSizing: "border-box",
 };
 
 function AddButton({ onClick, disabled }: { onClick: () => void; disabled: boolean }) {
@@ -189,6 +295,7 @@ function AddButton({ onClick, disabled }: { onClick: () => void; disabled: boole
         borderRadius: "0.625rem",
         cursor: disabled ? "not-allowed" : "pointer",
         whiteSpace: "nowrap",
+        flexShrink: 0,
       }}
     >
       +
