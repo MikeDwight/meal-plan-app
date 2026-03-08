@@ -251,7 +251,7 @@ export async function generatePoolRecipes(
     if (b.finalScore !== a.finalScore) {
       return b.finalScore - a.finalScore;
     }
-    return a.recipe.id.localeCompare(b.recipe.id);
+    return Math.random() - 0.5;
   });
 
   const topN = scoredRecipes.slice(0, count);

@@ -200,7 +200,7 @@ function selectBestRecipe(
     if (b.finalScore !== a.finalScore) {
       return b.finalScore - a.finalScore;
     }
-    return a.recipe.id.localeCompare(b.recipe.id);
+    return Math.random() - 0.5;
   });
 
   return scoredRecipes[0];
