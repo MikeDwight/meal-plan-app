@@ -526,7 +526,7 @@ export function RecipeForm() {
         )}
         {importing && (
           <p style={{ marginTop: "0.5rem", color: "#64748b", fontSize: "0.8rem", paddingLeft: "0.25rem" }}>
-            GPT-4o analyse la photo, ça prend quelques secondes…
+            Analyse la photo, ça prend quelques secondes…
           </p>
         )}
       </div>
@@ -665,8 +665,8 @@ export function RecipeForm() {
         <textarea
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
-          rows={6}
-          style={{ ...inputStyle, background: "#fff", borderRadius: "0.75rem", boxShadow: "0 4px 20px -2px rgba(0,0,0,0.05)", resize: "vertical", lineHeight: 1.6 }}
+          rows={Math.max(6, (instructions.match(/\n/g) ?? []).length + 2)}
+          style={{ ...inputStyle, background: "#fff", borderRadius: "0.75rem", boxShadow: "0 4px 20px -2px rgba(0,0,0,0.05)", resize: "vertical", lineHeight: 1.8, whiteSpace: "pre-wrap" }}
           placeholder="Décrivez les étapes de votre recette…"
         />
       </div>

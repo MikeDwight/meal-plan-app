@@ -19,7 +19,8 @@ Règles :
 - "servings" est un entier ou null si non trouvé
 - "quantity" est un nombre (pas une chaîne), ou null si non trouvé
 - "unit" est une chaîne courte (g, kg, ml, L, c. à soupe, c. à café, pincée, etc.) ou null
-- "instructions" est le texte brut des étapes. Si elles ne sont pas lisibles sur la photo, rédige des instructions de préparation cohérentes en français en te basant sur le titre de la recette et la liste des ingrédients. Ne laisse jamais "instructions" à null.
+- "title" : si le titre n'est pas lisible sur la photo, invente un nom de recette pertinent et appétissant en français basé sur les ingrédients identifiés. Ne laisse jamais "title" vide ou null.
+- "instructions" : formate les étapes sous forme de liste numérotée, une étape par ligne (ex: "1. Épluchez et coupez les oignons.\n2. Faites chauffer l'huile..."). Si les étapes ne sont pas lisibles sur la photo, rédige des instructions cohérentes en français basées sur le titre et les ingrédients. Ne laisse jamais "instructions" à null.
 - Les noms d'ingrédients sont en minuscules, sans quantité ni unité
 - Si l'image n'est pas une recette, retourne { "error": "Pas une recette" }`;
 
