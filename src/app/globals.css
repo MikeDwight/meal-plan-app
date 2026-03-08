@@ -9,10 +9,13 @@
   --radius-xl: 1.5rem;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
   background-color: #f6f8f7;
-  scrollbar-gutter: stable;
 }
 
 .material-symbols-outlined {
