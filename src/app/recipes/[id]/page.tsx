@@ -73,7 +73,7 @@ export default async function RecipeDetailPage({
   );
 
   return (
-    <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+    <main>
       {/* Back link */}
       <Link
         href="/recipes"

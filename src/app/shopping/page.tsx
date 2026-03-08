@@ -55,7 +55,7 @@ export default async function ShoppingPage() {
   if (!res.ok) {
     const body = await res.json().catch(() => null);
     return (
-      <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+      <main>
         <div style={{ padding: "2rem 0 1.25rem" }}>
           <h1 style={{ fontSize: "1.75rem", fontWeight: 700, margin: 0, color: "#0f172a" }}>Liste de courses</h1>
         </div>
@@ -80,7 +80,7 @@ export default async function ShoppingPage() {
   }));
 
   return (
-    <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+    <main>
       <div style={{ padding: "2rem 0 1.25rem" }}>
         <h1 style={{ fontSize: "1.75rem", fontWeight: 700, margin: "0 0 0.25rem", color: "#0f172a" }}>Liste de courses</h1>
         <p style={{ color: "#94a3b8", fontWeight: 500, margin: 0, fontSize: "0.8rem" }}>

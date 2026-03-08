@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Nouvelle Recette - Utility App</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#47ebbf",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#11211d",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .retro-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(71, 235, 191, 0.2);
+        }
+        .soft-card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-32">
+<!-- Top Navigation (Horizontal Scrollable for Mobile) -->
+<nav class="sticky top-0 z-40 bg-background-light/80 backdrop-blur-md border-b border-primary/10">
+<div class="flex overflow-x-auto no-scrollbar py-3 px-4 gap-6 items-center">
+<a class="text-sm font-medium text-slate-500 hover:text-primary whitespace-nowrap" href="#">Accueil</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary whitespace-nowrap" href="#">Semaine</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary whitespace-nowrap" href="#">Courses</a>
+<a class="text-sm font-semibold text-primary border-b-2 border-primary pb-1 whitespace-nowrap" href="#">Recettes</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary whitespace-nowrap" href="#">Garde-manger</a>
+<a class="text-sm font-medium text-slate-500 hover:text-primary whitespace-nowrap" href="#">Ingrédients</a>
+</div>
+</nav>
+<main class="max-w-2xl mx-auto px-4 py-6">
+<!-- Header -->
+<div class="flex items-center gap-3 mb-8">
+<button class="flex items-center justify-center p-2 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300">arrow_back</span>
+</button>
+<h1 class="text-2xl font-bold tracking-tight">Nouvelle recette</h1>
+</div>
+<form class="space-y-8">
+<!-- Section 1: Recipe Info -->
+<section class="space-y-5">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary">info</span>
+<h2 class="text-lg font-bold">Informations générales</h2>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold px-1">Nom de la recette</label>
+<input class="w-full h-14 px-4 rounded-xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary soft-card-shadow" placeholder="Ex: Risotto aux champignons" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold px-1">Préparation (min)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">timer</span>
+<input class="w-full h-12 pl-10 pr-4 rounded-xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="15" type="number"/>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold px-1">Cuisson (min)</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">heat</span>
+<input class="w-full h-12 pl-10 pr-4 rounded-xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary" placeholder="30" type="number"/>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold px-1">Tags</label>
+<div class="flex flex-wrap gap-2 p-3 rounded-xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 min-h-[56px] soft-card-shadow">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/20 text-emerald-800 dark:text-primary font-medium text-sm rounded-full">
+                                Végétarien <button class="material-symbols-outlined text-sm" type="button">close</button>
+</span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/20 text-emerald-800 dark:text-primary font-medium text-sm rounded-full">
+                                Dîner <button class="material-symbols-outlined text-sm" type="button">close</button>
+</span>
+<input class="flex-1 min-w-[120px] bg-transparent border-none focus:ring-0 p-0 text-sm" placeholder="Ajouter un tag..." type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Ingrédients -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">shopping_basket</span>
+<h2 class="text-lg font-bold">Ingrédients</h2>
+</div>
+<button class="text-primary font-bold text-sm flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                        Ajouter
+                    </button>
+</div>
+<div class="space-y-3">
+<!-- Ingredient Card 1 -->
+<div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 soft-card-shadow flex flex-col gap-4">
+<div class="flex gap-2">
+<input class="flex-1 h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:ring-primary" placeholder="Nom de l'ingrédient" type="text" value="Riz Arborio"/>
+<button class="text-slate-400 hover:text-red-500" type="button">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<input class="h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900" placeholder="Qté" type="number" value="300"/>
+<input class="h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900" placeholder="Unité" type="text" value="g"/>
+<input class="h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900" placeholder="Rayon" type="text" value="Épicerie"/>
+</div>
+</div>
+<!-- Ingredient Card 2 -->
+<div class="p-4 rounded-xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 soft-card-shadow flex flex-col gap-4">
+<div class="flex gap-2">
+<input class="flex-1 h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 focus:ring-primary" placeholder="Nom de l'ingrédient" type="text"/>
+<button class="text-slate-400 hover:text-red-500" type="button">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<input class="h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900" placeholder="Qté" type="number"/>
+<input class="h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900" placeholder="Unité" type="text"/>
+<input class="h-10 px-3 text-sm rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900" placeholder="Rayon" type="text"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 3: Instructions -->
+<section class="space-y-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">description</span>
+<h2 class="text-lg font-bold">Préparation</h2>
+</div>
+<div class="relative">
+<textarea class="w-full p-4 rounded-xl border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-primary focus:border-primary soft-card-shadow resize-none" placeholder="Décrivez les étapes de votre recette ici..." rows="6"></textarea>
+</div>
+</section>
+</form>
+</main>
+<!-- Bottom Actions Container -->
+<div class="fixed bottom-0 left-0 right-0 p-4 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md border-t border-primary/10 flex flex-col gap-3 z-50">
+<button class="w-full h-14 bg-primary text-slate-900 font-bold rounded-xl retro-shadow flex items-center justify-center gap-2 active:scale-95 transition-transform" type="submit">
+<span class="material-symbols-outlined">save</span>
+            Enregistrer la recette
+        </button>
+<button class="w-full h-12 text-slate-500 font-semibold rounded-xl flex items-center justify-center" type="button">
+            Annuler
+        </button>
+</div>
+<!-- Bottom Navigation Bar (Legacy Replacement) -->
+<div class="fixed bottom-32 hidden">
+<!-- This spacer ensures content doesn't get hidden behind fixed footer on mobile -->
+</div>
+</body></html>

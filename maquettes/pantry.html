@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+
+<html class="light" lang="fr"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#47ebbf",
+                        "background-light": "#f6f8f7",
+                        "background-dark": "#11211d",
+                        "soft-gray": "#e2e8e7",
+                        "text-main": "#1a2e29"
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .retro-shadow {
+            box-shadow: 4px 4px 0px 0px rgba(71, 235, 191, 0.2);
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-soft-gray dark:border-primary/10">
+<div class="flex overflow-x-auto hide-scrollbar px-4 py-3 gap-6 items-center">
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium whitespace-nowrap" href="#">Accueil</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium whitespace-nowrap" href="#">Semaine</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium whitespace-nowrap" href="#">Courses</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium whitespace-nowrap" href="#">Recettes</a>
+<a class="text-primary border-b-2 border-primary pb-1 text-sm font-bold whitespace-nowrap" href="#">Garde-manger</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium whitespace-nowrap" href="#">Ingrédients</a>
+</div>
+</nav>
+<main class="flex-1 w-full max-w-md mx-auto px-4 pb-24">
+<!-- Header Section -->
+<header class="py-8 flex justify-between items-center">
+<h1 class="text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Garde-manger</h1>
+<button class="bg-primary/20 p-2 rounded-full text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</header>
+<!-- Prominent Action Button -->
+<div class="mb-8">
+<button class="w-full bg-primary hover:bg-primary/90 text-slate-900 font-bold py-4 px-6 rounded-xl flex items-center justify-center gap-2 shadow-lg transition-transform active:scale-95">
+<span class="material-symbols-outlined font-bold">add</span>
+<span>Ajouter un ingrédient</span>
+</button>
+</div>
+<!-- Pantry Items List -->
+<div class="space-y-3">
+<!-- Item 1 -->
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl flex items-center justify-between border border-soft-gray dark:border-slate-700/50 retro-shadow">
+<div class="flex flex-col">
+<span class="text-lg font-semibold text-slate-800 dark:text-slate-100">Riz Basmati</span>
+<span class="text-sm text-slate-500 dark:text-slate-400">500 g</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-background-light dark:bg-slate-700 rounded-lg p-1">
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-8 text-center font-bold text-slate-800 dark:text-slate-100">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<button class="text-slate-300 hover:text-red-400 transition-colors p-1">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl flex items-center justify-between border border-soft-gray dark:border-slate-700/50 retro-shadow">
+<div class="flex flex-col">
+<span class="text-lg font-semibold text-slate-800 dark:text-slate-100">Lait Entier</span>
+<span class="text-sm text-slate-500 dark:text-slate-400">2 L</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-background-light dark:bg-slate-700 rounded-lg p-1">
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-8 text-center font-bold text-slate-800 dark:text-slate-100">2</span>
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<button class="text-slate-300 hover:text-red-400 transition-colors p-1">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl flex items-center justify-between border border-soft-gray dark:border-slate-700/50 retro-shadow">
+<div class="flex flex-col">
+<span class="text-lg font-semibold text-slate-800 dark:text-slate-100">Tomates</span>
+<span class="text-sm text-slate-500 dark:text-slate-400">4 pcs</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-background-light dark:bg-slate-700 rounded-lg p-1">
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-8 text-center font-bold text-slate-800 dark:text-slate-100">4</span>
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<button class="text-slate-300 hover:text-red-400 transition-colors p-1">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 4 -->
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl flex items-center justify-between border border-soft-gray dark:border-slate-700/50 retro-shadow">
+<div class="flex flex-col">
+<span class="text-lg font-semibold text-slate-800 dark:text-slate-100">Pâtes Fusilli</span>
+<span class="text-sm text-slate-500 dark:text-slate-400">1 kg</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-background-light dark:bg-slate-700 rounded-lg p-1">
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-8 text-center font-bold text-slate-800 dark:text-slate-100">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<button class="text-slate-300 hover:text-red-400 transition-colors p-1">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+<!-- Item 5 -->
+<div class="bg-white dark:bg-slate-800/50 p-4 rounded-xl flex items-center justify-between border border-soft-gray dark:border-slate-700/50 retro-shadow">
+<div class="flex flex-col">
+<span class="text-lg font-semibold text-slate-800 dark:text-slate-100">Huile d'Olive</span>
+<span class="text-sm text-slate-500 dark:text-slate-400">75 cl</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-background-light dark:bg-slate-700 rounded-lg p-1">
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">remove</span>
+</button>
+<span class="w-8 text-center font-bold text-slate-800 dark:text-slate-100">1</span>
+<button class="w-8 h-8 flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-soft-gray rounded-md transition-colors">
+<span class="material-symbols-outlined text-xl">add</span>
+</button>
+</div>
+<button class="text-slate-300 hover:text-red-400 transition-colors p-1">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<div class="fixed bottom-0 left-0 right-0 bg-white dark:bg-background-dark border-t border-soft-gray dark:border-primary/10 px-4 pb-6 pt-2 z-50">
+<div class="flex justify-around max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">home</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Accueil</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">calendar_today</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Semaine</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">shopping_cart</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Courses</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center relative">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">inventory_2</span>
+<div class="absolute -top-1 -right-1 w-2 h-2 bg-primary rounded-full ring-2 ring-white"></div>
+</div>
+<p class="text-[10px] font-bold uppercase tracking-widest">Pantry</p>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</div>
+<p class="text-[10px] font-medium uppercase tracking-widest">Profil</p>
+</a>
+</div>
+</div>
+</body></html>

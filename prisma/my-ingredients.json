@@ -1,0 +1,3855 @@
+[
+  {
+    "name": "Ail",
+    "icon": null,
+    "sourceUrl": "https://www.notion.so/Ail-28f3546554b081728a57c54fe37f3d3b?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      },
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      },
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      },
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      },
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      },
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      },
+      {
+        "title": "Curry de pois chiches végan",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-de-pois-chiches-v-gan-28f3546554b081f9bde1db447f8c605e?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Pâtes à la crème de poivrons",
+        "icon": "🍝",
+        "url": "https://www.notion.so/P-tes-la-cr-me-de-poivrons-28f3546554b0815997e0e4c3dcf9c1e9?pvs=21"
+      },
+      {
+        "title": "Nouille Udon, bœuf et oignons",
+        "icon": "🍜",
+        "url": "https://www.notion.so/Nouille-Udon-b-uf-et-oignons-28f3546554b0816182dccc906c4cd4b0?pvs=21"
+      },
+      {
+        "title": "Fried rice - Valin food",
+        "icon": null,
+        "url": "https://www.notion.so/Fried-rice-Valin-food-2913546554b081ba98e4f34b22258f58?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      },
+      {
+        "title": "Houmous",
+        "icon": null,
+        "url": "https://www.notion.so/Houmous-2913546554b08133bb6cf92d96da9e55?pvs=21"
+      },
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      },
+      {
+        "title": "Spaghetti bolognaise",
+        "icon": null,
+        "url": "https://www.notion.so/Spaghetti-bolognaise-2913546554b08180926ce54b8f9b8d88?pvs=21"
+      },
+      {
+        "title": "Lasagne bolognaise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Lasagne-bolognaise-WW-2913546554b081b88de2c86c389c95be?pvs=21"
+      },
+      {
+        "title": "Grilled cheese & Soupe",
+        "icon": null,
+        "url": "https://www.notion.so/Grilled-cheese-Soupe-2913546554b081c8b1f5f3aa4f97ae01?pvs=21"
+      },
+      {
+        "title": "Poulet sauté au basilique",
+        "icon": null,
+        "url": "https://www.notion.so/Poulet-saut-au-basilique-2913546554b081f48190c1c2c9533a2c?pvs=21"
+      },
+      {
+        "title": "Mijoté de cacahuètes",
+        "icon": null,
+        "url": "https://www.notion.so/Mijot-de-cacahu-tes-2913546554b0816d9f2cf527e3ff5494?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Ail en poudre",
+    "icon": "🧄",
+    "sourceUrl": "https://www.notion.so/Ail-en-poudre-28f3546554b081af8fead711aed8660d?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Saumon lentilles et riz rouge",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Saumon-lentilles-et-riz-rouge-28f3546554b08148b360d8c748ba2941?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Allumettes de jambon",
+    "icon": "🥓",
+    "sourceUrl": "https://www.notion.so/Allumettes-de-jambon-28f3546554b0817d9ec1f4b4e557f3e1?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de gnocchis pesto",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-gnocchis-pesto-28f3546554b0817eb18dfd09983c0560?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Aubergine",
+    "icon": "🍆",
+    "sourceUrl": "https://www.notion.so/Aubergine-2913546554b0812a811de65288cbe6c2?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Légumes houmous",
+        "icon": null,
+        "url": "https://www.notion.so/L-gumes-houmous-2913546554b0812bbd0ed16b8ff64f7c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Avocat",
+    "icon": "🥑",
+    "sourceUrl": "https://www.notion.so/Avocat-28f3546554b081929d3cce48e99a3251?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      },
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Pokeball poulet",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Pokeball-poulet-28f3546554b081be9af7d2933e25ca49?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Bacon",
+    "icon": "🥓",
+    "sourceUrl": "https://www.notion.so/Bacon-28f3546554b08181a377c1d8af5b858e?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "American Pizza",
+        "icon": "🍕",
+        "url": "https://www.notion.so/American-Pizza-28f3546554b081d49a0ac1970533c6c6?pvs=21"
+      },
+      {
+        "title": "Quichezza",
+        "icon": null,
+        "url": "https://www.notion.so/Quichezza-2913546554b08133b61fd4be8838cc09?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Basilic",
+    "icon": "🌿",
+    "sourceUrl": "https://www.notion.so/Basilic-28f3546554b081b29ad4d3455abf8370?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      },
+      {
+        "title": "Poulet grillé aux pâtes et au Pesto (ww)",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Poulet-grill-aux-p-tes-et-au-Pesto-ww-28f3546554b081948b6bcbc88dde37d4?pvs=21"
+      },
+      {
+        "title": "American Pizza",
+        "icon": "🍕",
+        "url": "https://www.notion.so/American-Pizza-28f3546554b081d49a0ac1970533c6c6?pvs=21"
+      },
+      {
+        "title": "Risotto à la tomate et au Parmesan",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Risotto-la-tomate-et-au-Parmesan-28f3546554b081dbb73cec748782ad63?pvs=21"
+      },
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      },
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Pâtes à la crème de poivrons",
+        "icon": "🍝",
+        "url": "https://www.notion.so/P-tes-la-cr-me-de-poivrons-28f3546554b0815997e0e4c3dcf9c1e9?pvs=21"
+      },
+      {
+        "title": "Saumon lentilles et riz rouge",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Saumon-lentilles-et-riz-rouge-28f3546554b08148b360d8c748ba2941?pvs=21"
+      },
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      },
+      {
+        "title": "Houmous",
+        "icon": null,
+        "url": "https://www.notion.so/Houmous-2913546554b08133bb6cf92d96da9e55?pvs=21"
+      },
+      {
+        "title": "Couscous végétarien",
+        "icon": null,
+        "url": "https://www.notion.so/Couscous-v-g-tarien-2913546554b08121b73ccac53dc538e9?pvs=21"
+      },
+      {
+        "title": "Fajitas",
+        "icon": null,
+        "url": "https://www.notion.so/Fajitas-2913546554b081e89e03e6babcff8cf6?pvs=21"
+      },
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      },
+      {
+        "title": "Spaghetti bolognaise",
+        "icon": null,
+        "url": "https://www.notion.so/Spaghetti-bolognaise-2913546554b08180926ce54b8f9b8d88?pvs=21"
+      },
+      {
+        "title": "Lasagne bolognaise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Lasagne-bolognaise-WW-2913546554b081b88de2c86c389c95be?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Beurre de cacahuète",
+    "icon": "🥜",
+    "sourceUrl": "https://www.notion.so/Beurre-de-cacahu-te-28f3546554b08157b836c5237e606d3d?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      },
+      {
+        "title": "Mijoté de cacahuètes",
+        "icon": null,
+        "url": "https://www.notion.so/Mijot-de-cacahu-tes-2913546554b0816d9f2cf527e3ff5494?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Biscuits à la cuillère",
+    "icon": "🥠",
+    "sourceUrl": "https://www.notion.so/Biscuits-la-cuill-re-2913546554b081c49592da3b9732ee51?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tiramisu",
+        "icon": "🧁",
+        "url": "https://www.notion.so/Tiramisu-2913546554b0811b942afee2689ecfc7?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Blanc de dinde",
+    "icon": "🥓",
+    "sourceUrl": "https://www.notion.so/Blanc-de-dinde-28f3546554b081e5a128e964e213d62d?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Truffade",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Truffade-28f3546554b0816aa392ea252fe420d0?pvs=21"
+      },
+      {
+        "title": "Croque-Monsieur",
+        "icon": "🥪",
+        "url": "https://www.notion.so/Croque-Monsieur-28f3546554b0815d8b7ffe6b4b97245d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Bœuf",
+    "icon": "🥩",
+    "sourceUrl": "https://www.notion.so/B-uf-28f3546554b081fba86accfec470e6f3?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Nouille Udon, bœuf et oignons",
+        "icon": "🍜",
+        "url": "https://www.notion.so/Nouille-Udon-b-uf-et-oignons-28f3546554b0816182dccc906c4cd4b0?pvs=21"
+      },
+      {
+        "title": "Riz, poivrons et bœuf",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-poivrons-et-b-uf-2913546554b0813eade3c0ccef0623c3?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Bok choy",
+    "icon": "🥦",
+    "sourceUrl": "https://www.notion.so/Bok-choy-2913546554b081659f6df5b1acad8ef9?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Sauté de porc caramélisé",
+        "icon": null,
+        "url": "https://www.notion.so/Saut-de-porc-caram-lis-2913546554b081e39823c0fd7e66995c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Bouillon de légumes",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Bouillon-de-l-gumes-28f3546554b081579d02e3e37c4276ba?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      },
+      {
+        "title": "Couscous végétarien",
+        "icon": null,
+        "url": "https://www.notion.so/Couscous-v-g-tarien-2913546554b08121b73ccac53dc538e9?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Bouillon de volaille",
+    "icon": "🍗",
+    "sourceUrl": "https://www.notion.so/Bouillon-de-volaille-28f3546554b08147b6b1cea9f7c36d32?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      },
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Boulgour",
+    "icon": "🌿",
+    "sourceUrl": "https://www.notion.so/Boulgour-28f3546554b081b4a318c1b041b7879a?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Boursin",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Boursin-28f3546554b081da99f0e12153cd960e?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Brocoli",
+    "icon": "🥦",
+    "sourceUrl": "https://www.notion.so/Brocoli-28f3546554b0815fbc9bd7ed0676a721?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      },
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      },
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Brunoise de légumes surgelés",
+    "icon": "🥦",
+    "sourceUrl": "https://www.notion.so/Brunoise-de-l-gumes-surgel-s-28f3546554b08155af9ae8fe27bff3da?pvs=21",
+    "aisle": "Surgelé",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Bûche de chèvre légère",
+    "icon": "🐑",
+    "sourceUrl": "https://www.notion.so/B-che-de-ch-vre-l-g-re-2913546554b081468a66e048038d2cdd?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pizza chèvre tomate cerise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Pizza-ch-vre-tomate-cerise-WW-2913546554b081259a54d117ccc71386?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Burrata",
+    "icon": "🐮",
+    "sourceUrl": "https://www.notion.so/Burrata-28f3546554b081008ec4ff86308bec5c?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      },
+      {
+        "title": "Tarte à la tomate et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Tarte-la-tomate-et-burrata-28f3546554b081e194f0e3760ef2bd4f?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cacahuètes grillées",
+    "icon": "🥜",
+    "sourceUrl": "https://www.notion.so/Cacahu-tes-grill-es-28f3546554b081aaa71ec9fde9db4553?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cacao en poudre",
+    "icon": "🍫",
+    "sourceUrl": "https://www.notion.so/Cacao-en-poudre-2913546554b081d1b012f85fa26dc2cd?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tiramisu",
+        "icon": "🧁",
+        "url": "https://www.notion.so/Tiramisu-2913546554b0811b942afee2689ecfc7?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Café",
+    "icon": "☕",
+    "sourceUrl": "https://www.notion.so/Caf-2913546554b08105a735efb2ace32b6c?pvs=21",
+    "aisle": "Boissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tiramisu",
+        "icon": "🧁",
+        "url": "https://www.notion.so/Tiramisu-2913546554b0811b942afee2689ecfc7?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Carotte",
+    "icon": "🥕",
+    "sourceUrl": "https://www.notion.so/Carotte-28f3546554b081d19c5ed4ad248177da?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      },
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Riz sauté et poulet à la Coréenne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-saut-et-poulet-la-Cor-enne-28f3546554b081f59e40f93e6be56a57?pvs=21"
+      },
+      {
+        "title": "Fried rice - Valin food",
+        "icon": null,
+        "url": "https://www.notion.so/Fried-rice-Valin-food-2913546554b081ba98e4f34b22258f58?pvs=21"
+      },
+      {
+        "title": "Couscous végétarien",
+        "icon": null,
+        "url": "https://www.notion.so/Couscous-v-g-tarien-2913546554b08121b73ccac53dc538e9?pvs=21"
+      },
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      },
+      {
+        "title": "Salade poulet teriyaki (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-poulet-teriyaki-ww-2913546554b081d2bd7df29ded5334ef?pvs=21"
+      },
+      {
+        "title": "Spaghetti bolognaise",
+        "icon": null,
+        "url": "https://www.notion.so/Spaghetti-bolognaise-2913546554b08180926ce54b8f9b8d88?pvs=21"
+      },
+      {
+        "title": "Lasagne bolognaise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Lasagne-bolognaise-WW-2913546554b081b88de2c86c389c95be?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Carpaccio de boeuf",
+    "icon": "🥩",
+    "sourceUrl": "https://www.notion.so/Carpaccio-de-boeuf-28f3546554b0812789b0f309c620c36e?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Carré de porc",
+    "icon": "🥓",
+    "sourceUrl": "https://www.notion.so/Carr-de-porc-28f3546554b081cdb090c2352d0d0993?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cassonade",
+    "icon": "🍪",
+    "sourceUrl": "https://www.notion.so/Cassonade-2913546554b0818182bdd4cd694df31a?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Sauté de porc caramélisé",
+        "icon": null,
+        "url": "https://www.notion.so/Saut-de-porc-caram-lis-2913546554b081e39823c0fd7e66995c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cebette",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Cebette-28f3546554b0811fbc65ec6bd1ac2303?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      },
+      {
+        "title": "Quiche, poireaux et fromage de chèvre",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Quiche-poireaux-et-fromage-de-ch-vre-28f3546554b081968214d4d478609850?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Fried rice - Valin food",
+        "icon": null,
+        "url": "https://www.notion.so/Fried-rice-Valin-food-2913546554b081ba98e4f34b22258f58?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Champignons",
+    "icon": "🍄",
+    "sourceUrl": "https://www.notion.so/Champignons-28f3546554b08151937cfce4eaf84889?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade forestière",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-foresti-re-28f3546554b0815eb2d3e2145ab81031?pvs=21"
+      },
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Salade paysane",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-paysane-28f3546554b081439228f858bf2e80c6?pvs=21"
+      },
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cheddar",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Cheddar-28f3546554b0813cb5ffc236f8d5e141?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cheddar râpé",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Cheddar-r-p-28f3546554b08153827bc50303a0841f?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos végé (ww)",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-v-g-ww-28f3546554b081849f5bf562315dd911?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Chèvre",
+    "icon": "🐑",
+    "sourceUrl": "https://www.notion.so/Ch-vre-2913546554b081b18b88d603d8374e6b?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Wrap chèvre jambon",
+        "icon": null,
+        "url": "https://www.notion.so/Wrap-ch-vre-jambon-2913546554b081a1bb8dc89050ce6130?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Chips de crevettes",
+    "icon": "🍤",
+    "sourceUrl": "https://www.notion.so/Chips-de-crevettes-28f3546554b081d6837add1c0a60525a?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Chou chinois",
+    "icon": "🥦",
+    "sourceUrl": "https://www.notion.so/Chou-chinois-28f3546554b081bfa6b9e259391572f1?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz sauté et poulet à la Coréenne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-saut-et-poulet-la-Cor-enne-28f3546554b081f59e40f93e6be56a57?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Chou-fleur",
+    "icon": "🥦",
+    "sourceUrl": "https://www.notion.so/Chou-fleur-28f3546554b081ffa0afed70c153d3ee?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Velouté de Chou-fleur et cuisse de poulet",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Velout-de-Chou-fleur-et-cuisse-de-poulet-28f3546554b081cb8014fda86664ea3d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Ciboulette",
+    "icon": "☘️",
+    "sourceUrl": "https://www.notion.so/Ciboulette-2913546554b08110a151f2c4b421641e?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Citron",
+    "icon": "🍋",
+    "sourceUrl": "https://www.notion.so/Citron-28f3546554b08108946fda22fd365326?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Saumon lentilles et riz rouge",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Saumon-lentilles-et-riz-rouge-28f3546554b08148b360d8c748ba2941?pvs=21"
+      },
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      },
+      {
+        "title": "Houmous",
+        "icon": null,
+        "url": "https://www.notion.so/Houmous-2913546554b08133bb6cf92d96da9e55?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Citron vert",
+    "icon": "🍋",
+    "sourceUrl": "https://www.notion.so/Citron-vert-28f3546554b081e79032e7ebd4d7a282?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      },
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      },
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      },
+      {
+        "title": "Salade poulet teriyaki (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-poulet-teriyaki-ww-2913546554b081d2bd7df29ded5334ef?pvs=21"
+      },
+      {
+        "title": "Poulet sauté au basilique",
+        "icon": null,
+        "url": "https://www.notion.so/Poulet-saut-au-basilique-2913546554b081f48190c1c2c9533a2c?pvs=21"
+      },
+      {
+        "title": "Mijoté de cacahuètes",
+        "icon": null,
+        "url": "https://www.notion.so/Mijot-de-cacahu-tes-2913546554b0816d9f2cf527e3ff5494?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Citronnelle",
+    "icon": "🍋",
+    "sourceUrl": "https://www.notion.so/Citronnelle-2913546554b081a1a755dda13b31d239?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cive",
+    "icon": "🧅",
+    "sourceUrl": "https://www.notion.so/Cive-2913546554b0816ca120e579ddcff006?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Concentré de tomate",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Concentr-de-tomate-28f3546554b0810cb5b1eb728d2cebe8?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      },
+      {
+        "title": "Couscous végétarien",
+        "icon": null,
+        "url": "https://www.notion.so/Couscous-v-g-tarien-2913546554b08121b73ccac53dc538e9?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Concombre",
+    "icon": "🥒",
+    "sourceUrl": "https://www.notion.so/Concombre-28f3546554b081c78635d5b15ff6a42f?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade Grecque",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-Grecque-28f3546554b081438900d0e2ffd90c39?pvs=21"
+      },
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      },
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Coquillettes",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Coquillettes-2913546554b08167b1f9eb9d35968aed?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Coquillette courgette viande hachée",
+        "icon": null,
+        "url": "https://www.notion.so/Coquillette-courgette-viande-hach-e-2913546554b08131941eeb35a9dcec02?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Coulis de tomate",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Coulis-de-tomate-28f3546554b08183aa4cdd3677336021?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      },
+      {
+        "title": "American Pizza",
+        "icon": "🍕",
+        "url": "https://www.notion.so/American-Pizza-28f3546554b081d49a0ac1970533c6c6?pvs=21"
+      },
+      {
+        "title": "Risotto à la tomate et au Parmesan",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Risotto-la-tomate-et-au-Parmesan-28f3546554b081dbb73cec748782ad63?pvs=21"
+      },
+      {
+        "title": "Pizza chèvre tomate cerise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Pizza-ch-vre-tomate-cerise-WW-2913546554b081259a54d117ccc71386?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Courge",
+    "icon": "🎃",
+    "sourceUrl": "https://www.notion.so/Courge-28f3546554b08182a169e6adc93c0e19?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Courgette",
+    "icon": "🥒",
+    "sourceUrl": "https://www.notion.so/Courgette-28f3546554b081b28679e07bcb50dbfe?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Crème épaisse allégée",
+    "icon": "🥛",
+    "sourceUrl": "https://www.notion.so/Cr-me-paisse-all-g-e-28f3546554b0814296b9cc2cdbb88b66?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Quiche, poireaux et fromage de chèvre",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Quiche-poireaux-et-fromage-de-ch-vre-28f3546554b081968214d4d478609850?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Crème fraîche allégée",
+    "icon": "🥛",
+    "sourceUrl": "https://www.notion.so/Cr-me-fra-che-all-g-e-28f3546554b081abbaafff6fe2db90cf?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Crème légère épaisse",
+    "icon": "🥛",
+    "sourceUrl": "https://www.notion.so/Cr-me-l-g-re-paisse-2913546554b081cf9edfdb37efd2f320?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Rigatoni tomate mozza",
+        "icon": null,
+        "url": "https://www.notion.so/Rigatoni-tomate-mozza-2913546554b081368a6fc97c971a1b45?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Crème liquide",
+    "icon": "🥛",
+    "sourceUrl": "https://www.notion.so/Cr-me-liquide-28f3546554b0813ebf2ffbf64a24914d?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Crème liquide légère",
+    "icon": "🥛",
+    "sourceUrl": "https://www.notion.so/Cr-me-liquide-l-g-re-28f3546554b0818f9a32d4904b0af525?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Crevettes",
+    "icon": "🍤",
+    "sourceUrl": "https://www.notion.so/Crevettes-28f3546554b0815ab226dc3ce662b7a3?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Cumin",
+    "icon": "🇮🇳",
+    "sourceUrl": "https://www.notion.so/Cumin-2913546554b08146b45be7ff6b2bb06e?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      },
+      {
+        "title": "Houmous",
+        "icon": null,
+        "url": "https://www.notion.so/Houmous-2913546554b08133bb6cf92d96da9e55?pvs=21"
+      },
+      {
+        "title": "Quichezza",
+        "icon": null,
+        "url": "https://www.notion.so/Quichezza-2913546554b08133b61fd4be8838cc09?pvs=21"
+      },
+      {
+        "title": "Sauté de porc caramélisé",
+        "icon": null,
+        "url": "https://www.notion.so/Saut-de-porc-caram-lis-2913546554b081e39823c0fd7e66995c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Curry",
+    "icon": "🇮🇳",
+    "sourceUrl": "https://www.notion.so/Curry-28f3546554b0814eaeedcddee31c478c?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      },
+      {
+        "title": "Curry de pois chiches végan",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-de-pois-chiches-v-gan-28f3546554b081f9bde1db447f8c605e?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Échalote",
+    "icon": "🧄",
+    "sourceUrl": "https://www.notion.so/chalote-28f3546554b08166b6d5d2a30ffa6782?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      },
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      },
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Emmental râpé",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Emmental-r-p-28f3546554b081468153c2684f3ee961?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Épices orientales",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/pices-orientales-2913546554b081fa878eff879d395c65?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Couscous végétarien",
+        "icon": null,
+        "url": "https://www.notion.so/Couscous-v-g-tarien-2913546554b08121b73ccac53dc538e9?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Épinards",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/pinards-28f3546554b0817eb492c9b70aa5e8e7?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      },
+      {
+        "title": "Mijoté de cacahuètes",
+        "icon": null,
+        "url": "https://www.notion.so/Mijot-de-cacahu-tes-2913546554b0816d9f2cf527e3ff5494?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Farine",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/Farine-28f3546554b08146b0d0f9009bb91edc?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Fécule de maïs",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/F-cule-de-ma-s-2913546554b081c59b00db9f1912d8c0?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Lasagne bolognaise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Lasagne-bolognaise-WW-2913546554b081b88de2c86c389c95be?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Fêta",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/F-ta-28f3546554b0812f820af7ff93074c88?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade forestière",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-foresti-re-28f3546554b0815eb2d3e2145ab81031?pvs=21"
+      },
+      {
+        "title": "Salade de riz Méditerranéenne (ww)",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Salade-de-riz-M-diterran-enne-ww-28f3546554b081c19c6cd2b4c466e747?pvs=21"
+      },
+      {
+        "title": "Salade Grecque",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-Grecque-28f3546554b081438900d0e2ffd90c39?pvs=21"
+      },
+      {
+        "title": "Pasta Feta",
+        "icon": null,
+        "url": "https://www.notion.so/Pasta-Feta-2913546554b081039c1dec64c066be83?pvs=21"
+      },
+      {
+        "title": "Fajitas",
+        "icon": null,
+        "url": "https://www.notion.so/Fajitas-2913546554b081e89e03e6babcff8cf6?pvs=21"
+      },
+      {
+        "title": "Grilled cheese & Soupe",
+        "icon": null,
+        "url": "https://www.notion.so/Grilled-cheese-Soupe-2913546554b081c8b1f5f3aa4f97ae01?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Filet de poulet",
+    "icon": "🍗",
+    "sourceUrl": "https://www.notion.so/Filet-de-poulet-28f3546554b0814b9714c21089afb174?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      },
+      {
+        "title": "Pokeball poulet",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Pokeball-poulet-28f3546554b081be9af7d2933e25ca49?pvs=21"
+      },
+      {
+        "title": "Poulet grillé aux pâtes et au Pesto (ww)",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Poulet-grill-aux-p-tes-et-au-Pesto-ww-28f3546554b081948b6bcbc88dde37d4?pvs=21"
+      },
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      },
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      },
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      },
+      {
+        "title": "Riz sauté et poulet à la Coréenne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-saut-et-poulet-la-Cor-enne-28f3546554b081f59e40f93e6be56a57?pvs=21"
+      },
+      {
+        "title": "Fried rice - Valin food",
+        "icon": null,
+        "url": "https://www.notion.so/Fried-rice-Valin-food-2913546554b081ba98e4f34b22258f58?pvs=21"
+      },
+      {
+        "title": "Fajitas",
+        "icon": null,
+        "url": "https://www.notion.so/Fajitas-2913546554b081e89e03e6babcff8cf6?pvs=21"
+      },
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      },
+      {
+        "title": "Salade poulet teriyaki (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-poulet-teriyaki-ww-2913546554b081d2bd7df29ded5334ef?pvs=21"
+      },
+      {
+        "title": "Poulet sauté au basilique",
+        "icon": null,
+        "url": "https://www.notion.so/Poulet-saut-au-basilique-2913546554b081f48190c1c2c9533a2c?pvs=21"
+      },
+      {
+        "title": "Galette poulet chèvre miel",
+        "icon": null,
+        "url": "https://www.notion.so/Galette-poulet-ch-vre-miel-2913546554b081879425e93e12b6391b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Fromage blanc",
+    "icon": "🥛",
+    "sourceUrl": "https://www.notion.so/Fromage-blanc-28f3546554b081a49de4d3b25a1bf424?pvs=21",
+    "aisle": "Yaourt",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pâtes à la crème de poivrons",
+        "icon": "🍝",
+        "url": "https://www.notion.so/P-tes-la-cr-me-de-poivrons-28f3546554b0815997e0e4c3dcf9c1e9?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Fromage de chèvre",
+    "icon": "🐑",
+    "sourceUrl": "https://www.notion.so/Fromage-de-ch-vre-28f3546554b0817abbfecee1871aec9e?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Quiche, poireaux et fromage de chèvre",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Quiche-poireaux-et-fromage-de-ch-vre-28f3546554b081968214d4d478609850?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Fromage frais",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Fromage-frais-28f3546554b0811598f9f13818846dc2?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Soupe de potiron au fromage frais",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Soupe-de-potiron-au-fromage-frais-28f3546554b081409ba3eded39968e26?pvs=21"
+      },
+      {
+        "title": "Soupe de courgettes au fromage frais",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Soupe-de-courgettes-au-fromage-frais-28f3546554b081a6983df07f22995218?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Fusilli",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Fusilli-28f3546554b081078c22db90f20611e7?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poulet grillé aux pâtes et au Pesto (ww)",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Poulet-grill-aux-p-tes-et-au-Pesto-ww-28f3546554b081948b6bcbc88dde37d4?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Galettes de fajitas",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/Galettes-de-fajitas-2913546554b081c2af00c149868d66be?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Fajitas",
+        "icon": null,
+        "url": "https://www.notion.so/Fajitas-2913546554b081e89e03e6babcff8cf6?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Galettes de riz",
+    "icon": "🍚",
+    "sourceUrl": "https://www.notion.so/Galettes-de-riz-28f3546554b08109b8f0d3afa7290319?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Galettes de sarrasin",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/Galettes-de-sarrasin-2913546554b081bcb1a8fdea2c0b9fd9?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Galette poulet chèvre miel",
+        "icon": null,
+        "url": "https://www.notion.so/Galette-poulet-ch-vre-miel-2913546554b081879425e93e12b6391b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Galettes fajitas",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/Galettes-fajitas-28f3546554b0814394abf004ae913ae3?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Galettes wrap",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/Galettes-wrap-2913546554b08153bcc2ebc46bab4be5?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Wrap chèvre jambon",
+        "icon": null,
+        "url": "https://www.notion.so/Wrap-ch-vre-jambon-2913546554b081a1bb8dc89050ce6130?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Gingembre",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Gingembre-28f3546554b0817a9496e6bad5f80fa0?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      },
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      },
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      },
+      {
+        "title": "Curry de pois chiches végan",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-de-pois-chiches-v-gan-28f3546554b081f9bde1db447f8c605e?pvs=21"
+      },
+      {
+        "title": "Nouille Udon, bœuf et oignons",
+        "icon": "🍜",
+        "url": "https://www.notion.so/Nouille-Udon-b-uf-et-oignons-28f3546554b0816182dccc906c4cd4b0?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Gnocchi",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Gnocchi-28f3546554b081a9844afcdd903dd278?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de gnocchis pesto",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-gnocchis-pesto-28f3546554b0817eb18dfd09983c0560?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Gouda",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Gouda-2913546554b0811082d6d43276158b29?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Grilled cheese & Soupe",
+        "icon": null,
+        "url": "https://www.notion.so/Grilled-cheese-Soupe-2913546554b081c8b1f5f3aa4f97ae01?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Graines de chia",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Graines-de-chia-28f3546554b0816189e3db629afb6f40?pvs=21",
+    "aisle": "Vrac",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz sauté et poulet à la Coréenne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-saut-et-poulet-la-Cor-enne-28f3546554b081f59e40f93e6be56a57?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Graines de sésame",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Graines-de-s-same-2913546554b081738fddd19dc5ab291d?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Graines de sésame",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Graines-de-s-same-28f3546554b081ef973cc70f2a3aa741?pvs=21",
+    "aisle": "Vrac",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Graines de soja",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Graines-de-soja-28f3546554b0815796d7d534e282722f?pvs=21",
+    "aisle": "Vrac",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Haricots mungo",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Haricots-mungo-2913546554b08147866cd99933664c7f?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de thon et mangue",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-de-thon-et-mangue-2913546554b08105bfc9d1763116c8f2?pvs=21"
+      },
+      {
+        "title": "Poulet sauté au basilique",
+        "icon": null,
+        "url": "https://www.notion.so/Poulet-saut-au-basilique-2913546554b081f48190c1c2c9533a2c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Haricots noirs",
+    "icon": "🫘",
+    "sourceUrl": "https://www.notion.so/Haricots-noirs-28f3546554b081ec849bcba96f843c9c?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos végé (ww)",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-v-g-ww-28f3546554b081849f5bf562315dd911?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Haricots rouges",
+    "icon": "🫘",
+    "sourceUrl": "https://www.notion.so/Haricots-rouges-28f3546554b0819abdd8fefd5456ec79?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de riz Méditerranéenne (ww)",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Salade-de-riz-M-diterran-enne-ww-28f3546554b081c19c6cd2b4c466e747?pvs=21"
+      },
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Hauts de cuisses de poulet",
+    "icon": "🍗",
+    "sourceUrl": "https://www.notion.so/Hauts-de-cuisses-de-poulet-28f3546554b081668011f6bff40c8640?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Velouté de Chou-fleur et cuisse de poulet",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Velout-de-Chou-fleur-et-cuisse-de-poulet-28f3546554b081cb8014fda86664ea3d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Houmous",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Houmous-2913546554b081609757ce6f5f4124e2?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Légumes houmous",
+        "icon": null,
+        "url": "https://www.notion.so/L-gumes-houmous-2913546554b0812bbd0ed16b8ff64f7c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Houmous",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Houmous-28f3546554b08155b2e3dc3f908847c3?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bagel Saumon",
+        "icon": "🥯",
+        "url": "https://www.notion.so/Bagel-Saumon-28f3546554b0810b8e16c043821da8d1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Huile d'olive",
+    "icon": "🫒",
+    "sourceUrl": "https://www.notion.so/Huile-d-olive-28f3546554b081eebca0e653a7e91898?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      },
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Huile de sésame",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Huile-de-s-same-28f3546554b0811c8f57ffc4884dd57a?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Huile de tournesol",
+    "icon": "🌻",
+    "sourceUrl": "https://www.notion.so/Huile-de-tournesol-28f3546554b081ac930fc5c30315c355?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz sauté et poulet à la Coréenne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-saut-et-poulet-la-Cor-enne-28f3546554b081f59e40f93e6be56a57?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Jambon",
+    "icon": "🍖",
+    "sourceUrl": "https://www.notion.so/Jambon-28f3546554b0813d832efcc9934988bc?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade paysane",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-paysane-28f3546554b081439228f858bf2e80c6?pvs=21"
+      },
+      {
+        "title": "Wrap chèvre jambon",
+        "icon": null,
+        "url": "https://www.notion.so/Wrap-ch-vre-jambon-2913546554b081a1bb8dc89050ce6130?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Jus de citron",
+    "icon": "🍋",
+    "sourceUrl": "https://www.notion.so/Jus-de-citron-2913546554b081d69e18faa8d394a3b8?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      },
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Lait de coco",
+    "icon": "🥥",
+    "sourceUrl": "https://www.notion.so/Lait-de-coco-28f3546554b08189bbf9d21211ecc58d?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      },
+      {
+        "title": "Curry de pois chiches végan",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-de-pois-chiches-v-gan-28f3546554b081f9bde1db447f8c605e?pvs=21"
+      },
+      {
+        "title": "Pomme de terre et œufs rendang",
+        "icon": null,
+        "url": "https://www.notion.so/Pomme-de-terre-et-ufs-rendang-2913546554b081e8bb82dea78439ddbc?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Lait écrémé",
+    "icon": "🥛",
+    "sourceUrl": "https://www.notion.so/Lait-cr-m-28f3546554b081bf9f9eca06ab7d393f?pvs=21",
+    "aisle": "Lait et oeuf",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Velouté de Chou-fleur et cuisse de poulet",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Velout-de-Chou-fleur-et-cuisse-de-poulet-28f3546554b081cb8014fda86664ea3d?pvs=21"
+      },
+      {
+        "title": "Lasagne bolognaise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Lasagne-bolognaise-WW-2913546554b081b88de2c86c389c95be?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Laitue",
+    "icon": "🥗",
+    "sourceUrl": "https://www.notion.so/Laitue-28f3546554b081ca9816e4d3b1fc4f1c?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Salade poulet teriyaki (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-poulet-teriyaki-ww-2913546554b081d2bd7df29ded5334ef?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Lasagne précuite",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Lasagne-pr-cuite-2913546554b081b8983ef0a478acffb1?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Lasagne bolognaise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Lasagne-bolognaise-WW-2913546554b081b88de2c86c389c95be?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Lentilles corail",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Lentilles-corail-28f3546554b0815a813af00843e4e26f?pvs=21",
+    "aisle": "Vrac",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Maïzena",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/Ma-zena-28f3546554b081b1b84bd1a487933947?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Nouille Udon, bœuf et oignons",
+        "icon": "🍜",
+        "url": "https://www.notion.so/Nouille-Udon-b-uf-et-oignons-28f3546554b0816182dccc906c4cd4b0?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mandarine",
+    "icon": "🍊",
+    "sourceUrl": "https://www.notion.so/Mandarine-28f3546554b081c6bc29faf86f97ca92?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mangue",
+    "icon": "🥭",
+    "sourceUrl": "https://www.notion.so/Mangue-28f3546554b0819394a8f4742f67db97?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pokeball poulet",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Pokeball-poulet-28f3546554b081be9af7d2933e25ca49?pvs=21"
+      },
+      {
+        "title": "Salade de thon et mangue",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-de-thon-et-mangue-2913546554b08105bfc9d1763116c8f2?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mascarpone",
+    "icon": "🍦",
+    "sourceUrl": "https://www.notion.so/Mascarpone-2913546554b0814dbfeacad0f4bc3f33?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tiramisu",
+        "icon": "🧁",
+        "url": "https://www.notion.so/Tiramisu-2913546554b0811b942afee2689ecfc7?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mélange gourmand",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/M-lange-gourmand-28f3546554b08164b4aecfe1b6ad5c16?pvs=21",
+    "aisle": "Vrac",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Saumon lentilles et riz rouge",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Saumon-lentilles-et-riz-rouge-28f3546554b08148b360d8c748ba2941?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mélange pour wok",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/M-lange-pour-wok-28f3546554b081bd905bc2ae42a740c8?pvs=21",
+    "aisle": "Surgelé",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Menthe",
+    "icon": "🌿",
+    "sourceUrl": "https://www.notion.so/Menthe-28f3546554b081b0b5a2ce4e30808033?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mesclun",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Mesclun-2913546554b08120b4cbee3c38025f70?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      },
+      {
+        "title": "Bagel Saumon",
+        "icon": "🥯",
+        "url": "https://www.notion.so/Bagel-Saumon-28f3546554b0810b8e16c043821da8d1?pvs=21"
+      },
+      {
+        "title": "Salade forestière",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-foresti-re-28f3546554b0815eb2d3e2145ab81031?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Miel",
+    "icon": "🐝",
+    "sourceUrl": "https://www.notion.so/Miel-28f3546554b0816cbc21fa7d16ca9918?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Nouille Udon, bœuf et oignons",
+        "icon": "🍜",
+        "url": "https://www.notion.so/Nouille-Udon-b-uf-et-oignons-28f3546554b0816182dccc906c4cd4b0?pvs=21"
+      },
+      {
+        "title": "Salade poulet teriyaki (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-poulet-teriyaki-ww-2913546554b081d2bd7df29ded5334ef?pvs=21"
+      },
+      {
+        "title": "Poulet sauté au basilique",
+        "icon": null,
+        "url": "https://www.notion.so/Poulet-saut-au-basilique-2913546554b081f48190c1c2c9533a2c?pvs=21"
+      },
+      {
+        "title": "Galette poulet chèvre miel",
+        "icon": null,
+        "url": "https://www.notion.so/Galette-poulet-ch-vre-miel-2913546554b081879425e93e12b6391b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mortadelle",
+    "icon": "🥓",
+    "sourceUrl": "https://www.notion.so/Mortadelle-2913546554b081a9b842feaf24dde47b?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pâtes pesto & pistache",
+        "icon": null,
+        "url": "https://www.notion.so/P-tes-pesto-pistache-2913546554b08165a41ad5f8f1ce1c9c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Moutarde",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Moutarde-2913546554b0814baa53ef12cdc4a8ae?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Galette poulet chèvre miel",
+        "icon": null,
+        "url": "https://www.notion.so/Galette-poulet-ch-vre-miel-2913546554b081879425e93e12b6391b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mozzarella",
+    "icon": "🐮",
+    "sourceUrl": "https://www.notion.so/Mozzarella-28f3546554b081c0ad55d587889af2c3?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      },
+      {
+        "title": "Tarte à la tomate et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Tarte-la-tomate-et-burrata-28f3546554b081e194f0e3760ef2bd4f?pvs=21"
+      },
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Mozzarella râpée",
+    "icon": "🐮",
+    "sourceUrl": "https://www.notion.so/Mozzarella-r-p-e-28f3546554b081259e5bde365dda0adc?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      },
+      {
+        "title": "Rigatoni tomate mozza",
+        "icon": null,
+        "url": "https://www.notion.so/Rigatoni-tomate-mozza-2913546554b081368a6fc97c971a1b45?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Nectarine",
+    "icon": "🍑",
+    "sourceUrl": "https://www.notion.so/Nectarine-28f3546554b081659648f6aa98d7b0c1?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Noix de cajou",
+    "icon": "🌰",
+    "sourceUrl": "https://www.notion.so/Noix-de-cajou-28f3546554b08189a811d37dba92e3bb?pvs=21",
+    "aisle": "Vrac",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      },
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      },
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Nouilles de blé",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Nouilles-de-bl-28f3546554b0812f930fe87aca1f02b1?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Nouilles de riz",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Nouilles-de-riz-28f3546554b081a38793ef80bfe9b2d0?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Nouilles soba",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Nouilles-soba-28f3546554b08161985dee3bcb354a81?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Nouilles udon",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Nouilles-udon-28f3546554b0812c8214d992014b2fee?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Nouille Udon, bœuf et oignons",
+        "icon": "🍜",
+        "url": "https://www.notion.so/Nouille-Udon-b-uf-et-oignons-28f3546554b0816182dccc906c4cd4b0?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Nuoc-Mâm",
+    "icon": "🐟",
+    "sourceUrl": "https://www.notion.so/Nuoc-M-m-28f3546554b08163bd8be61e410f041c?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      },
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Œufs",
+    "icon": "🥚",
+    "sourceUrl": "https://www.notion.so/ufs-28f3546554b081eb81dad52d4d44c8bf?pvs=21",
+    "aisle": "Lait et oeuf",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carbonara",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Carbonara-28f3546554b081fbbf3bc89f228c09ff?pvs=21"
+      },
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      },
+      {
+        "title": "Croque-Monsieur",
+        "icon": "🥪",
+        "url": "https://www.notion.so/Croque-Monsieur-28f3546554b0815d8b7ffe6b4b97245d?pvs=21"
+      },
+      {
+        "title": "Tarte à la tomate et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Tarte-la-tomate-et-burrata-28f3546554b081e194f0e3760ef2bd4f?pvs=21"
+      },
+      {
+        "title": "Quiche, poireaux et fromage de chèvre",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Quiche-poireaux-et-fromage-de-ch-vre-28f3546554b081968214d4d478609850?pvs=21"
+      },
+      {
+        "title": "Bagel Saumon",
+        "icon": "🥯",
+        "url": "https://www.notion.so/Bagel-Saumon-28f3546554b0810b8e16c043821da8d1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Oignon",
+    "icon": "🧅",
+    "sourceUrl": "https://www.notion.so/Oignon-28f3546554b0810c9e5bf4be1aea23f5?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      },
+      {
+        "title": "Soupe de potiron au fromage frais",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Soupe-de-potiron-au-fromage-frais-28f3546554b081409ba3eded39968e26?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Oignon rouge",
+    "icon": "🧅",
+    "sourceUrl": "https://www.notion.so/Oignon-rouge-28f3546554b08144a2cac6c8db837170?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      },
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Oignons frits",
+    "icon": "🧅",
+    "sourceUrl": "https://www.notion.so/Oignons-frits-28f3546554b081aebf36d33f050c8189?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pokeball poulet",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Pokeball-poulet-28f3546554b081be9af7d2933e25ca49?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Oignons nouveaux",
+    "icon": "🧅",
+    "sourceUrl": "https://www.notion.so/Oignons-nouveaux-28f3546554b081aa9187c780d3be77ef?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz sauté et poulet à la Coréenne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-saut-et-poulet-la-Cor-enne-28f3546554b081f59e40f93e6be56a57?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Olives noires",
+    "icon": "🫒",
+    "sourceUrl": "https://www.notion.so/Olives-noires-28f3546554b081a7bffeef8a113ba068?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de riz Méditerranéenne (ww)",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Salade-de-riz-M-diterran-enne-ww-28f3546554b081c19c6cd2b4c466e747?pvs=21"
+      },
+      {
+        "title": "Pizza chèvre tomate cerise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Pizza-ch-vre-tomate-cerise-WW-2913546554b081259a54d117ccc71386?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Olives vertes",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Olives-vertes-28f3546554b081e983e2c31b2842899d?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade Grecque",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-Grecque-28f3546554b081438900d0e2ffd90c39?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Orecchiette",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Orecchiette-28f3546554b08168a032f0029b5b5e78?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pain bagel",
+    "icon": "🥯",
+    "sourceUrl": "https://www.notion.so/Pain-bagel-28f3546554b081dabecdd5262b55a45a?pvs=21",
+    "aisle": "Boulangerie",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bagel Saumon",
+        "icon": "🥯",
+        "url": "https://www.notion.so/Bagel-Saumon-28f3546554b0810b8e16c043821da8d1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pain de campagne",
+    "icon": "🥖",
+    "sourceUrl": "https://www.notion.so/Pain-de-campagne-2913546554b08146ba0bde3df35b5474?pvs=21",
+    "aisle": "Boulangerie",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Grilled cheese & Soupe",
+        "icon": null,
+        "url": "https://www.notion.so/Grilled-cheese-Soupe-2913546554b081c8b1f5f3aa4f97ae01?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pain de mie",
+    "icon": "🍞",
+    "sourceUrl": "https://www.notion.so/Pain-de-mie-28f3546554b0810eb4bffb162ac6ad2c?pvs=21",
+    "aisle": "Brioche & pain de mie",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Croque-Monsieur",
+        "icon": "🥪",
+        "url": "https://www.notion.so/Croque-Monsieur-28f3546554b0815d8b7ffe6b4b97245d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Palets de chèvre",
+    "icon": "🐑",
+    "sourceUrl": "https://www.notion.so/Palets-de-ch-vre-2913546554b08129b031edadf85abd7d?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Galette poulet chèvre miel",
+        "icon": null,
+        "url": "https://www.notion.so/Galette-poulet-ch-vre-miel-2913546554b081879425e93e12b6391b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pancetta",
+    "icon": "🥓",
+    "sourceUrl": "https://www.notion.so/Pancetta-28f3546554b081719aa5eec9b316366a?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carbonara",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Carbonara-28f3546554b081fbbf3bc89f228c09ff?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Paprika",
+    "icon": "🌶️",
+    "sourceUrl": "https://www.notion.so/Paprika-2913546554b081eea1e8d52e322706d5?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Fajitas",
+        "icon": null,
+        "url": "https://www.notion.so/Fajitas-2913546554b081e89e03e6babcff8cf6?pvs=21"
+      },
+      {
+        "title": "Salade de poivron (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-de-poivron-ww-2913546554b0819798c9d71960dc77bf?pvs=21"
+      },
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      },
+      {
+        "title": "Saumon lentilles et riz rouge",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Saumon-lentilles-et-riz-rouge-28f3546554b08148b360d8c748ba2941?pvs=21"
+      },
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Parmesan",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Parmesan-28f3546554b08109a8a7f37d100384f9?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carbonara",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Carbonara-28f3546554b081fbbf3bc89f228c09ff?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Patate douce",
+    "icon": "🍠",
+    "sourceUrl": "https://www.notion.so/Patate-douce-2913546554b081e4b169e536e913c293?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Mijoté de cacahuètes",
+        "icon": null,
+        "url": "https://www.notion.so/Mijot-de-cacahu-tes-2913546554b0816d9f2cf527e3ff5494?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pâte à pizza",
+    "icon": "🍕",
+    "sourceUrl": "https://www.notion.so/P-te-pizza-2913546554b0816e9458d68a81f28155?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pizza chèvre tomate cerise (WW)",
+        "icon": null,
+        "url": "https://www.notion.so/Pizza-ch-vre-tomate-cerise-WW-2913546554b081259a54d117ccc71386?pvs=21"
+      },
+      {
+        "title": "Quichezza",
+        "icon": null,
+        "url": "https://www.notion.so/Quichezza-2913546554b08133b61fd4be8838cc09?pvs=21"
+      },
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pâte brisée",
+    "icon": "🍕",
+    "sourceUrl": "https://www.notion.so/P-te-bris-e-28f3546554b0817dbb01dd9db5f30f5a?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tarte à la tomate et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Tarte-la-tomate-et-burrata-28f3546554b081e194f0e3760ef2bd4f?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pâte de curry",
+    "icon": "🇮🇳",
+    "sourceUrl": "https://www.notion.so/P-te-de-curry-2913546554b081c88636ca29bbcb3a3c?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pomme de terre et œufs rendang",
+        "icon": null,
+        "url": "https://www.notion.so/Pomme-de-terre-et-ufs-rendang-2913546554b081e8bb82dea78439ddbc?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pâte de curry rouge",
+    "icon": "🇮🇳",
+    "sourceUrl": "https://www.notion.so/P-te-de-curry-rouge-28f3546554b081ca932adc12b0bc6e8c?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pâte feuilletée",
+    "icon": "🍕",
+    "sourceUrl": "https://www.notion.so/P-te-feuillet-e-28f3546554b081e8be17cd3c9c7baefd?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "American Pizza",
+        "icon": "🍕",
+        "url": "https://www.notion.so/American-Pizza-28f3546554b081d49a0ac1970533c6c6?pvs=21"
+      },
+      {
+        "title": "Quiche, poireaux et fromage de chèvre",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Quiche-poireaux-et-fromage-de-ch-vre-28f3546554b081968214d4d478609850?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pâte miso",
+    "icon": "🐟",
+    "sourceUrl": "https://www.notion.so/P-te-miso-28f3546554b081d393b7d5906ef3d7de?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pâtes",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/P-tes-28f3546554b08172944bfad82183cb9c?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carbonara",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Carbonara-28f3546554b081fbbf3bc89f228c09ff?pvs=21"
+      },
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      },
+      {
+        "title": "Pasta Feta",
+        "icon": null,
+        "url": "https://www.notion.so/Pasta-Feta-2913546554b081039c1dec64c066be83?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Persil",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Persil-28f3546554b08121b705e4f19d4fd7f2?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "American Pizza",
+        "icon": "🍕",
+        "url": "https://www.notion.so/American-Pizza-28f3546554b081d49a0ac1970533c6c6?pvs=21"
+      },
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pesto",
+    "icon": "🌿",
+    "sourceUrl": "https://www.notion.so/Pesto-28f3546554b0811386a9c89d61dfecbe?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poulet grillé aux pâtes et au Pesto (ww)",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Poulet-grill-aux-p-tes-et-au-Pesto-ww-28f3546554b081948b6bcbc88dde37d4?pvs=21"
+      },
+      {
+        "title": "Tarte à la tomate et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Tarte-la-tomate-et-burrata-28f3546554b081e194f0e3760ef2bd4f?pvs=21"
+      },
+      {
+        "title": "Salade de gnocchis pesto",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-gnocchis-pesto-28f3546554b0817eb18dfd09983c0560?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Petits pois",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Petits-pois-28f3546554b0810dbb15ff01987159da?pvs=21",
+    "aisle": "Surgelé",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pignons de pin",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Pignons-de-pin-28f3546554b0814db6dafba35e851d7b?pvs=21",
+    "aisle": "Vrac",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tarte à la tomate et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Tarte-la-tomate-et-burrata-28f3546554b081e194f0e3760ef2bd4f?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Piment",
+    "icon": "🌶️",
+    "sourceUrl": "https://www.notion.so/Piment-28f3546554b0819680c3df2a3a1137c1?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Piment chili",
+    "icon": "🌶️",
+    "sourceUrl": "https://www.notion.so/Piment-chili-2913546554b081b1aabbf5279ecebee1?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Mijoté de cacahuètes",
+        "icon": null,
+        "url": "https://www.notion.so/Mijot-de-cacahu-tes-2913546554b0816d9f2cf527e3ff5494?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Piment d'Espelette",
+    "icon": "🌶️",
+    "sourceUrl": "https://www.notion.so/Piment-d-Espelette-28f3546554b08189aa16ce33a0a708e4?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Soupe de courgettes au fromage frais",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Soupe-de-courgettes-au-fromage-frais-28f3546554b081a6983df07f22995218?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Piment en poudre",
+    "icon": "🌶️",
+    "sourceUrl": "https://www.notion.so/Piment-en-poudre-28f3546554b0812f854afaed0916b572?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pistaches",
+    "icon": "🌰",
+    "sourceUrl": "https://www.notion.so/Pistaches-2913546554b081578de8f5d2c0715459?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pâtes pesto & pistache",
+        "icon": null,
+        "url": "https://www.notion.so/P-tes-pesto-pistache-2913546554b08165a41ad5f8f1ce1c9c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Poireau",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Poireau-28f3546554b081cb9320ee1032c3d060?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pois chiches",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Pois-chiches-2913546554b0819dacf5d1a7b7cbdd15?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Houmous",
+        "icon": null,
+        "url": "https://www.notion.so/Houmous-2913546554b08133bb6cf92d96da9e55?pvs=21"
+      },
+      {
+        "title": "Couscous végétarien",
+        "icon": null,
+        "url": "https://www.notion.so/Couscous-v-g-tarien-2913546554b08121b73ccac53dc538e9?pvs=21"
+      },
+      {
+        "title": "Curry de pois chiches végan",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-de-pois-chiches-v-gan-28f3546554b081f9bde1db447f8c605e?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pois gourmands",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Pois-gourmands-28f3546554b081b09af1d77a1874da4f?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Poivron",
+    "icon": "🫑",
+    "sourceUrl": "https://www.notion.so/Poivron-28f3546554b081a69eaeda7073f42f93?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      },
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Pâtes à la crème de poivrons",
+        "icon": "🍝",
+        "url": "https://www.notion.so/P-tes-la-cr-me-de-poivrons-28f3546554b0815997e0e4c3dcf9c1e9?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Poivron jaune",
+    "icon": "🫑",
+    "sourceUrl": "https://www.notion.so/Poivron-jaune-2913546554b0819684a8e4a09320eadf?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      },
+      {
+        "title": "Salade de poivron (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-de-poivron-ww-2913546554b0819798c9d71960dc77bf?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pommes de terre",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Pommes-de-terre-28f3546554b081f48eb2fe81b2ec3627?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Curry thaï rouge aux légumes",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-tha-rouge-aux-l-gumes-28f3546554b08163a2e0ea088fffad4b?pvs=21"
+      },
+      {
+        "title": "Curry de pois chiches végan",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-de-pois-chiches-v-gan-28f3546554b081f9bde1db447f8c605e?pvs=21"
+      },
+      {
+        "title": "Pomme de terre et œufs rendang",
+        "icon": null,
+        "url": "https://www.notion.so/Pomme-de-terre-et-ufs-rendang-2913546554b081e8bb82dea78439ddbc?pvs=21"
+      },
+      {
+        "title": "Truffade",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Truffade-28f3546554b0816aa392ea252fe420d0?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Porc",
+    "icon": "🥩",
+    "sourceUrl": "https://www.notion.so/Porc-2913546554b081c1a4e3df62cb02095a?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      },
+      {
+        "title": "Porc sauté au brocoli et noix de cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Porc-saut-au-brocoli-et-noix-de-cajou-28f3546554b081f1bb2ce11039053372?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Potiron",
+    "icon": "🎃",
+    "sourceUrl": "https://www.notion.so/Potiron-28f3546554b0819ca715ec1b5de4316d?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Soupe de potiron au fromage frais",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Soupe-de-potiron-au-fromage-frais-28f3546554b081409ba3eded39968e26?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pousses de soja",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Pousses-de-soja-28f3546554b081788ebfc81f0ce03eb7?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Pulpe de tomate",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Pulpe-de-tomate-28f3546554b081bc917dcb2f1847b052?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Radis",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Radis-28f3546554b0819c90dde5a784ba8b39?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pokeball poulet",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Pokeball-poulet-28f3546554b081be9af7d2933e25ca49?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Râpé de brebis",
+    "icon": "🐑",
+    "sourceUrl": "https://www.notion.so/R-p-de-brebis-2913546554b081b9a942c86648e1e584?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Coquillette courgette viande hachée",
+        "icon": null,
+        "url": "https://www.notion.so/Coquillette-courgette-viande-hach-e-2913546554b08131941eeb35a9dcec02?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Ricotta",
+    "icon": "🐮",
+    "sourceUrl": "https://www.notion.so/Ricotta-2913546554b0819f8244dd71b08dd7a7?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de thon et mangue",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-de-thon-et-mangue-2913546554b08105bfc9d1763116c8f2?pvs=21"
+      },
+      {
+        "title": "Pâtes à la crème de poivrons",
+        "icon": "🍝",
+        "url": "https://www.notion.so/P-tes-la-cr-me-de-poivrons-28f3546554b0815997e0e4c3dcf9c1e9?pvs=21"
+      },
+      {
+        "title": "Salade de gnocchis pesto",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-gnocchis-pesto-28f3546554b0817eb18dfd09983c0560?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Rigatoni",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Rigatoni-2913546554b081eda2ecc2ae9146a9dd?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Rigatoni tomate mozza",
+        "icon": null,
+        "url": "https://www.notion.so/Rigatoni-tomate-mozza-2913546554b081368a6fc97c971a1b45?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Riz",
+    "icon": "🍚",
+    "sourceUrl": "https://www.notion.so/Riz-28f3546554b0816fb106f08a72db673f?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      },
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      },
+      {
+        "title": "Fried rice - Valin food",
+        "icon": null,
+        "url": "https://www.notion.so/Fried-rice-Valin-food-2913546554b081ba98e4f34b22258f58?pvs=21"
+      },
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      },
+      {
+        "title": "Riz, poivrons et bœuf",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-poivrons-et-b-uf-2913546554b0813eade3c0ccef0623c3?pvs=21"
+      },
+      {
+        "title": "Poulet sauté au basilique",
+        "icon": null,
+        "url": "https://www.notion.so/Poulet-saut-au-basilique-2913546554b081f48190c1c2c9533a2c?pvs=21"
+      },
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      },
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      },
+      {
+        "title": "Pokeball poulet",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Pokeball-poulet-28f3546554b081be9af7d2933e25ca49?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Riz complet",
+    "icon": "🍚",
+    "sourceUrl": "https://www.notion.so/Riz-complet-28f3546554b081a3ab19d096fe2e185c?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de riz Méditerranéenne (ww)",
+        "icon": "🍚",
+        "url": "https://www.notion.so/Salade-de-riz-M-diterran-enne-ww-28f3546554b081c19c6cd2b4c466e747?pvs=21"
+      },
+      {
+        "title": "Riz sauté et poulet à la Coréenne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-saut-et-poulet-la-Cor-enne-28f3546554b081f59e40f93e6be56a57?pvs=21"
+      },
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      },
+      {
+        "title": "Sauté de porc caramélisé",
+        "icon": null,
+        "url": "https://www.notion.so/Saut-de-porc-caram-lis-2913546554b081e39823c0fd7e66995c?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Romarin séché",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Romarin-s-ch-28f3546554b081d28a93c163385f5839?pvs=21",
+    "aisle": "Épices",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Roquette",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Roquette-28f3546554b08167ab73cdf6a2e601e5?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pizza crème de champignon et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Pizza-cr-me-de-champignon-et-burrata-28f3546554b081388afdc1fe00d6cd4d?pvs=21"
+      },
+      {
+        "title": "Carré de porc & sauce au romarin",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Carr-de-porc-sauce-au-romarin-28f3546554b08186b688cea372e2f999?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Saint Moret",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Saint-Moret-28f3546554b081eda448e0b9d2e6603f?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Pokeball poulet",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Pokeball-poulet-28f3546554b081be9af7d2933e25ca49?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Salade",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Salade-2913546554b0814a80a8dbf8cb84be9e?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Galette poulet chèvre miel",
+        "icon": null,
+        "url": "https://www.notion.so/Galette-poulet-ch-vre-miel-2913546554b081879425e93e12b6391b?pvs=21"
+      },
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      },
+      {
+        "title": "Salade paysane",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-paysane-28f3546554b081439228f858bf2e80c6?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Salade iceberg",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Salade-iceberg-2913546554b08153aa72d5c0affe1551?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Wrap chèvre jambon",
+        "icon": null,
+        "url": "https://www.notion.so/Wrap-ch-vre-jambon-2913546554b081a1bb8dc89050ce6130?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Salade mâche betterave",
+    "icon": "🥬",
+    "sourceUrl": "https://www.notion.so/Salade-m-che-betterave-2913546554b08101bb72ea4ae49235fe?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de thon et mangue",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-de-thon-et-mangue-2913546554b08105bfc9d1763116c8f2?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Sauce nem",
+    "icon": "🐟",
+    "sourceUrl": "https://www.notion.so/Sauce-nem-28f3546554b081fe9b16cae891a7781d?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Rouleau de printemps",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Rouleau-de-printemps-28f3546554b081db9d4fe196b2df6cb1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Sauce salsa",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Sauce-salsa-28f3546554b0815488cacaf68799bd91?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos végé (ww)",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-v-g-ww-28f3546554b081849f5bf562315dd911?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Sauce soja",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Sauce-soja-28f3546554b081278821dcdc9de7c73c?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Riz poulet au beurre de cacahuète (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Riz-poulet-au-beurre-de-cacahu-te-ww-28f3546554b0816380f2d0802ce0c9f3?pvs=21"
+      },
+      {
+        "title": "Nouille Udon, bœuf et oignons",
+        "icon": "🍜",
+        "url": "https://www.notion.so/Nouille-Udon-b-uf-et-oignons-28f3546554b0816182dccc906c4cd4b0?pvs=21"
+      },
+      {
+        "title": "Bouillon asiatique aux chou et boulette de porc",
+        "icon": null,
+        "url": "https://www.notion.so/Bouillon-asiatique-aux-chou-et-boulette-de-porc-2913546554b081dab830d5d778fe3487?pvs=21"
+      },
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      },
+      {
+        "title": "Poulet sauté au basilique",
+        "icon": null,
+        "url": "https://www.notion.so/Poulet-saut-au-basilique-2913546554b081f48190c1c2c9533a2c?pvs=21"
+      },
+      {
+        "title": "Sauté de porc caramélisé",
+        "icon": null,
+        "url": "https://www.notion.so/Saut-de-porc-caram-lis-2913546554b081e39823c0fd7e66995c?pvs=21"
+      },
+      {
+        "title": "Bibimbap au boeuf",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Bibimbap-au-boeuf-28f3546554b08165ac04deccd8e35b3b?pvs=21"
+      },
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      },
+      {
+        "title": "Nouilles sautées aux crevettes (WW)",
+        "icon": "🍤",
+        "url": "https://www.notion.so/Nouilles-saut-es-aux-crevettes-WW-28f3546554b081a6a280ee9cbb787d71?pvs=21"
+      },
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      },
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Sauce soja sucrée",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Sauce-soja-sucr-e-28f3546554b081e7afc1d25d04871871?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Sauté de poulet à l'asiatique (légumes et cacahuète)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Saut-de-poulet-l-asiatique-l-gumes-et-cacahu-te-28f3546554b081b5a24fce9c8d50f91a?pvs=21"
+      },
+      {
+        "title": "Fried rice - Valin food",
+        "icon": null,
+        "url": "https://www.notion.so/Fried-rice-Valin-food-2913546554b081ba98e4f34b22258f58?pvs=21"
+      },
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      },
+      {
+        "title": "Riz à la thaï (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Riz-la-tha-ww-2913546554b081dc80c0cd9a9d8e3abb?pvs=21"
+      },
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Sauce teriyaki",
+    "icon": "🐟",
+    "sourceUrl": "https://www.notion.so/Sauce-teriyaki-2913546554b0813ca7f6e4d13b518aa0?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade poulet teriyaki (ww)",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-poulet-teriyaki-ww-2913546554b081d2bd7df29ded5334ef?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Saumon",
+    "icon": "🐟",
+    "sourceUrl": "https://www.notion.so/Saumon-28f3546554b0819f989ecf21a133dd1e?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      },
+      {
+        "title": "Bouillon miso au saumon & Nouilles Soba",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Bouillon-miso-au-saumon-Nouilles-Soba-28f3546554b08147abbcd749f2f64179?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Saumon fumé",
+    "icon": "🐟",
+    "sourceUrl": "https://www.notion.so/Saumon-fum-28f3546554b081e9bc8fca5c3e9131d0?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Bagel Saumon",
+        "icon": "🥯",
+        "url": "https://www.notion.so/Bagel-Saumon-28f3546554b0810b8e16c043821da8d1?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Semoule",
+    "icon": "🌽",
+    "sourceUrl": "https://www.notion.so/Semoule-2913546554b0818ca0d9cc19ad488674?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Légumes houmous",
+        "icon": null,
+        "url": "https://www.notion.so/L-gumes-houmous-2913546554b0812bbd0ed16b8ff64f7c?pvs=21"
+      },
+      {
+        "title": "Couscous végétarien",
+        "icon": null,
+        "url": "https://www.notion.so/Couscous-v-g-tarien-2913546554b08121b73ccac53dc538e9?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Spaghetti",
+    "icon": "🍝",
+    "sourceUrl": "https://www.notion.so/Spaghetti-2913546554b081578256c1746bf7214e?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Spaghetti bolognaise",
+        "icon": null,
+        "url": "https://www.notion.so/Spaghetti-bolognaise-2913546554b08180926ce54b8f9b8d88?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Sucre roux",
+    "icon": "🍪",
+    "sourceUrl": "https://www.notion.so/Sucre-roux-2913546554b081449843f940883322c5?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tiramisu",
+        "icon": "🧁",
+        "url": "https://www.notion.so/Tiramisu-2913546554b0811b942afee2689ecfc7?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Sucre vanillé",
+    "icon": "🍪",
+    "sourceUrl": "https://www.notion.so/Sucre-vanill-2913546554b081699dcfc7db7457b59e?pvs=21",
+    "aisle": "Épicerie sucrée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Tiramisu",
+        "icon": "🧁",
+        "url": "https://www.notion.so/Tiramisu-2913546554b0811b942afee2689ecfc7?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tahin",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Tahin-2913546554b08178b4e4c7d73126d65c?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Houmous",
+        "icon": null,
+        "url": "https://www.notion.so/Houmous-2913546554b08133bb6cf92d96da9e55?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Thon cru",
+    "icon": "🐟",
+    "sourceUrl": "https://www.notion.so/Thon-cru-2913546554b081daabc7d29d0a9820a0?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de thon et mangue",
+        "icon": null,
+        "url": "https://www.notion.so/Salade-de-thon-et-mangue-2913546554b08105bfc9d1763116c8f2?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Thym frais",
+    "icon": "🌱",
+    "sourceUrl": "https://www.notion.so/Thym-frais-28f3546554b081b4bfbdd3586dc07c87?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Toastinette",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Toastinette-28f3546554b0814389a8c7e123df2701?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Croque-Monsieur",
+        "icon": "🥪",
+        "url": "https://www.notion.so/Croque-Monsieur-28f3546554b0815d8b7ffe6b4b97245d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tomate",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Tomate-28f3546554b081e9b6ebf0e786ea787a?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de Boulgour au poulet et nectarine (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-Boulgour-au-poulet-et-nectarine-ww-28f3546554b08176ab26efad769e1081?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tomates cerises",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Tomates-cerises-28f3546554b081078b9fdfbb478c5dd2?pvs=21",
+    "aisle": "Fruits et légumes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      },
+      {
+        "title": "Salade paysane",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-paysane-28f3546554b081439228f858bf2e80c6?pvs=21"
+      },
+      {
+        "title": "Poulet grillé aux pâtes et au Pesto (ww)",
+        "icon": "🍝",
+        "url": "https://www.notion.so/Poulet-grill-aux-p-tes-et-au-Pesto-ww-28f3546554b081948b6bcbc88dde37d4?pvs=21"
+      },
+      {
+        "title": "Tarte à la tomate et burrata",
+        "icon": "🍕",
+        "url": "https://www.notion.so/Tarte-la-tomate-et-burrata-28f3546554b081e194f0e3760ef2bd4f?pvs=21"
+      },
+      {
+        "title": "Salade de gnocchis pesto",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-gnocchis-pesto-28f3546554b0817eb18dfd09983c0560?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tomates confites",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Tomates-confites-28f3546554b081669f46f8ccb37a4322?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Orzo crémeux & pavé de saumon",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Orzo-cr-meux-pav-de-saumon-28f3546554b0810ab8d7c016ac152769?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tomates en dés",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Tomates-en-d-s-28f3546554b081079217e0b5da143811?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Curry de pois chiches végan",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Curry-de-pois-chiches-v-gan-28f3546554b081f9bde1db447f8c605e?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tomates pelées",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Tomates-pel-es-28f3546554b081dc810bcb4da637dddb?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poulet au paprika, lentilles et légumes grillés",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Poulet-au-paprika-lentilles-et-l-gumes-grill-s-28f3546554b081d6a123d274da28db8a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tomates séchées",
+    "icon": "🍅",
+    "sourceUrl": "https://www.notion.so/Tomates-s-ch-es-28f3546554b08185bd62ea344ff7fa03?pvs=21",
+    "aisle": "Conserve",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Wok de nouilles, poulet cajou (ww)",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Wok-de-nouilles-poulet-cajou-ww-28f3546554b08174aa93e37c9e2458f8?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tome fraîche",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Tome-fra-che-28f3546554b081d3861fdcf3f1dbf94a?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Truffade",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Truffade-28f3546554b0816aa392ea252fe420d0?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Tortilla",
+    "icon": "🥔",
+    "sourceUrl": "https://www.notion.so/Tortilla-28f3546554b0818daa91d4c3cffcfb29?pvs=21",
+    "aisle": "Charcuterie et pâtes fraîches",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos végé (ww)",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-v-g-ww-28f3546554b081849f5bf562315dd911?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Vache qui rit",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Vache-qui-rit-2913546554b081878d69ddedfaec8928?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Wrap chèvre jambon",
+        "icon": null,
+        "url": "https://www.notion.so/Wrap-ch-vre-jambon-2913546554b081a1bb8dc89050ce6130?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Vache qui rit légère",
+    "icon": "🧀",
+    "sourceUrl": "https://www.notion.so/Vache-qui-rit-l-g-re-28f3546554b081c7ac8bc37e6255207e?pvs=21",
+    "aisle": "Fromage et crème",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Velouté de Chou-fleur et cuisse de poulet",
+        "icon": "🍲",
+        "url": "https://www.notion.so/Velout-de-Chou-fleur-et-cuisse-de-poulet-28f3546554b081cb8014fda86664ea3d?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Vermicelles de riz",
+    "icon": "🍚",
+    "sourceUrl": "https://www.notion.so/Vermicelles-de-riz-28f3546554b081f5ac6fe6ec2cf26243?pvs=21",
+    "aisle": "Riz et pâtes",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Vermicelles de riz au poulet et noix de Cajou",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Vermicelles-de-riz-au-poulet-et-noix-de-Cajou-28f3546554b0816cb09fc98b6c44f21a?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Viande hachée",
+    "icon": "🥩",
+    "sourceUrl": "https://www.notion.so/Viande-hach-e-28f3546554b08138aae5d90db352df28?pvs=21",
+    "aisle": "Viandes et poissons",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Burritos",
+        "icon": "🌯",
+        "url": "https://www.notion.so/Burritos-28f3546554b081b7a819e6fe79c7c6b6?pvs=21"
+      },
+      {
+        "title": "Chili con carne",
+        "icon": "🍛",
+        "url": "https://www.notion.so/Chili-con-carne-28f3546554b0816b9515c652a8943726?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Vinaigre balsamique",
+    "icon": "🍇",
+    "sourceUrl": "https://www.notion.so/Vinaigre-balsamique-2913546554b08128aadac05a599cbc7d?pvs=21",
+    "aisle": "Épicerie salée",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Poke Bowl",
+        "icon": null,
+        "url": "https://www.notion.so/Poke-Bowl-2913546554b0813ab9befe9900140c14?pvs=21"
+      }
+    ]
+  },
+  {
+    "name": "Vinaigre de riz",
+    "icon": "🍚",
+    "sourceUrl": "https://www.notion.so/Vinaigre-de-riz-28f3546554b08113963be18fb91f5869?pvs=21",
+    "aisle": "Rayon du monde",
+    "shoppingListRefs": [],
+    "recipeRefs": [
+      {
+        "title": "Salade de poulet à l'asiatique (ww)",
+        "icon": "🥗",
+        "url": "https://www.notion.so/Salade-de-poulet-l-asiatique-ww-28f3546554b08198a279f4f4374e40ec?pvs=21"
+      }
+    ]
+  }
+]

@@ -51,7 +51,7 @@ export default function Home() {
         <p className="text-slate-500 mt-1 text-lg">Que voulez-vous faire aujourd&apos;hui ?</p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {cards.map(({ href, label, desc, cta, icon, bgIcon, iconBg, iconColor }) => (
           <Link
             key={href}
@@ -80,7 +80,7 @@ export default function Home() {
         {/* Ingrédients — large card */}
         <Link
           href="/ingredients"
-          className="group relative flex flex-col bg-white rounded-xl p-6 border border-primary/5 hover:border-primary/40 transition-all duration-300 lg:col-span-2"
+          className="group relative flex flex-col bg-white rounded-xl p-6 border border-primary/5 hover:border-primary/40 transition-all duration-300 md:col-span-2"
           style={{ boxShadow: "0 4px 20px -2px rgba(71, 235, 191, 0.1)" }}
         >
           <div className="flex items-start md:items-center flex-col md:flex-row gap-6">

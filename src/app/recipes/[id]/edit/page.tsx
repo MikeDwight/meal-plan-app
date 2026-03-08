@@ -56,7 +56,7 @@ export default async function RecipeEditPage({
   };
 
   return (
-    <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+    <main>
       <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
         <Link
           href={`/recipes/${id}`}

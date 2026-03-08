@@ -30,7 +30,7 @@ export default async function IngredientsPage() {
   ]);
 
   return (
-    <main style={{ maxWidth: "56rem", margin: "0 auto" }}>
+    <main>
       <IngredientsClient
         initialIngredients={ingredients.map((i) => ({
           id: i.id,

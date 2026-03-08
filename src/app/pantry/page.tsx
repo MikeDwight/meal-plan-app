@@ -37,7 +37,7 @@ export default async function PantryPage() {
   }));
 
   return (
-    <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+    <main>
       <PantryClient
         householdId={HOUSEHOLD_ID}
         initialItems={serializedItems}
