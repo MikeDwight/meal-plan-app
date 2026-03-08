@@ -21,14 +21,18 @@
 - **Multi-tenant** : tout est isolé par `householdId`
 - **Docker** : images dev et prod, docker-compose
 - **CI/CD** : GitHub Actions → déploiement VPS
-- **Scripts d'import données** : `prisma/import-recipes.ts`, `prisma/import-ingredients.ts`, `prisma/infer-default-units.ts` — import depuis exports Notion
+- **Scripts d'import données** : utilisés pour migration initiale depuis Notion (supprimés après import)
 - **Migrations auto au démarrage** : Dockerfile lance `prisma migrate deploy` avant `node server.js`
 - **Recettes cliquables depuis /week** : les titres de recettes dans le plan hebdomadaire linkent vers `/recipes/[id]`
 - **Suppression notes ingrédients** : champ "note" retiré des lignes d'ingrédients (création et édition)
 - **Recherche dynamique recettes** : filtrage client-side par titre ou tag sur la page `/recipes`
 - **Pré-remplissage rayon en édition** : le champ rayon des ingrédients est pré-rempli depuis `ingredient.defaultAisleId` à l'ouverture du formulaire d'édition
-- **Navigation mobile redesignée** : bottom nav 5 boutons — Semaine | Courses | FAB Accueil (bouton mint surélevé) | Recettes | Plus (popover Garde-manger + Ingrédients) — composant `src/app/bottom-nav.tsx`
-- **Responsive audit et corrections** : table ingrédients mobile collapse (Rayon/Unité masqués en lecture), formulaire ingrédients restructuré en layout vertical (pantry pattern) pour mobile, grille ingrédients recette responsive (Rayon passe pleine largeur sur mobile)
+- **Navigation mobile redesignée** : bottom nav 5 boutons — Semaine | Courses | FAB Accueil (bouton mint surélevé) | Recettes | Plus (popover Garde-manger + Articles) — composant `src/app/bottom-nav.tsx`
+- **Responsive audit et corrections** : table articles mobile collapse (Rayon/Unité masqués en lecture), formulaire articles restructuré en layout vertical (pantry pattern) pour mobile, grille ingrédients recette responsive (Rayon passe pleine largeur sur mobile)
+- **Articles ponctuels améliorés** : autocomplete sur catalogue d'articles, création inline avec rayon + unité (autocomplete + création si inexistant), auto-ajout à la liste après création, purge des items cochés
+- **Page catalogue renommée** : "Ingrédients" → "Articles" dans la nav (desktop + mobile), titres et libellés
+- **Suppression d'articles** : bouton supprimer avec confirmation 2 étapes, protection si article utilisé en recette/garde-manger/courses
+- **Nettoyage repo** : suppression maquettes HTML et scripts d'import one-shot (données déjà en prod)
 
 ## In Progress
 
