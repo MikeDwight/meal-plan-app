@@ -25,6 +25,8 @@
 - **Migrations auto au démarrage** : Dockerfile lance `prisma migrate deploy` avant `node server.js`
 - **Recettes cliquables depuis /week** : les titres de recettes dans le plan hebdomadaire linkent vers `/recipes/[id]`
 - **Suppression notes ingrédients** : champ "note" retiré des lignes d'ingrédients (création et édition)
+- **Recherche dynamique recettes** : filtrage client-side par titre ou tag sur la page `/recipes`
+- **Pré-remplissage rayon en édition** : le champ rayon des ingrédients est pré-rempli depuis `ingredient.defaultAisleId` à l'ouverture du formulaire d'édition
 
 ## In Progress
 
