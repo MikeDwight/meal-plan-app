@@ -27,6 +27,8 @@
 - **Suppression notes ingrédients** : champ "note" retiré des lignes d'ingrédients (création et édition)
 - **Recherche dynamique recettes** : filtrage client-side par titre ou tag sur la page `/recipes`
 - **Pré-remplissage rayon en édition** : le champ rayon des ingrédients est pré-rempli depuis `ingredient.defaultAisleId` à l'ouverture du formulaire d'édition
+- **Navigation mobile redesignée** : bottom nav 5 boutons — Semaine | Courses | FAB Accueil (bouton mint surélevé) | Recettes | Plus (popover Garde-manger + Ingrédients) — composant `src/app/bottom-nav.tsx`
+- **Responsive audit et corrections** : table ingrédients mobile collapse (Rayon/Unité masqués en lecture), formulaire ingrédients restructuré en layout vertical (pantry pattern) pour mobile, grille ingrédients recette responsive (Rayon passe pleine largeur sur mobile)
 
 ## In Progress
 
