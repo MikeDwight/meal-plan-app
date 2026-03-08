@@ -28,6 +28,70 @@ interface Unit {
   abbr: string;
 }
 
+interface AutocompleteItem { id: string; label: string; }
+
+function PanelAutocomplete({ value, onChange, items, onSelect, onCreate, placeholder }: {
+  value: string;
+  onChange: (v: string) => void;
+  items: AutocompleteItem[];
+  onSelect: (item: AutocompleteItem) => void;
+  onCreate: (label: string) => Promise<void>;
+  placeholder?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const blurRef = useRef<NodeJS.Timeout | null>(null);
+
+  const filtered = value.trim()
+    ? items.filter((i) => i.label.toLowerCase().includes(value.toLowerCase()))
+    : items;
+  const exactMatch = items.some((i) => i.label.toLowerCase() === value.trim().toLowerCase());
+  const showCreate = value.trim() && !exactMatch;
+
+  async function handleCreate() {
+    setCreating(true);
+    try { await onCreate(value.trim()); }
+    finally { setCreating(false); setOpen(false); }
+  }
+
+  return (
+    <div style={{ position: "relative" }}>
+      <input
+        type="text"
+        value={value}
+        placeholder={placeholder}
+        onChange={(e) => { onChange(e.target.value); setOpen(true); }}
+        onFocus={() => { if (blurRef.current) clearTimeout(blurRef.current); setOpen(true); }}
+        onBlur={() => { blurRef.current = setTimeout(() => setOpen(false), 150); }}
+        style={{ ...panelInputStyle }}
+      />
+      {open && (filtered.length > 0 || showCreate) && (
+        <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #e2e8f0", borderRadius: "0 0 0.5rem 0.5rem", maxHeight: "160px", overflowY: "auto", zIndex: 60, boxShadow: "0 4px 12px rgba(0,0,0,0.08)" }}>
+          {filtered.map((item) => (
+            <button key={item.id} type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => { onSelect(item); setOpen(false); }}
+              style={{ display: "block", width: "100%", padding: "0.4rem 0.6rem", textAlign: "left", background: "none", border: "none", cursor: "pointer", fontSize: "0.8rem" }}
+              onMouseOver={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f0fdf9"; }}
+              onMouseOut={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "none"; }}
+            >{item.label}</button>
+          ))}
+          {showCreate && (
+            <button type="button"
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={handleCreate}
+              disabled={creating}
+              style={{ display: "block", width: "100%", padding: "0.4rem 0.6rem", textAlign: "left", background: "rgba(71,235,191,0.1)", border: "none", borderTop: filtered.length ? "1px solid #e2e8f0" : "none", cursor: creating ? "wait" : "pointer", fontSize: "0.8rem", fontWeight: 600, color: "#0f766e" }}
+              onMouseOver={(e) => { if (!creating) (e.currentTarget as HTMLButtonElement).style.background = "rgba(71,235,191,0.2)"; }}
+              onMouseOut={(e) => { if (!creating) (e.currentTarget as HTMLButtonElement).style.background = "rgba(71,235,191,0.1)"; }}
+            >{creating ? "Création…" : `Créer « ${value.trim()} »`}</button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 const HOUSEHOLD_ID = "home-household";
 
 export function TransitionListClient({ items }: { items: TransitionItemProps[] }) {
@@ -51,8 +115,10 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
   const [showCreatePanel, setShowCreatePanel] = useState(false);
   const [aisles, setAisles] = useState<Aisle[]>([]);
   const [units, setUnits] = useState<Unit[]>([]);
-  const [aisleNameForCreate, setAisleNameForCreate] = useState("");
-  const [unitForCreate, setUnitForCreate] = useState("");
+  const [aisleLabel, setAisleLabel] = useState("");
+  const [aisleIdCreate, setAisleIdCreate] = useState<string | null>(null);
+  const [unitLabel, setUnitLabel] = useState("");
+  const [unitIdCreate, setUnitIdCreate] = useState<string | null>(null);
   const [creating, setCreating] = useState(false);
 
   const searchTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -96,8 +162,10 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     if (blurTimeout.current) clearTimeout(blurTimeout.current);
     setShowSuggestions(false);
     setSuggestions([]);
-    setAisleNameForCreate("");
-    setUnitForCreate("");
+    setAisleLabel("");
+    setAisleIdCreate(null);
+    setUnitLabel("");
+    setUnitIdCreate(null);
     setShowCreatePanel(true);
     try {
       const [aislesRes, unitsRes] = await Promise.all([
@@ -109,55 +177,62 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     } catch { /* ignore */ }
   }, [aisles.length, units.length]);
 
+  const handleSelectAisle = useCallback((item: AutocompleteItem) => {
+    setAisleIdCreate(item.id);
+    setAisleLabel(item.label);
+  }, []);
+
+  const handleCreateAisle = useCallback(async (label: string) => {
+    const res = await fetch("/api/aisles", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ householdId: HOUSEHOLD_ID, name: label }) });
+    if (res.ok) {
+      const created: Aisle = await res.json();
+      setAisles((prev) => [...prev, created]);
+      setAisleIdCreate(created.id);
+      setAisleLabel(created.name);
+    }
+  }, []);
+
+  const handleSelectUnit = useCallback((item: AutocompleteItem) => {
+    setUnitIdCreate(item.id);
+    setUnitLabel(item.label);
+  }, []);
+
+  const handleCreateUnit = useCallback(async (label: string) => {
+    const res = await fetch("/api/units", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ householdId: HOUSEHOLD_ID, abbr: label, name: label }) });
+    if (res.ok) {
+      const created: Unit = await res.json();
+      setUnits((prev) => [...prev, created]);
+      setUnitIdCreate(created.id);
+      setUnitLabel(created.abbr);
+    }
+  }, []);
+
   const handleCreate = useCallback(async () => {
     const trimmed = articleName.trim();
     if (!trimmed) return;
     setCreating(true);
     try {
-      // Resolve aisle: find existing by name or create
-      let resolvedAisleId: string | null = null;
-      if (aisleNameForCreate.trim()) {
-        const existing = aisles.find(
-          (a) => a.name.toLowerCase() === aisleNameForCreate.trim().toLowerCase()
-        );
-        if (existing) {
-          resolvedAisleId = existing.id;
-        } else {
-          const res = await fetch("/api/aisles", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ householdId: HOUSEHOLD_ID, name: aisleNameForCreate.trim() }),
-          });
-          if (res.ok) {
-            const created: Aisle = await res.json();
-            resolvedAisleId = created.id;
-            setAisles((prev) => [...prev, created]);
-          }
-        }
-      }
-
-      // Create article (stored as ingredient in DB)
       const res = await fetch("/api/ingredients", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           householdId: HOUSEHOLD_ID,
           name: trimmed,
-          defaultAisleId: resolvedAisleId,
-          defaultUnitId: unitForCreate || null,
+          defaultAisleId: aisleIdCreate || null,
+          defaultUnitId: unitIdCreate || null,
         }),
       });
       if (res.ok) {
         const created: ArticleSuggestion = await res.json();
         setArticleId(created.id);
-        setSelectedUnitId(unitForCreate || created.defaultUnitId);
-        setSelectedAisleId(resolvedAisleId ?? created.defaultAisleId);
+        setSelectedUnitId(unitIdCreate || created.defaultUnitId);
+        setSelectedAisleId(aisleIdCreate || created.defaultAisleId);
       }
     } catch { /* ignore */ } finally {
       setCreating(false);
       setShowCreatePanel(false);
     }
-  }, [articleName, aisleNameForCreate, unitForCreate, aisles]);
+  }, [articleName, aisleIdCreate, unitIdCreate]);
 
   function resetForm() {
     setArticleName("");
@@ -168,8 +243,10 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     setSuggestions([]);
     setShowSuggestions(false);
     setShowCreatePanel(false);
-    setAisleNameForCreate("");
-    setUnitForCreate("");
+    setAisleLabel("");
+    setAisleIdCreate(null);
+    setUnitLabel("");
+    setUnitIdCreate(null);
   }
 
   async function handleAdd() {
@@ -257,7 +334,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
                 onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "#f0fdf9"; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.background = "transparent"; }}
               >
-                + Ajouter &ldquo;{articleName.trim()}&rdquo; avec rayon / unité
+                + Ajouter &ldquo;{articleName.trim()}&rdquo;
               </button>
             </div>
           )}
@@ -289,35 +366,26 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
           </span>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.5rem" }}>
             <div>
-              <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "0.25rem" }}>
-                Rayon
-              </label>
-              <input
-                type="text"
-                list="aisles-datalist"
-                placeholder="Ex: Hygiène…"
-                value={aisleNameForCreate}
-                onChange={(e) => setAisleNameForCreate(e.target.value)}
-                style={{ ...inputStyle, background: "#fff" }}
+              <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "0.25rem" }}>Rayon</label>
+              <PanelAutocomplete
+                value={aisleLabel}
+                onChange={(v) => { setAisleLabel(v); setAisleIdCreate(null); }}
+                items={aisles.map((a) => ({ id: a.id, label: a.name }))}
+                onSelect={handleSelectAisle}
+                onCreate={handleCreateAisle}
+                placeholder="Rayon…"
               />
-              <datalist id="aisles-datalist">
-                {aisles.map((a) => <option key={a.id} value={a.name} />)}
-              </datalist>
             </div>
             <div>
-              <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "0.25rem" }}>
-                Unité
-              </label>
-              <select
-                value={unitForCreate}
-                onChange={(e) => setUnitForCreate(e.target.value)}
-                style={{ ...inputStyle, background: "#fff" }}
-              >
-                <option value="">— Sans unité —</option>
-                {units.map((u) => (
-                  <option key={u.id} value={u.id}>{u.name} ({u.abbr})</option>
-                ))}
-              </select>
+              <label style={{ fontSize: "0.72rem", color: "#64748b", fontWeight: 600, display: "block", marginBottom: "0.25rem" }}>Unité</label>
+              <PanelAutocomplete
+                value={unitLabel}
+                onChange={(v) => { setUnitLabel(v); setUnitIdCreate(null); }}
+                items={units.map((u) => ({ id: u.id, label: u.abbr }))}
+                onSelect={handleSelectUnit}
+                onCreate={handleCreateUnit}
+                placeholder="Unité…"
+              />
             </div>
           </div>
           <div style={{ display: "flex", gap: "0.5rem" }}>
@@ -450,6 +518,17 @@ const inputStyle: React.CSSProperties = {
   border: "1px solid #e2e8f0",
   borderRadius: "0.625rem",
   fontSize: "0.875rem",
+  background: "#fff",
+  outline: "none",
+  boxSizing: "border-box",
+};
+
+const panelInputStyle: React.CSSProperties = {
+  width: "100%",
+  padding: "0.4rem 0.6rem",
+  border: "1px solid #e2e8f0",
+  borderRadius: "0.5rem",
+  fontSize: "0.8rem",
   background: "#fff",
   outline: "none",
   boxSizing: "border-box",

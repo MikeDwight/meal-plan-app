@@ -29,7 +29,7 @@ export function BottomNav() {
             className="flex items-center gap-3 px-5 py-3.5 hover:bg-primary/5 transition-colors"
           >
             <span className="material-symbols-outlined text-xl" style={{ color: "#47ebbf" }}>grocery</span>
-            <span className="text-sm font-medium text-slate-700">Ingrédients</span>
+            <span className="text-sm font-medium text-slate-700">Articles</span>
           </Link>
         </div>
       )}

@@ -102,6 +102,8 @@ export function IngredientsClient({
   const [units, setUnits] = useState<Unit[]>(initialUnits);
   const [aisles, setAisles] = useState<Aisle[]>(initialAisles);
 
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState("");
   const [editUnitId, setEditUnitId] = useState<string | null>(null);
@@ -213,6 +215,24 @@ export function IngredientsClient({
     }
   }
 
+  async function handleDelete(id: string) {
+    setDeleteError(null);
+    try {
+      const res = await fetch(`/api/ingredients/${id}`, { method: "DELETE" });
+      if (res.status === 204) {
+        setIngredients((prev) => prev.filter((i) => i.id !== id));
+        setDeletingId(null);
+      } else {
+        const data = await res.json().catch(() => null);
+        setDeleteError(data?.error ?? `Erreur ${res.status}`);
+        setDeletingId(null);
+      }
+    } catch {
+      setDeleteError("Erreur réseau.");
+      setDeletingId(null);
+    }
+  }
+
   async function handleSave(id: string) {
     if (!editName.trim()) { setError("Le nom ne peut pas être vide."); return; }
     setSaving(true);
@@ -255,7 +275,7 @@ export function IngredientsClient({
         <div>
           <h1 style={{ margin: 0, fontSize: "1.75rem", fontWeight: 700, color: "#0f172a" }}>Catalogue</h1>
           <p style={{ margin: "0.25rem 0 0", fontSize: "0.8rem", color: "#94a3b8" }}>
-            {ingredients.length} ingrédient{ingredients.length !== 1 ? "s" : ""} enregistré{ingredients.length !== 1 ? "s" : ""}
+            {ingredients.length} article{ingredients.length !== 1 ? "s" : ""} enregistré{ingredients.length !== 1 ? "s" : ""}
           </p>
         </div>
         <button
@@ -273,7 +293,7 @@ export function IngredientsClient({
         <span className="material-symbols-outlined" style={{ position: "absolute", left: "1rem", top: "50%", transform: "translateY(-50%)", color: "#94a3b8", fontSize: "1.1rem", pointerEvents: "none" }}>search</span>
         <input
           type="text"
-          placeholder="Rechercher un ingrédient…"
+          placeholder="Rechercher un article…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{ width: "100%", padding: "0.75rem 1rem 0.75rem 2.75rem", border: "none", borderRadius: "0.75rem", fontSize: "0.9rem", background: "#fff", boxShadow: "0 4px 20px -2px rgba(71,235,191,0.1)", outline: "none", boxSizing: "border-box" }}
@@ -285,7 +305,7 @@ export function IngredientsClient({
         <div style={{ background: "rgba(71,235,191,0.07)", borderRadius: "0.75rem", borderLeft: "4px solid #47ebbf", padding: "1.25rem", marginBottom: "1rem" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
             <div>
-              <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'ingrédient</label>
+              <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'article</label>
               <input type="text" value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Ex: Farine T55" style={baseInputStyle} autoFocus />
             </div>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem" }}>
@@ -313,8 +333,9 @@ export function IngredientsClient({
         </div>
       )}
 
-      {/* Error */}
+      {/* Errors */}
       {error && <p style={{ color: "#b91c1c", fontSize: "0.85rem", marginBottom: "0.75rem" }}>{error}</p>}
+      {deleteError && <p style={{ color: "#b91c1c", fontSize: "0.85rem", marginBottom: "0.75rem" }}>{deleteError}</p>}
 
       {/* Table card */}
       <div style={{ background: "#fff", borderRadius: "0.75rem", overflow: "hidden", boxShadow: "0 4px 20px -2px rgba(71,235,191,0.1)", border: "1px solid rgba(71,235,191,0.08)" }}>
@@ -329,7 +350,7 @@ export function IngredientsClient({
         {/* Rows */}
         <div>
           {filtered.length === 0 && (
-            <p style={{ textAlign: "center", color: "#94a3b8", padding: "2rem", margin: 0 }}>Aucun ingrédient trouvé.</p>
+            <p style={{ textAlign: "center", color: "#94a3b8", padding: "2rem", margin: 0 }}>Aucun article trouvé.</p>
           )}
           {filtered.map((item, idx) => (
             editingId === item.id ? (
@@ -337,7 +358,7 @@ export function IngredientsClient({
               <div key={item.id} style={{ padding: "1rem 1.5rem", background: "rgba(71,235,191,0.07)", borderLeft: "4px solid #47ebbf", borderTop: idx > 0 ? "1px solid rgba(71,235,191,0.1)" : "none" }}>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
                   <div>
-                    <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'ingrédient</label>
+                    <label style={{ display: "block", fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", color: "#94a3b8", marginBottom: "0.25rem", letterSpacing: "0.06em" }}>Nom de l'article</label>
                     <input type="text" value={editName} onChange={(e) => setEditName(e.target.value)} style={baseInputStyle} />
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.625rem" }}>
@@ -378,12 +399,34 @@ export function IngredientsClient({
                   {item.defaultAisleName ?? "—"}
                 </div>
                 <div className="ing-col-unite" style={{ fontSize: "0.875rem", color: item.defaultUnitAbbr ? "#475569" : "#cbd5e1" }}>{item.defaultUnitAbbr ?? "—"}</div>
-                <div style={{ textAlign: "right" }}>
-                  <button type="button" onClick={() => startEdit(item)}
-                    style={{ background: "none", border: "none", color: "#47ebbf", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer", padding: 0 }}
-                    onMouseOver={(e) => (e.currentTarget.style.textDecoration = "underline")}
-                    onMouseOut={(e) => (e.currentTarget.style.textDecoration = "none")}
-                  >Modifier</button>
+                <div style={{ textAlign: "right", display: "flex", gap: "0.75rem", justifyContent: "flex-end", alignItems: "center" }}>
+                  {deletingId === item.id ? (
+                    <>
+                      <button type="button" onClick={() => handleDelete(item.id)}
+                        style={{ background: "none", border: "none", color: "#dc2626", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer", padding: 0 }}>
+                        Confirmer
+                      </button>
+                      <button type="button" onClick={() => setDeletingId(null)}
+                        style={{ background: "none", border: "none", color: "#94a3b8", fontSize: "0.875rem", cursor: "pointer", padding: 0 }}>
+                        Annuler
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button type="button" onClick={() => startEdit(item)}
+                        style={{ background: "none", border: "none", color: "#47ebbf", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer", padding: 0 }}
+                        onMouseOver={(e) => (e.currentTarget.style.textDecoration = "underline")}
+                        onMouseOut={(e) => (e.currentTarget.style.textDecoration = "none")}
+                      >Modifier</button>
+                      <button type="button" onClick={() => { setDeletingId(item.id); setDeleteError(null); }}
+                        style={{ background: "none", border: "none", color: "#cbd5e1", fontSize: "0.875rem", cursor: "pointer", padding: 0, display: "flex", alignItems: "center" }}
+                        onMouseOver={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#dc2626"; }}
+                        onMouseOut={(e) => { (e.currentTarget as HTMLButtonElement).style.color = "#cbd5e1"; }}
+                      >
+                        <span className="material-symbols-outlined" style={{ fontSize: "1rem" }}>delete</span>
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             )

@@ -2,6 +2,47 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
+export async function DELETE(
+  _request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+
+    const refs = await prisma.ingredient.findUnique({
+      where: { id },
+      select: {
+        _count: {
+          select: {
+            recipeIngredients: true,
+            pantryItems: true,
+            shoppingItems: true,
+            transitionItems: true,
+          },
+        },
+      },
+    });
+
+    if (!refs) {
+      return NextResponse.json({ error: "Introuvable" }, { status: 404 });
+    }
+
+    const total = refs._count.recipeIngredients + refs._count.pantryItems + refs._count.shoppingItems + refs._count.transitionItems;
+    if (total > 0) {
+      return NextResponse.json(
+        { error: `Cet article est utilisé (${refs._count.recipeIngredients} recette(s), ${refs._count.pantryItems} garde-manger, ${refs._count.shoppingItems} courses). Retirez-le d'abord.` },
+        { status: 409 }
+      );
+    }
+
+    await prisma.ingredient.delete({ where: { id } });
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    console.error("Unexpected error in DELETE /api/ingredients/[id]:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
 const patchSchema = z.object({
   name: z.string().min(1).optional(),
   defaultUnitId: z.string().nullable().optional(),
