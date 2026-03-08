@@ -30,6 +30,28 @@ function toRow(item: {
 }
 
 // ---------------------------------------------------------------------------
+// DELETE /api/transitionitems?householdId=... — purge all DONE items
+// ---------------------------------------------------------------------------
+
+export async function DELETE(request: NextRequest) {
+  try {
+    const householdId = request.nextUrl.searchParams.get("householdId");
+    if (!householdId) {
+      return NextResponse.json({ error: "householdId is required" }, { status: 400 });
+    }
+
+    const { count } = await prisma.transitionItem.deleteMany({
+      where: { householdId, status: "DONE" },
+    });
+
+    return NextResponse.json({ deleted: count }, { status: 200 });
+  } catch (error) {
+    console.error("Unexpected error in DELETE /api/transitionitems:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
+// ---------------------------------------------------------------------------
 // GET /api/transitionitems?householdId=...&includeDone=true|false
 // ---------------------------------------------------------------------------
 

@@ -100,6 +100,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
   const [applyMessage, setApplyMessage] = useState<string | null>(null);
   const [isAdding, startAddTransition] = useTransition();
   const [isApplying, startApplyTransition] = useTransition();
+  const [isPurging, startPurgeTransition] = useTransition();
 
   // Add form state
   const [articleName, setArticleName] = useState("");
@@ -126,6 +127,7 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
 
   const visibleItems = showDone ? items : items.filter((i) => i.status !== "DONE");
   const todoCount = items.filter((i) => i.status === "TODO").length;
+  const doneCount = items.filter((i) => i.status === "DONE").length;
 
   const searchArticles = useCallback(async (q: string) => {
     if (!q.trim()) { setSuggestions([]); return; }
@@ -268,6 +270,11 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
     });
     resetForm();
     startAddTransition(() => router.refresh());
+  }
+
+  async function handlePurge() {
+    await fetch(`/api/transitionitems?householdId=${HOUSEHOLD_ID}`, { method: "DELETE" });
+    startPurgeTransition(() => router.refresh());
   }
 
   async function handleApply() {
@@ -474,6 +481,16 @@ export function TransitionListClient({ items }: { items: TransitionItemProps[] }
             <input type="checkbox" checked={showDone} onChange={(e) => setShowDone(e.target.checked)} />
             Voir faits
           </label>
+          {doneCount > 0 && (
+            <button
+              onClick={handlePurge}
+              disabled={isPurging}
+              style={{ background: "none", border: "none", fontSize: "0.75rem", color: "#94a3b8", cursor: isPurging ? "wait" : "pointer", padding: 0, textDecoration: "underline" }}
+            >
+              {isPurging ? "…" : `Purger (${doneCount})`}
+            </button>
+          )}
+
         </div>
       </div>
 
