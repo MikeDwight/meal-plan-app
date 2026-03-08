@@ -97,6 +97,7 @@ export function RecipeForm() {
   const [importing, setImporting] = useState(false);
   const [importError, setImportError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const newIngredientIds = useRef<Set<string>>(new Set());
 
   useEffect(() => {
     async function loadMeta() {
@@ -261,6 +262,7 @@ export function RecipeForm() {
             return next;
           });
           setIngredients((prev) => [...prev, created]);
+          newIngredientIds.current.add(created.id);
         }
       } catch (e) {
         console.error("Create ingredient error:", e);
@@ -467,6 +469,23 @@ export function RecipeForm() {
       }
 
       const created = (await res.json()) as { id: string };
+
+      // Persist unit/aisle defaults for ingredients created inline during this session
+      await Promise.all(
+        validIngredients
+          .filter((line) => newIngredientIds.current.has(line.ingredientId) && (line.unitId || line.aisleId))
+          .map((line) =>
+            fetch(`/api/ingredients/${line.ingredientId}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                ...(line.unitId && { defaultUnitId: line.unitId }),
+                ...(line.aisleId && { defaultAisleId: line.aisleId }),
+              }),
+            })
+          )
+      );
+
       router.push(`/recipes/${created.id}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Erreur inattendue");
