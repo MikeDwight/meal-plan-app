@@ -107,7 +107,7 @@ export function RecipePicker({
         style={{ background: "#f6f8f7", borderRadius: "0.75rem", width: "min(28rem, 100%)", maxHeight: "90vh", display: "flex", flexDirection: "column", overflow: "hidden", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.25)" }}
       >
         {/* Header */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1.25rem", borderBottom: "1px solid rgba(71,235,191,0.15)" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "1.25rem", borderBottom: "1px solid rgba(71,235,191,0.15)", flexShrink: 0 }}>
           <h2 style={{ margin: 0, fontSize: "1.1rem", fontWeight: 700, color: "#0f172a", letterSpacing: "-0.01em" }}>
             Repas #{position + 1}
           </h2>
@@ -123,7 +123,7 @@ export function RecipePicker({
         </div>
 
         {/* Search */}
-        <div style={{ padding: "1rem 1rem 0" }}>
+        <div style={{ padding: "1rem 1rem 0", flexShrink: 0 }}>
           <div style={{ position: "relative" }}>
             <span className="material-symbols-outlined" style={{ position: "absolute", left: "0.875rem", top: "50%", transform: "translateY(-50%)", fontSize: "1.1rem", color: "#47ebbf", pointerEvents: "none" }}>search</span>
             <input
@@ -141,7 +141,7 @@ export function RecipePicker({
 
         {/* Tag pills */}
         {allTags.length > 0 && (
-          <div style={{ display: "flex", gap: "0.5rem", padding: "0.75rem 1rem", overflowX: "auto", scrollbarWidth: "none" }}>
+          <div style={{ display: "flex", gap: "0.5rem", padding: "0.75rem 1rem", overflowX: "auto", scrollbarWidth: "none", flexShrink: 0, flexWrap: "nowrap" }}>
             <button
               type="button"
               onClick={() => setActiveTag(null)}
@@ -163,7 +163,7 @@ export function RecipePicker({
         )}
 
         {/* Recipe list */}
-        <div style={{ flex: 1, overflowY: "auto", padding: "0.5rem 1rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+        <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "0.5rem 1rem 1.5rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           {error && (
             <p style={{ color: "#b91c1c", fontSize: "0.85rem", margin: 0 }}>{error}</p>
           )}
