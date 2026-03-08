@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 const SYSTEM_PROMPT = `Tu es un assistant qui extrait des informations de recettes de cuisine depuis des images.
 Retourne UNIQUEMENT un objet JSON valide, sans markdown, sans explication.
 
@@ -37,6 +35,8 @@ export async function POST(request: NextRequest) {
     if (!imageBase64 || !mimeType) {
       return NextResponse.json({ error: "imageBase64 et mimeType sont requis" }, { status: 400 });
     }
+
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
     const response = await client.chat.completions.create({
       model: "gpt-4o",
