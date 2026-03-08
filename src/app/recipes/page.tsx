@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import { RecipeList } from "./recipe-list";
 
@@ -24,23 +23,12 @@ export default async function RecipesPage() {
   }));
 
   return (
-    <main>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
-        <h1 style={{ margin: 0 }}>Recettes</h1>
-        <Link
-          href="/recipes/new"
-          style={{
-            padding: "0.5rem 1rem",
-            background: "#2563eb",
-            color: "#fff",
-            borderRadius: "6px",
-            textDecoration: "none",
-            fontSize: "0.95rem",
-            fontWeight: 500,
-          }}
-        >
-          + Nouvelle recette
-        </Link>
+    <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+      <div style={{ padding: "2rem 0 1.25rem" }}>
+        <h1 style={{ margin: 0, fontSize: "1.75rem", fontWeight: 700, color: "#0f172a" }}>Recettes</h1>
+        <p style={{ margin: "0.25rem 0 0", fontSize: "0.8rem", color: "#94a3b8" }}>
+          {serialized.length} recette{serialized.length !== 1 ? "s" : ""} dans votre collection
+        </p>
       </div>
       <RecipeList recipes={serialized} />
     </main>

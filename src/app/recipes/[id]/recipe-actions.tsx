@@ -11,9 +11,7 @@ export function RecipeActions({ id, householdId }: { id: string; householdId: st
     if (!confirm("Supprimer cette recette définitivement ?")) return;
     setDeleting(true);
     try {
-      const res = await fetch(`/api/recipes/${id}?householdId=${householdId}`, {
-        method: "DELETE",
-      });
+      const res = await fetch(`/api/recipes/${id}?householdId=${householdId}`, { method: "DELETE" });
       if (res.ok) {
         router.push("/recipes");
       } else {
@@ -32,17 +30,23 @@ export function RecipeActions({ id, householdId }: { id: string; householdId: st
       onClick={handleDelete}
       disabled={deleting}
       style={{
-        padding: "0.45rem 0.9rem",
-        background: deleting ? "#e5e7eb" : "#fee2e2",
-        color: deleting ? "#9ca3af" : "#b91c1c",
-        border: "1px solid #fca5a5",
-        borderRadius: "4px",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "0.5rem",
+        width: "100%",
+        padding: "0.875rem",
+        background: "#fff",
+        color: deleting ? "#94a3b8" : "#ef4444",
+        border: "1px solid #fee2e2",
+        borderRadius: "0.75rem",
+        fontWeight: 700,
+        fontSize: "0.875rem",
         cursor: deleting ? "not-allowed" : "pointer",
-        fontSize: "0.9rem",
-        fontWeight: 500,
       }}
     >
-      {deleting ? "Suppression..." : "Supprimer"}
+      <span className="material-symbols-outlined" style={{ fontSize: "1rem" }}>delete</span>
+      {deleting ? "Suppression…" : "Supprimer la recette"}
     </button>
   );
 }

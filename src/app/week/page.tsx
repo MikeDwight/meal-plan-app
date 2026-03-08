@@ -25,7 +25,7 @@ export default async function WeekPage({
     : null;
 
   return (
-    <main>
+    <main style={{ background: "#f3f4f6", minHeight: "calc(100vh - 3.5rem)", padding: "1rem", margin: "-1rem", borderRadius: "0" }}>
       <WeekNav weekStart={data?.weekStart ?? weekStart} />
 
       <GenerateButton

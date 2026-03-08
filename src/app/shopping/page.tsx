@@ -37,14 +37,8 @@ export default async function ShoppingPage() {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000";
 
   const [res, transitionRes] = await Promise.all([
-    fetch(
-      `${baseUrl}/api/shoppinglist?householdId=${HOUSEHOLD_ID}`,
-      { cache: "no-store" }
-    ),
-    fetch(
-      `${baseUrl}/api/transitionitems?householdId=${HOUSEHOLD_ID}&includeDone=true`,
-      { cache: "no-store" }
-    ),
+    fetch(`${baseUrl}/api/shoppinglist?householdId=${HOUSEHOLD_ID}`, { cache: "no-store" }),
+    fetch(`${baseUrl}/api/transitionitems?householdId=${HOUSEHOLD_ID}&includeDone=true`, { cache: "no-store" }),
   ]);
 
   const transitionItems: TransitionItemProps[] = transitionRes.ok
@@ -61,13 +55,12 @@ export default async function ShoppingPage() {
   if (!res.ok) {
     const body = await res.json().catch(() => null);
     return (
-      <main>
-        <h1>Liste de courses</h1>
-        <TransitionListClient items={transitionItems} />
-        <p>
-          Aucune liste trouvée.{" "}
-          {body?.error && <em>({body.error})</em>}
-        </p>
+      <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+        <div style={{ padding: "2rem 0 1.25rem" }}>
+          <h1 style={{ fontSize: "1.75rem", fontWeight: 700, margin: 0, color: "#0f172a" }}>Liste de courses</h1>
+        </div>
+        <ShoppingListClient groups={[]} doneCount={0} totalCount={0} transitionItems={transitionItems} />
+        {body?.error && <p style={{ color: "#ef4444", fontSize: "0.875rem" }}>{body.error}</p>}
       </main>
     );
   }
@@ -87,20 +80,20 @@ export default async function ShoppingPage() {
   }));
 
   return (
-    <main>
-      <h1>Liste de courses</h1>
+    <main style={{ maxWidth: "42rem", margin: "0 auto" }}>
+      <div style={{ padding: "2rem 0 1.25rem" }}>
+        <h1 style={{ fontSize: "1.75rem", fontWeight: 700, margin: "0 0 0.25rem", color: "#0f172a" }}>Liste de courses</h1>
+        <p style={{ color: "#94a3b8", fontWeight: 500, margin: 0, fontSize: "0.8rem" }}>
+          {data.meta.done} / {data.meta.done + data.meta.todo} articles cochés
+        </p>
+      </div>
 
-      <TransitionListClient items={transitionItems} />
-
-      <p>
-        {data.meta.done} / {data.meta.done + data.meta.todo} articles cochés
-      </p>
-
-      {data.items.length === 0 ? (
-        <p style={{ color: "#888" }}>La liste est vide.</p>
-      ) : (
-        <ShoppingListClient groups={groups} doneCount={data.meta.done} />
-      )}
+      <ShoppingListClient
+        groups={groups}
+        doneCount={data.meta.done}
+        totalCount={data.meta.done + data.meta.todo}
+        transitionItems={transitionItems}
+      />
     </main>
   );
 }

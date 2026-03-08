@@ -30,8 +30,7 @@ export default async function IngredientsPage() {
   ]);
 
   return (
-    <main>
-      <h1 style={{ marginBottom: "1.5rem" }}>Ingrédients</h1>
+    <main style={{ maxWidth: "56rem", margin: "0 auto" }}>
       <IngredientsClient
         initialIngredients={ingredients.map((i) => ({
           id: i.id,

@@ -29,23 +29,43 @@ interface IngredientSuggestion {
 }
 
 const inputStyle: React.CSSProperties = {
-  padding: "0.5rem",
-  border: "1px solid #ccc",
-  borderRadius: "4px",
-  fontSize: "0.95rem",
   width: "100%",
+  padding: "0.625rem 0.875rem",
+  border: "1px solid #e2e8f0",
+  borderRadius: "0.625rem",
+  fontSize: "0.875rem",
+  background: "#f8fafc",
+  boxSizing: "border-box",
+  outline: "none",
 };
 
 const labelStyle: React.CSSProperties = {
   display: "block",
-  marginBottom: "0.25rem",
-  fontWeight: 500,
-  fontSize: "0.9rem",
+  marginBottom: "0.375rem",
+  fontWeight: 600,
+  fontSize: "0.8rem",
+  color: "#475569",
+  paddingLeft: "0.25rem",
 };
 
 const sectionStyle: React.CSSProperties = {
-  marginBottom: "1.5rem",
+  marginBottom: "2rem",
 };
+
+const cardStyle: React.CSSProperties = {
+  background: "#fff",
+  borderRadius: "0.75rem",
+  border: "1px solid #f1f5f9",
+  boxShadow: "0 4px 20px -2px rgba(0,0,0,0.05)",
+  padding: "1rem",
+};
+
+const sectionHeaderStyle = (icon: string, label: string) => (
+  <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "1rem" }}>
+    <span className="material-symbols-outlined" style={{ fontSize: "1.2rem", color: "#47ebbf" }}>{icon}</span>
+    <h2 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700 }}>{label}</h2>
+  </div>
+);
 
 export function RecipeForm() {
   const router = useRouter();
@@ -381,287 +401,173 @@ export function RecipeForm() {
   };
 
   if (loadingMeta) {
-    return <p style={{ color: "#888" }}>Chargement...</p>;
+    return <p style={{ color: "#94a3b8", fontSize: "0.875rem" }}>Chargement…</p>;
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} style={{ paddingBottom: "8rem" }}>
       {error && (
-        <div
-          style={{
-            padding: "0.75rem",
-            background: "#fee2e2",
-            color: "#b91c1c",
-            borderRadius: "4px",
-            marginBottom: "1rem",
-            fontSize: "0.9rem",
-          }}
-        >
+        <div style={{ padding: "0.75rem 1rem", background: "#fee2e2", color: "#b91c1c", borderRadius: "0.625rem", marginBottom: "1.25rem", fontSize: "0.875rem" }}>
           {error}
         </div>
       )}
 
-      {/* Title */}
+      {/* Section: Infos générales */}
       <div style={sectionStyle}>
-        <label style={labelStyle}>
-          Titre <span style={{ color: "#c00" }}>*</span>
-        </label>
-        <input
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          style={inputStyle}
-          placeholder="Ex: Poulet rôti aux herbes"
-        />
+        {sectionHeaderStyle("info", "Informations générales")}
+        <div style={{ ...cardStyle, display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div>
+            <label style={labelStyle}>Nom de la recette *</label>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} style={{ ...inputStyle, height: "3rem" }} placeholder="Ex: Poulet rôti aux herbes" />
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0.75rem" }}>
+            <div>
+              <label style={labelStyle}>Portions</label>
+              <input type="number" min="1" value={servings} onChange={(e) => setServings(e.target.value)} style={inputStyle} placeholder="4" />
+            </div>
+            <div>
+              <label style={labelStyle}>URL source</label>
+              <input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} style={inputStyle} placeholder="https://..." />
+            </div>
+          </div>
+          <div>
+            <label style={labelStyle}>Tags</label>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "0.375rem", padding: "0.625rem", background: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "0.625rem", minHeight: "3rem", alignItems: "center" }}>
+              {selectedTags.map((tag) => (
+                <span key={tag.id} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.2rem 0.625rem", background: "rgba(71,235,191,0.2)", color: "#0f766e", borderRadius: "999px", fontSize: "0.8rem", fontWeight: 600 }}>
+                  {tag.name}
+                  <button type="button" onClick={() => removeTag(tag.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#0f766e", padding: 0, lineHeight: 1, display: "flex" }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: "0.85rem" }}>close</span>
+                  </button>
+                </span>
+              ))}
+              <FieldAutocomplete
+                value={tagInput}
+                onChange={setTagInput}
+                items={tags.filter((t) => !selectedTags.some((s) => s.id === t.id)).map((t) => ({ id: t.id, label: t.name }))}
+                onSelect={handleSelectTag}
+                onCreate={handleCreateTag}
+                placeholder="Ajouter un tag…"
+                style={{ flex: 1, minWidth: "8rem", padding: "0.2rem 0", border: "none", background: "transparent", fontSize: "0.875rem", outline: "none" }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Servings / Source */}
-      <div style={{ ...sectionStyle, display: "grid", gridTemplateColumns: "1fr 2fr", gap: "1rem" }}>
-        <div>
-          <label style={labelStyle}>Portions</label>
-          <input type="number" min="1" value={servings} onChange={(e) => setServings(e.target.value)} style={inputStyle} placeholder="4" />
-        </div>
-        <div>
-          <label style={labelStyle}>URL source</label>
-          <input type="url" value={sourceUrl} onChange={(e) => setSourceUrl(e.target.value)} style={inputStyle} placeholder="https://..." />
-        </div>
-      </div>
-
-      {/* Tags */}
+      {/* Section: Ingrédients */}
       <div style={sectionStyle}>
-        <label style={labelStyle}>Tags</label>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.5rem" }}>
-          {selectedTags.map((tag) => (
-            <span key={tag.id} style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", padding: "0.2rem 0.5rem", background: "#dbeafe", borderRadius: "4px", fontSize: "0.85rem" }}>
-              {tag.name}
-              <button type="button" onClick={() => removeTag(tag.id)} style={{ background: "none", border: "none", cursor: "pointer", color: "#1d4ed8", fontWeight: 700, padding: 0, lineHeight: 1 }}>×</button>
-            </span>
-          ))}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+            <span className="material-symbols-outlined" style={{ fontSize: "1.2rem", color: "#47ebbf" }}>shopping_basket</span>
+            <h2 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700 }}>Ingrédients *</h2>
+          </div>
+          <button type="button" onClick={addIngredientLine} style={{ display: "flex", alignItems: "center", gap: "0.25rem", background: "none", border: "none", cursor: "pointer", color: "#47ebbf", fontWeight: 700, fontSize: "0.875rem" }}>
+            <span className="material-symbols-outlined" style={{ fontSize: "1.1rem" }}>add_circle</span>
+            Ajouter
+          </button>
         </div>
-        <FieldAutocomplete
-          value={tagInput}
-          onChange={setTagInput}
-          items={tags.filter((t) => !selectedTags.some((s) => s.id === t.id)).map((t) => ({ id: t.id, label: t.name }))}
-          onSelect={handleSelectTag}
-          onCreate={handleCreateTag}
-          placeholder="Ajouter un tag..."
-          style={inputStyle}
-        />
-      </div>
-
-      {/* Ingredients */}
-      <div style={sectionStyle}>
-        <label style={labelStyle}>
-          Ingrédients <span style={{ color: "#c00" }}>*</span>
-        </label>
-        <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
           {ingredientLines.map((line, index) => (
-            <div
-              key={index}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "2fr 1fr 1fr 1fr 1.5fr auto",
-                gap: "0.5rem",
-                alignItems: "center",
-              }}
-            >
-              <div style={{ position: "relative" }}>
-                <input
-                  type="text"
-                  placeholder="Rechercher un ingrédient..."
-                  value={line.ingredientName}
-                  onChange={(e) => handleIngredientInputChange(index, e.target.value)}
-                  onFocus={() => handleIngredientInputFocus(index)}
-                  onBlur={handleIngredientInputBlur}
-                  style={{
-                    ...inputStyle,
-                    borderColor: line.ingredientId ? "#22c55e" : "#ccc",
-                  }}
-                />
-                {activeLineIndex === index && (ingredientSuggestions.length > 0 || line.ingredientName.trim()) && (
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "100%",
-                      left: 0,
-                      right: 0,
-                      background: "#fff",
-                      border: "1px solid #ccc",
-                      borderTop: "none",
-                      borderRadius: "0 0 4px 4px",
-                      maxHeight: "200px",
-                      overflowY: "auto",
-                      zIndex: 10,
-                      boxShadow: "0 4px 6px rgba(0,0,0,0.1)",
-                    }}
-                  >
-                    {isSearching && (
-                      <div style={{ padding: "0.5rem", color: "#888", fontSize: "0.85rem" }}>
-                        Recherche...
-                      </div>
-                    )}
-                    {!isSearching && ingredientSuggestions.map((suggestion) => (
-                      <button
-                        key={suggestion.id}
-                        type="button"
-                        onMouseDown={(e) => e.preventDefault()}
-                        onClick={() => handleSelectSuggestion(index, suggestion)}
-                        style={{
-                          display: "block",
-                          width: "100%",
-                          padding: "0.5rem",
-                          textAlign: "left",
-                          background: "none",
-                          border: "none",
-                          cursor: "pointer",
-                          fontSize: "0.9rem",
-                        }}
-                        onMouseOver={(e) => (e.currentTarget.style.background = "#f3f4f6")}
-                        onMouseOut={(e) => (e.currentTarget.style.background = "none")}
-                      >
-                        {suggestion.name}
-                      </button>
-                    ))}
-                    {!isSearching &&
-                      line.ingredientName.trim() &&
-                      !ingredientSuggestions.some(
-                        (s) => s.name.toLowerCase() === line.ingredientName.trim().toLowerCase()
-                      ) && (
-                        <button
-                          type="button"
-                          onMouseDown={(e) => e.preventDefault()}
-                          onClick={() => handleCreateIngredient(index, line.ingredientName)}
-                          style={{
-                            display: "block",
-                            width: "100%",
-                            padding: "0.5rem",
-                            textAlign: "left",
-                            background: "#dbeafe",
-                            border: "none",
-                            borderTop: "1px solid #ccc",
-                            cursor: "pointer",
-                            fontSize: "0.9rem",
-                            fontWeight: 500,
-                            color: "#1d4ed8",
-                          }}
-                          onMouseOver={(e) => (e.currentTarget.style.background = "#bfdbfe")}
-                          onMouseOut={(e) => (e.currentTarget.style.background = "#dbeafe")}
-                        >
-                          Créer « {line.ingredientName.trim()} »
-                        </button>
+            <div key={index} style={cardStyle}>
+              <div style={{ display: "flex", gap: "0.5rem", marginBottom: "0.75rem" }}>
+                <div style={{ flex: 1, position: "relative" }}>
+                  <input
+                    type="text"
+                    placeholder="Nom de l'ingrédient…"
+                    value={line.ingredientName}
+                    onChange={(e) => handleIngredientInputChange(index, e.target.value)}
+                    onFocus={() => handleIngredientInputFocus(index)}
+                    onBlur={handleIngredientInputBlur}
+                    style={{ ...inputStyle, borderColor: line.ingredientId ? "#47ebbf" : "#e2e8f0" }}
+                  />
+                  {activeLineIndex === index && (ingredientSuggestions.length > 0 || line.ingredientName.trim()) && (
+                    <div style={{ position: "absolute", top: "100%", left: 0, right: 0, background: "#fff", border: "1px solid #e2e8f0", borderRadius: "0 0 0.625rem 0.625rem", maxHeight: "200px", overflowY: "auto", zIndex: 10, boxShadow: "0 8px 16px rgba(0,0,0,0.1)" }}>
+                      {isSearching && <div style={{ padding: "0.5rem 0.75rem", color: "#94a3b8", fontSize: "0.85rem" }}>Recherche…</div>}
+                      {!isSearching && ingredientSuggestions.map((suggestion) => (
+                        <button key={suggestion.id} type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => handleSelectSuggestion(index, suggestion)}
+                          style={{ display: "block", width: "100%", padding: "0.5rem 0.75rem", textAlign: "left", background: "none", border: "none", cursor: "pointer", fontSize: "0.875rem" }}
+                          onMouseOver={(e) => (e.currentTarget.style.background = "#f8fafc")}
+                          onMouseOut={(e) => (e.currentTarget.style.background = "none")}
+                        >{suggestion.name}</button>
+                      ))}
+                      {!isSearching && line.ingredientName.trim() && !ingredientSuggestions.some((s) => s.name.toLowerCase() === line.ingredientName.trim().toLowerCase()) && (
+                        <button type="button" onMouseDown={(e) => e.preventDefault()} onClick={() => handleCreateIngredient(index, line.ingredientName)}
+                          style={{ display: "block", width: "100%", padding: "0.5rem 0.75rem", textAlign: "left", background: "rgba(71,235,191,0.1)", border: "none", borderTop: "1px solid #e2e8f0", cursor: "pointer", fontSize: "0.875rem", fontWeight: 600, color: "#0f766e" }}
+                          onMouseOver={(e) => (e.currentTarget.style.background = "rgba(71,235,191,0.2)")}
+                          onMouseOut={(e) => (e.currentTarget.style.background = "rgba(71,235,191,0.1)")}
+                        >Créer « {line.ingredientName.trim()} »</button>
                       )}
-                  </div>
-                )}
+                    </div>
+                  )}
+                </div>
+                <button type="button" onClick={() => removeIngredientLine(index)} disabled={ingredientLines.length <= 1}
+                  style={{ background: "none", border: "none", cursor: ingredientLines.length <= 1 ? "not-allowed" : "pointer", color: ingredientLines.length <= 1 ? "#cbd5e1" : "#ef4444", display: "flex", alignItems: "center", padding: "0.25rem" }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: "1.2rem" }}>delete</span>
+                </button>
               </div>
-
-              <input
-                type="number"
-                min="0"
-                step="any"
-                placeholder="Qté"
-                value={line.quantity}
-                onChange={(e) => updateIngredientLine(index, "quantity", e.target.value)}
-                style={inputStyle}
-              />
-
-              <FieldAutocomplete
-                value={line.aisleName}
-                onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], aisleName: v, aisleId: "" }; return next; })}
-                items={aisles.map((a) => ({ id: a.id, label: a.name }))}
-                onSelect={(item) => handleSelectAisle(index, item)}
-                onCreate={(label) => handleCreateAisle(index, label)}
-                placeholder="Rayon..."
-                style={inputStyle}
-              />
-
-              <FieldAutocomplete
-                value={line.unitLabel}
-                onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], unitLabel: v, unitId: "" }; return next; })}
-                items={units.map((u) => ({ id: u.id, label: u.abbr }))}
-                onSelect={(item) => handleSelectUnit(index, item)}
-                onCreate={(label) => handleCreateUnit(index, label)}
-                placeholder="Unité..."
-                style={inputStyle}
-              />
-
-
-              <button
-                type="button"
-                onClick={() => removeIngredientLine(index)}
-                disabled={ingredientLines.length <= 1}
-                style={{
-                  padding: "0.4rem 0.6rem",
-                  background: ingredientLines.length <= 1 ? "#e5e7eb" : "#fee2e2",
-                  color: ingredientLines.length <= 1 ? "#9ca3af" : "#b91c1c",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: ingredientLines.length <= 1 ? "not-allowed" : "pointer",
-                  fontSize: "0.85rem",
-                }}
-              >
-                ✕
-              </button>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "0.5rem" }}>
+                <input type="number" min="0" step="any" placeholder="Qté" value={line.quantity} onChange={(e) => updateIngredientLine(index, "quantity", e.target.value)} style={inputStyle} />
+                <FieldAutocomplete
+                  value={line.unitLabel}
+                  onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], unitLabel: v, unitId: "" }; return next; })}
+                  items={units.map((u) => ({ id: u.id, label: u.abbr }))}
+                  onSelect={(item) => handleSelectUnit(index, item)}
+                  onCreate={(label) => handleCreateUnit(index, label)}
+                  placeholder="Unité…"
+                  style={inputStyle}
+                />
+                <FieldAutocomplete
+                  value={line.aisleName}
+                  onChange={(v) => setIngredientLines((prev) => { const next = [...prev]; next[index] = { ...next[index], aisleName: v, aisleId: "" }; return next; })}
+                  items={aisles.map((a) => ({ id: a.id, label: a.name }))}
+                  onSelect={(item) => handleSelectAisle(index, item)}
+                  onCreate={(label) => handleCreateAisle(index, label)}
+                  placeholder="Rayon…"
+                  style={inputStyle}
+                />
+              </div>
             </div>
           ))}
         </div>
-        <button
-          type="button"
-          onClick={addIngredientLine}
-          style={{
-            marginTop: "0.5rem",
-            padding: "0.4rem 0.8rem",
-            background: "#f3f4f6",
-            border: "1px solid #d1d5db",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "0.9rem",
-          }}
-        >
-          + Ajouter un ingrédient
-        </button>
       </div>
 
-      {/* Instructions */}
+      {/* Section: Instructions */}
       <div style={sectionStyle}>
-        <label style={labelStyle}>Instructions</label>
+        {sectionHeaderStyle("description", "Préparation")}
         <textarea
           value={instructions}
           onChange={(e) => setInstructions(e.target.value)}
           rows={6}
-          style={{ ...inputStyle, resize: "vertical" }}
-          placeholder="1. Préchauffer le four...&#10;2. Mélanger les ingrédients..."
+          style={{ ...inputStyle, background: "#fff", borderRadius: "0.75rem", boxShadow: "0 4px 20px -2px rgba(0,0,0,0.05)", resize: "vertical", lineHeight: 1.6 }}
+          placeholder="Décrivez les étapes de votre recette…"
         />
       </div>
 
-      {/* Notes */}
+      {/* Section: Notes */}
       <div style={sectionStyle}>
-        <label style={labelStyle}>Notes</label>
+        {sectionHeaderStyle("sticky_note_2", "Notes")}
         <textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
-          style={{ ...inputStyle, resize: "vertical" }}
-          placeholder="Astuces, variantes, allergènes..."
+          style={{ ...inputStyle, background: "#fff", borderRadius: "0.75rem", boxShadow: "0 4px 20px -2px rgba(0,0,0,0.05)", resize: "vertical", lineHeight: 1.6 }}
+          placeholder="Astuces, variantes, allergènes…"
         />
       </div>
 
-      {/* Submit */}
-      <button
-        type="submit"
-        disabled={submitting}
-        style={{
-          padding: "0.75rem 1.5rem",
-          background: submitting ? "#9ca3af" : "#2563eb",
-          color: "#fff",
-          border: "none",
-          borderRadius: "6px",
-          cursor: submitting ? "wait" : "pointer",
-          fontSize: "1rem",
-          fontWeight: 500,
-        }}
-      >
-        {submitting ? "Création..." : "Créer la recette"}
-      </button>
+      {/* Fixed bottom actions */}
+      <div style={{ position: "fixed", bottom: 0, left: 0, right: 0, padding: "1rem", background: "rgba(246,248,247,0.95)", backdropFilter: "blur(8px)", borderTop: "1px solid rgba(71,235,191,0.1)", display: "flex", flexDirection: "column", gap: "0.625rem", zIndex: 50 }}>
+        <button type="submit" disabled={submitting}
+          style={{ width: "100%", height: "3.5rem", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", background: submitting ? "#a7f3d0" : "#47ebbf", color: "#0f172a", fontWeight: 700, fontSize: "0.95rem", border: "none", borderRadius: "0.75rem", cursor: submitting ? "wait" : "pointer", boxShadow: "4px 4px 0 rgba(71,235,191,0.2)" }}>
+          <span className="material-symbols-outlined" style={{ fontSize: "1.1rem" }}>save</span>
+          {submitting ? "Création…" : "Enregistrer la recette"}
+        </button>
+        <button type="button" onClick={() => window.history.back()}
+          style={{ width: "100%", height: "3rem", background: "transparent", border: "none", color: "#94a3b8", fontWeight: 600, fontSize: "0.875rem", cursor: "pointer" }}>
+          Annuler
+        </button>
+      </div>
     </form>
   );
 }

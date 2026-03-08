@@ -129,198 +129,167 @@ export function PoolSection({
   const busy = loading || clearing;
 
   return (
-    <section
-      style={{
-        margin: "1.5rem 0",
-        padding: "1rem",
-        border: "1px solid #e0e0e0",
-        borderRadius: "8px",
-        background: "#fafafa",
-      }}
-    >
-      <h2 style={{ margin: "0 0 0.5rem", fontSize: "1.1rem" }}>
-        Pool de recettes (suggestions)
-      </h2>
-
-      <p
-        style={{
-          margin: "0 0 1rem",
-          fontSize: "0.85rem",
-          color: "#666",
-        }}
-      >
-        Generez des suggestions et ajoutez-les a votre liste de repas.
-      </p>
-
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "0.75rem",
-          flexWrap: "wrap",
-          marginBottom: "1rem",
-        }}
-      >
-        <label style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontSize: "0.9rem" }}>Suggestions :</span>
+    <section style={{ marginTop: "2rem" }}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "0.875rem" }}>
+        <h2 style={{ margin: 0, fontSize: "1.05rem", fontWeight: 700, color: "#111827" }}>
+          Suggestions
+        </h2>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <input
             type="number"
             min={1}
             max={20}
             value={count}
-            onChange={(e) =>
-              setCount(Math.max(1, Math.min(20, Number(e.target.value))))
-            }
+            onChange={(e) => setCount(Math.max(1, Math.min(20, Number(e.target.value))))}
             disabled={busy}
             style={{
-              width: "4rem",
-              padding: "0.4rem",
-              border: "1px solid #ccc",
-              borderRadius: "4px",
-              fontSize: "0.9rem",
+              width: "3.5rem",
+              padding: "0.35rem 0.5rem",
+              border: "1px solid #d1d5db",
+              borderRadius: "999px",
+              fontSize: "0.85rem",
+              textAlign: "center",
             }}
           />
-        </label>
-
-        <button
-          type="button"
-          onClick={handleGenerate}
-          disabled={busy}
-          style={{
-            padding: "0.5rem 1rem",
-            background: busy ? "#ccc" : "#0070f3",
-            color: "#fff",
-            border: "none",
-            borderRadius: "4px",
-            cursor: busy ? "wait" : "pointer",
-            fontSize: "0.9rem",
-          }}
-        >
-          {loading ? "Generation..." : `Generer ${count} suggestions`}
-        </button>
-
-        {recipes.length > 0 && (
           <button
             type="button"
-            onClick={handleClear}
+            onClick={handleGenerate}
             disabled={busy}
             style={{
-              padding: "0.5rem 1rem",
-              background: busy ? "#ccc" : "#dc3545",
-              color: "#fff",
-              border: "none",
-              borderRadius: "4px",
+              padding: "0.4rem 1rem",
+              borderRadius: "999px",
+              border: "1.5px solid #22c55e",
+              background: "transparent",
+              color: "#22c55e",
+              fontWeight: 600,
+              fontSize: "0.85rem",
               cursor: busy ? "wait" : "pointer",
-              fontSize: "0.9rem",
             }}
           >
-            {clearing ? "Suppression..." : "Vider"}
+            {loading ? "…" : "Générer"}
           </button>
-        )}
+          {recipes.length > 0 && (
+            <button
+              type="button"
+              onClick={handleClear}
+              disabled={busy}
+              style={{
+                padding: "0.4rem 1rem",
+                borderRadius: "999px",
+                border: "1.5px solid #d1d5db",
+                background: "transparent",
+                color: "#6b7280",
+                fontWeight: 600,
+                fontSize: "0.85rem",
+                cursor: busy ? "wait" : "pointer",
+              }}
+            >
+              {clearing ? "…" : "Vider"}
+            </button>
+          )}
+        </div>
       </div>
 
       {error && (
-        <p style={{ color: "#dc3545", fontSize: "0.9rem", margin: "0 0 1rem" }}>
+        <p style={{ color: "#ef4444", fontSize: "0.85rem", margin: "0 0 0.75rem" }}>
           {error}
         </p>
       )}
 
-      {recipes.length > 0 && (
-        <>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "0.5rem",
-              marginBottom: "0.75rem",
-            }}
-          >
-            <span style={{ fontSize: "0.85rem", color: "#555" }}>
-              Ajouter a la position :
-            </span>
-            <input
-              type="number"
-              min={0}
-              value={targetPosition}
-              onChange={(e) => setTargetPosition(Math.max(0, Number(e.target.value)))}
-              style={{
-                width: "4rem",
-                padding: "0.3rem",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-                fontSize: "0.85rem",
-              }}
-            />
-          </div>
+      {recipes.length === 0 && !loading && (
+        <div style={{
+          padding: "1.5rem",
+          textAlign: "center",
+          background: "#fff",
+          borderRadius: "12px",
+          border: "2px dashed #d1d5db",
+          color: "#9ca3af",
+          fontSize: "0.875rem",
+        }}>
+          Aucune suggestion — cliquez sur « Générer » pour commencer.
+        </div>
+      )}
 
-          <ul
-            style={{
-              listStyle: "none",
-              margin: 0,
-              padding: 0,
-              display: "flex",
-              flexDirection: "column",
-              gap: "0.5rem",
-            }}
-          >
-            {recipes.map((recipe) => (
-              <li
+      {recipes.length > 0 && (
+        <div style={{ display: "flex", gap: "0.75rem", overflowX: "auto", paddingBottom: "0.5rem" }}>
+          {recipes.map((recipe) => {
+            const isAdding = addingRecipeId === recipe.recipeId;
+            const TAG_PALETTE = [
+              { bg: "#fef9c3", text: "#854d0e" },
+              { bg: "#f3e8ff", text: "#6b21a8" },
+              { bg: "#d1fae5", text: "#065f46" },
+            ];
+            function getTagColor(tag: string) {
+              const idx = [...tag].reduce((acc, c) => acc + c.charCodeAt(0), 0) % TAG_PALETTE.length;
+              return TAG_PALETTE[idx];
+            }
+            return (
+              <div
                 key={recipe.id}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  padding: "0.5rem 0.75rem",
+                  flexShrink: 0,
+                  width: "10rem",
                   background: "#fff",
-                  border: "1px solid #e0e0e0",
-                  borderRadius: "4px",
+                  borderRadius: "0.75rem",
+                  border: "1px solid #f1f5f9",
+                  boxShadow: "0 4px 20px -2px rgba(0,0,0,0.05)",
+                  padding: "0.875rem",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
                 }}
               >
-                <div>
-                  <span style={{ fontWeight: 500 }}>{recipe.title}</span>
-                  {recipe.tags.length > 0 && (
-                    <span
-                      style={{
-                        marginLeft: "0.5rem",
-                        fontSize: "0.8rem",
-                        color: "#888",
-                      }}
-                    >
-                      ({recipe.tags.join(", ")})
-                    </span>
-                  )}
+                <div style={{ fontSize: "0.875rem", fontWeight: 700, color: "#0f172a", lineHeight: 1.3 }}>
+                  {recipe.title}
                 </div>
+
+                {recipe.tags.length > 0 && (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem" }}>
+                    {recipe.tags.slice(0, 2).map((tag) => {
+                      const { bg, text } = getTagColor(tag);
+                      return (
+                        <span
+                          key={tag}
+                          style={{
+                            padding: "0.125rem 0.4rem",
+                            borderRadius: "0.375rem",
+                            background: bg,
+                            color: text,
+                            fontSize: "0.6rem",
+                            fontWeight: 700,
+                            textTransform: "uppercase",
+                            letterSpacing: "0.05em",
+                          }}
+                        >
+                          {tag}
+                        </span>
+                      );
+                    })}
+                  </div>
+                )}
 
                 <button
                   type="button"
                   onClick={() => handleAddToPosition(recipe)}
-                  disabled={addingRecipeId === recipe.recipeId}
+                  disabled={isAdding}
                   style={{
-                    padding: "0.35rem 0.75rem",
-                    background:
-                      addingRecipeId === recipe.recipeId ? "#ccc" : "#28a745",
-                    color: "#fff",
+                    marginTop: "auto",
+                    padding: "0.4rem 0",
+                    borderRadius: "999px",
                     border: "none",
-                    borderRadius: "4px",
-                    cursor:
-                      addingRecipeId === recipe.recipeId ? "wait" : "pointer",
-                    fontSize: "0.85rem",
+                    background: isAdding ? "#d1d5db" : "#22c55e",
+                    color: "#fff",
+                    fontWeight: 600,
+                    fontSize: "0.8rem",
+                    cursor: isAdding ? "wait" : "pointer",
                   }}
                 >
-                  {addingRecipeId === recipe.recipeId
-                    ? "..."
-                    : `Ajouter (#${targetPosition + 1})`}
+                  {isAdding ? "…" : "+ Ajouter"}
                 </button>
-              </li>
-            ))}
-          </ul>
-        </>
-      )}
-
-      {recipes.length === 0 && !loading && (
-        <p style={{ color: "#888", fontSize: "0.9rem", margin: 0 }}>
-          Aucune suggestion. Generez-en pour commencer.
-        </p>
+              </div>
+            );
+          })}
+        </div>
       )}
     </section>
   );

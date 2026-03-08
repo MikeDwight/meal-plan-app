@@ -81,19 +81,20 @@ export function MealList({
     return (
       <div
         style={{
-          marginTop: "2rem",
-          padding: "2rem",
+          marginTop: "1rem",
+          padding: "2.5rem 1rem",
           textAlign: "center",
-          background: "#fafafa",
-          borderRadius: "8px",
-          border: "1px dashed #ccc",
+          background: "#fff",
+          borderRadius: "12px",
+          border: "2px dashed #d1d5db",
         }}
       >
-        <p style={{ color: "#666", fontSize: "1rem", margin: 0 }}>
-          Aucun repas planifié pour cette semaine.
+        <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🍽️</div>
+        <p style={{ color: "#374151", fontSize: "0.95rem", fontWeight: 600, margin: 0 }}>
+          Aucun repas planifié
         </p>
-        <p style={{ color: "#888", fontSize: "0.85rem", marginTop: "0.5rem" }}>
-          Utilisez le bouton « Générer les repas » ci-dessus.
+        <p style={{ color: "#9ca3af", fontSize: "0.82rem", marginTop: "0.4rem" }}>
+          Utilisez « Générer les repas » ci-dessus.
         </p>
       </div>
     );
@@ -103,10 +104,10 @@ export function MealList({
     <>
       <div
         style={{
-          marginTop: "1.5rem",
+          marginTop: "0.5rem",
           display: "flex",
           flexDirection: "column",
-          gap: "0.5rem",
+          gap: "0.625rem",
         }}
       >
         {items.map((item) => (
