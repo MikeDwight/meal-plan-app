@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getCurrentMondayString } from "@/lib/mealplan/utils";
@@ -32,6 +32,19 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   const [search, setSearch] = useState("");
   const [addingRecipeId, setAddingRecipeId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ recipeId: string; text: string; isError?: boolean } | null>(null);
+  const [weekRecipeIds, setWeekRecipeIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    const weekStart = getCurrentMondayString();
+    fetch(`/api/mealplan?householdId=${HOUSEHOLD_ID}&weekStart=${weekStart}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data?.items) {
+          setWeekRecipeIds(new Set(data.items.map((item: { recipe: { id: string } }) => item.recipe.id)));
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const handleAddToList = useCallback(
     async (recipe: RecipeRow) => {
@@ -56,6 +69,7 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
           const body = await res.json().catch(() => null);
           throw new Error((body as { error?: string } | null)?.error ?? `Erreur ${res.status}`);
         }
+        setWeekRecipeIds((prev) => new Set([...prev, recipe.id]));
         setFeedback({ recipeId: recipe.id, text: "Ajouté !" });
         setTimeout(() => setFeedback(null), 2500);
         router.refresh();
@@ -234,24 +248,31 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
                       {recipeFeedback.text}
                     </span>
                   )}
-                  <button
-                    type="button"
-                    onClick={() => handleAddToList(recipe)}
-                    disabled={isAdding}
-                    style={{
-                      padding: "0.3rem 0.75rem",
-                      fontSize: "0.75rem",
-                      fontWeight: 600,
-                      border: "1px solid #e2e8f0",
-                      borderRadius: "999px",
-                      background: isAdding ? "#f1f5f9" : "#fff",
-                      color: "#475569",
-                      cursor: isAdding ? "wait" : "pointer",
-                      whiteSpace: "nowrap",
-                    }}
-                  >
-                    {isAdding ? "…" : "+ Semaine"}
-                  </button>
+                  {weekRecipeIds.has(recipe.id) ? (
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.3rem 0.75rem", fontSize: "0.7rem", fontWeight: 700, borderRadius: "999px", background: "rgba(71,235,191,0.15)", color: "#0f766e", whiteSpace: "nowrap" }}>
+                      <span className="material-symbols-outlined" style={{ fontSize: "0.8rem" }}>check</span>
+                      Planifiée
+                    </span>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleAddToList(recipe)}
+                      disabled={isAdding}
+                      style={{
+                        padding: "0.3rem 0.75rem",
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                        border: "1px solid #e2e8f0",
+                        borderRadius: "999px",
+                        background: isAdding ? "#f1f5f9" : "#fff",
+                        color: "#475569",
+                        cursor: isAdding ? "wait" : "pointer",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {isAdding ? "…" : "+ Semaine"}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

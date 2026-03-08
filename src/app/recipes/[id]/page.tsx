@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { RecipeActions } from "./recipe-actions";
+import { AddToWeekButton } from "./add-to-week-button";
 
 export const dynamic = "force-dynamic";
 
@@ -274,6 +275,7 @@ export default async function RecipeDetailPage({
 
       {/* Actions */}
       <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem", paddingBottom: "2rem" }}>
+        <AddToWeekButton recipeId={id} />
         <Link
           href={`/recipes/${id}/edit`}
           style={{
