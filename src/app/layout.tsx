@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-bg-light text-slate-900 min-h-screen flex flex-col">
         <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-primary/10">
-          <div className="max-w-3xl mx-auto px-4 h-16 flex items-center justify-between">
+          <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="bg-primary rounded-lg p-1.5 flex items-center justify-center">
                 <span className="material-symbols-outlined text-bg-dark text-2xl">restaurant_menu</span>
@@ -30,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <span className="text-xl font-bold tracking-tight">Meal Plan App</span>
             </div>
           </div>
-          <nav className="max-w-3xl mx-auto px-4 overflow-x-auto">
+          <nav className="max-w-4xl mx-auto px-4 overflow-x-auto">
             <div className="flex gap-6 border-t border-primary/5">
               <Link href="/" className="text-sm font-medium text-slate-500 hover:text-primary pb-2 pt-1 whitespace-nowrap transition-colors border-b-2 border-transparent hover:border-primary/40">Accueil</Link>
               <Link href="/week" className="text-sm font-medium text-slate-500 hover:text-primary pb-2 pt-1 whitespace-nowrap transition-colors border-b-2 border-transparent hover:border-primary/40">Semaine</Link>
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </nav>
         </header>
 
-        <div className="flex-1 max-w-3xl mx-auto w-full px-4 py-6">
+        <div className="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
           {children}
         </div>
 
