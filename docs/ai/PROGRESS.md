@@ -35,6 +35,7 @@
 - **Nettoyage repo** : suppression maquettes HTML et scripts d'import one-shot (données déjà en prod)
 - **Import recette depuis photo** : bouton "Importer depuis une photo" sur `/recipes/new` — upload image ou prise de vue mobile, envoi à GPT-4o vision (`POST /api/recipes/import-photo`), extraction titre/portions/ingrédients/instructions, pré-remplissage du formulaire avec matching automatique sur le catalogue existant. Instructions générées si non lisibles. Clé `OPENAI_API_KEY` injectée via GitHub Secret → `.env` sur VPS.
 - **Persistance rayon/unité à la création inline** : quand un ingrédient est créé inline depuis le formulaire recette, ses `defaultUnitId` et `defaultAisleId` sont PATCHés au submit avec les valeurs saisies dans la ligne.
+- **Exposition publique via domaine** : `meal.mikealvs.fr` exposé via Nginx reverse proxy (HTTPS Let's Encrypt + Basic Auth). Configuration serveur : `/etc/nginx/sites-available/meal.mikealvs.fr`, `/etc/nginx/.htpasswd`. Port 3000 bloqué depuis internet via règle iptables `DOCKER-USER` (persistante via `iptables-persistent`).
 
 ## In Progress
 
