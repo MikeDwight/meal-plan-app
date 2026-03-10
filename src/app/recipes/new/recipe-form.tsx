@@ -365,6 +365,16 @@ export function RecipeForm() {
         body: JSON.stringify({ imageBase64: base64, mimeType: file.type }),
       });
 
+      if (!res.ok) {
+        const errorMessages: Record<number, string> = {
+          413: "Image trop volumineuse (limite serveur dépassée)",
+          401: "Non autorisé",
+          500: "Erreur serveur lors de l'import",
+        };
+        setImportError(errorMessages[res.status] ?? `Erreur HTTP ${res.status}`);
+        return;
+      }
+
       const data = await res.json() as {
         error?: string;
         title?: string;
@@ -373,8 +383,8 @@ export function RecipeForm() {
         ingredients?: { name: string; quantity: number | null; unit: string | null }[];
       };
 
-      if (!res.ok || data.error) {
-        setImportError(data.error ?? "Échec de l'extraction");
+      if (data.error) {
+        setImportError(data.error);
         return;
       }
 
