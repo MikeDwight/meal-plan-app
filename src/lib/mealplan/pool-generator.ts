@@ -65,7 +65,7 @@ async function fetchRecipes(householdId: string): Promise<RecipeWithRelations[]>
   const recipes = await prisma.recipe.findMany({
     where: {
       householdId,
-      tags: { some: { tag: { name: "repas" } } },
+      tags: { some: { tag: { name: { equals: "Repas", mode: "insensitive" } } } },
     },
     include: {
       tags: { select: { tagId: true } },
