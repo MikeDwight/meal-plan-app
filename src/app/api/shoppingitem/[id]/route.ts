@@ -6,6 +6,15 @@ import type { ShoppingItemRow } from "@/lib/shoppinglist/types";
 const PatchSchema = z.object({
   householdId: z.string().min(1, "householdId is required"),
   status: z.enum(["TODO", "DONE"]).optional(),
+  quantity: z
+    .union([z.number(), z.string()])
+    .nullish()
+    .transform((v) => {
+      if (v === null || v === undefined) return null;
+      const n = Number(v);
+      if (Number.isNaN(n)) return null;
+      return n;
+    }),
 });
 
 export async function PATCH(
@@ -27,7 +36,7 @@ export async function PATCH(
       );
     }
 
-    const { householdId, status: explicitStatus } = parseResult.data;
+    const { householdId, status: explicitStatus, quantity } = parseResult.data;
 
     const item = await prisma.shoppingItem.findUnique({
       where: { id },
@@ -50,9 +59,12 @@ export async function PATCH(
     const newStatus =
       explicitStatus ?? (item.status === "TODO" ? "DONE" : "TODO");
 
+    const updateData: Record<string, unknown> = { status: newStatus };
+    if (quantity !== undefined) updateData.quantity = quantity;
+
     const updated = await prisma.shoppingItem.update({
       where: { id },
-      data: { status: newStatus },
+      data: updateData,
       include: {
         unit: { select: { abbr: true } },
         aisle: { select: { name: true, sortOrder: true } },

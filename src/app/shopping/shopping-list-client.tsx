@@ -249,58 +249,117 @@ export function ShoppingListClient({
 
               {/* Items */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.625rem" }}>
-                {items.map((item) => {
-                  const isDone = item.status === "DONE";
-                  return (
-                    <div
-                      key={item.id}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "1rem",
-                        padding: "1rem",
-                        background: isDone ? "rgba(255,255,255,0.5)" : "#fff",
-                        borderRadius: "0.75rem",
-                        border: isDone ? "1px solid transparent" : "1px solid #f1f5f9",
-                        boxShadow: isDone ? "none" : "0 4px 20px -2px rgba(71,235,191,0.08)",
-                        opacity: isDone ? 0.6 : 1,
-                        transition: "opacity 0.15s",
-                      }}
-                    >
-                      <ToggleItemButton itemId={item.id} householdId={HOUSEHOLD_ID} currentStatus={item.status} />
-
-                      <div style={{ flex: 1, display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-                        <span style={{
-                          fontWeight: 600,
-                          fontSize: "0.925rem",
-                          color: isDone ? "#94a3b8" : "#0f172a",
-                          textDecoration: isDone ? "line-through" : "none",
-                        }}>
-                          {item.label}
-                        </span>
-
-                        {item.quantity != null && (
-                          <span style={{
-                            fontSize: "0.75rem",
-                            fontWeight: 700,
-                            color: isDone ? "#94a3b8" : "#47ebbf",
-                            background: isDone ? "transparent" : "rgba(71,235,191,0.1)",
-                            padding: "0.15rem 0.5rem",
-                            borderRadius: "0.375rem",
-                            whiteSpace: "nowrap",
-                          }}>
-                            {item.quantity}{item.unitAbbr ? ` ${item.unitAbbr}` : ""}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
+                {items.map((item) => (
+                  <ShoppingItemRow key={item.id} item={item} />
+                ))}
               </div>
             </section>
           ))}
         </div>
       )}
     </>
+  );
+}
+
+function ShoppingItemRow({ item }: { item: ShoppingItemProps }) {
+  const router = useRouter();
+  const [editingQty, setEditingQty] = useState(false);
+  const [qtyDraft, setQtyDraft] = useState("");
+  const isDone = item.status === "DONE";
+
+  function startEdit() {
+    setQtyDraft(item.quantity ?? "");
+    setEditingQty(true);
+  }
+
+  async function saveQty() {
+    setEditingQty(false);
+    const trimmed = qtyDraft.trim();
+    const qty = trimmed === "" ? null : Number(trimmed);
+    const current = item.quantity != null ? Number(item.quantity) : null;
+    if (qty === current) return;
+    await fetch(`/api/shoppingitem/${item.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID, status: item.status, quantity: qty }),
+    });
+    router.refresh();
+  }
+
+  return (
+    <div style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "1rem",
+      padding: "1rem",
+      background: isDone ? "rgba(255,255,255,0.5)" : "#fff",
+      borderRadius: "0.75rem",
+      border: isDone ? "1px solid transparent" : "1px solid #f1f5f9",
+      boxShadow: isDone ? "none" : "0 4px 20px -2px rgba(71,235,191,0.08)",
+      opacity: isDone ? 0.6 : 1,
+      transition: "opacity 0.15s",
+    }}>
+      <ToggleItemButton itemId={item.id} householdId={HOUSEHOLD_ID} currentStatus={item.status} />
+
+      <div style={{ flex: 1, display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
+        <span style={{
+          fontWeight: 600,
+          fontSize: "0.925rem",
+          color: isDone ? "#94a3b8" : "#0f172a",
+          textDecoration: isDone ? "line-through" : "none",
+        }}>
+          {item.label}
+        </span>
+
+        {editingQty ? (
+          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+            <input
+              type="number"
+              value={qtyDraft}
+              onChange={(e) => setQtyDraft(e.target.value)}
+              onBlur={saveQty}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") saveQty();
+                if (e.key === "Escape") setEditingQty(false);
+              }}
+              autoFocus
+              style={{
+                width: "3.5rem",
+                padding: "0.1rem 0.35rem",
+                fontSize: "0.75rem",
+                fontWeight: 700,
+                border: "1px solid #47ebbf",
+                borderRadius: "0.375rem",
+                outline: "none",
+                textAlign: "right",
+              }}
+            />
+            {item.unitAbbr && (
+              <span style={{ fontSize: "0.75rem", color: "#47ebbf", fontWeight: 700 }}>
+                {item.unitAbbr}
+              </span>
+            )}
+          </div>
+        ) : (
+          <span
+            onClick={startEdit}
+            title="Modifier la quantité"
+            style={{
+              fontSize: "0.75rem",
+              fontWeight: 700,
+              color: isDone ? "#94a3b8" : item.quantity != null ? "#47ebbf" : "#cbd5e1",
+              background: isDone ? "transparent" : item.quantity != null ? "rgba(71,235,191,0.1)" : "transparent",
+              padding: "0.15rem 0.5rem",
+              borderRadius: "0.375rem",
+              whiteSpace: "nowrap",
+              cursor: "pointer",
+              userSelect: "none",
+            }}
+          >
+            {item.quantity != null ? `${item.quantity}${item.unitAbbr ? ` ${item.unitAbbr}` : ""}` : "—"}
+          </span>
+        )}
+      </div>
+    </div>
   );
 }

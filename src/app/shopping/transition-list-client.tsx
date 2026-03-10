@@ -609,6 +609,8 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
   const router = useRouter();
   const [isToggling, startToggleTransition] = useTransition();
   const [isDeleting, startDeleteTransition] = useTransition();
+  const [editingQty, setEditingQty] = useState(false);
+  const [qtyDraft, setQtyDraft] = useState("");
   const isPending = isToggling || isDeleting;
   const isDone = item.status === "DONE";
 
@@ -628,6 +630,25 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
       body: JSON.stringify({ householdId: HOUSEHOLD_ID }),
     });
     startDeleteTransition(() => router.refresh());
+  }
+
+  function startEditQty() {
+    setQtyDraft(item.quantity ?? "");
+    setEditingQty(true);
+  }
+
+  async function saveQty() {
+    setEditingQty(false);
+    const trimmed = qtyDraft.trim();
+    const qty = trimmed === "" ? null : Number(trimmed);
+    const current = item.quantity != null ? Number(item.quantity) : null;
+    if (qty === current) return;
+    await fetch(`/api/transitionitem/${item.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID, status: item.status, quantity: qty }),
+    });
+    router.refresh();
   }
 
   return (
@@ -675,10 +696,47 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
         textDecoration: isDone ? "line-through" : "none",
       }}>
         {item.label}
-        {item.quantity != null && (
-          <span style={{ fontWeight: 400, color: "#94a3b8", marginLeft: "0.375rem" }}>× {item.quantity}</span>
-        )}
       </span>
+
+      {editingQty ? (
+        <input
+          type="number"
+          value={qtyDraft}
+          onChange={(e) => setQtyDraft(e.target.value)}
+          onBlur={saveQty}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") saveQty();
+            if (e.key === "Escape") setEditingQty(false);
+          }}
+          autoFocus
+          style={{
+            width: "3.5rem",
+            padding: "0.1rem 0.35rem",
+            fontSize: "0.75rem",
+            fontWeight: 700,
+            border: "1px solid #47ebbf",
+            borderRadius: "0.375rem",
+            outline: "none",
+            textAlign: "right",
+          }}
+        />
+      ) : (
+        <span
+          onClick={startEditQty}
+          title="Modifier la quantité"
+          style={{
+            fontSize: "0.8rem",
+            fontWeight: 600,
+            color: item.quantity != null ? "#94a3b8" : "#cbd5e1",
+            cursor: "pointer",
+            userSelect: "none",
+            padding: "0.1rem 0.25rem",
+            borderRadius: "0.25rem",
+          }}
+        >
+          {item.quantity != null ? `× ${item.quantity}` : "—"}
+        </span>
+      )}
 
       <button
         type="button"
