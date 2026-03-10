@@ -44,7 +44,10 @@ function normalizeToMonday(dateStr: string): { date: Date; formatted: string } {
 
 async function fetchRecipes(householdId: string): Promise<RecipeWithRelations[]> {
   const recipes = await prisma.recipe.findMany({
-    where: { householdId },
+    where: {
+      householdId,
+      tags: { some: { tag: { name: "repas" } } },
+    },
     include: {
       tags: { select: { tagId: true } },
       ingredients: { select: { ingredientId: true } },
