@@ -22,6 +22,7 @@ function toRow(item: {
     label: item.label,
     quantity: item.quantity,
     unitId: item.unitId,
+    unitAbbr: null,
     aisleId: item.aisleId,
     status: item.status as "TODO" | "DONE",
     createdAt: item.createdAt.toISOString(),

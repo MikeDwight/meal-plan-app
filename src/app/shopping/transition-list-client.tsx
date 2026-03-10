@@ -7,7 +7,17 @@ export interface TransitionItemProps {
   id: string;
   label: string;
   quantity: string | null;
+  unitId: string | null;
+  unitAbbr: string | null;
   status: "TODO" | "DONE";
+}
+
+let cachedUnits: { id: string; abbr: string }[] | null = null;
+async function fetchUnitsOnce(): Promise<{ id: string; abbr: string }[]> {
+  if (cachedUnits) return cachedUnits;
+  const res = await fetch(`/api/units?householdId=${HOUSEHOLD_ID}`);
+  if (res.ok) cachedUnits = await res.json();
+  return cachedUnits ?? [];
 }
 
 interface ArticleSuggestion {
@@ -611,6 +621,8 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
   const [isDeleting, startDeleteTransition] = useTransition();
   const [editingQty, setEditingQty] = useState(false);
   const [qtyDraft, setQtyDraft] = useState("");
+  const [editingUnit, setEditingUnit] = useState(false);
+  const [unitsList, setUnitsList] = useState<{ id: string; abbr: string }[]>([]);
   const isPending = isToggling || isDeleting;
   const isDone = item.status === "DONE";
 
@@ -698,45 +710,56 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
         {item.label}
       </span>
 
-      {editingQty ? (
-        <input
-          type="number"
-          value={qtyDraft}
-          onChange={(e) => setQtyDraft(e.target.value)}
-          onBlur={saveQty}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") saveQty();
-            if (e.key === "Escape") setEditingQty(false);
-          }}
-          autoFocus
-          style={{
-            width: "3.5rem",
-            padding: "0.1rem 0.35rem",
-            fontSize: "0.75rem",
-            fontWeight: 700,
-            border: "1px solid #47ebbf",
-            borderRadius: "0.375rem",
-            outline: "none",
-            textAlign: "right",
-          }}
-        />
-      ) : (
-        <span
-          onClick={startEditQty}
-          title="Modifier la quantité"
-          style={{
-            fontSize: "0.8rem",
-            fontWeight: 600,
-            color: item.quantity != null ? "#94a3b8" : "#cbd5e1",
-            cursor: "pointer",
-            userSelect: "none",
-            padding: "0.1rem 0.25rem",
-            borderRadius: "0.25rem",
-          }}
-        >
-          {item.quantity != null ? `× ${item.quantity}` : "—"}
-        </span>
-      )}
+      <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+        {/* Quantité */}
+        {editingQty ? (
+          <input
+            type="number"
+            value={qtyDraft}
+            onChange={(e) => setQtyDraft(e.target.value)}
+            onBlur={saveQty}
+            onKeyDown={(e) => { if (e.key === "Enter") saveQty(); if (e.key === "Escape") setEditingQty(false); }}
+            autoFocus
+            style={{ width: "3.5rem", padding: "0.1rem 0.35rem", fontSize: "0.75rem", fontWeight: 700, border: "1px solid #47ebbf", borderRadius: "0.375rem", outline: "none", textAlign: "right" }}
+          />
+        ) : (
+          <span onClick={startEditQty} title="Modifier la quantité" style={{ fontSize: "0.8rem", fontWeight: 600, color: item.quantity != null ? "#94a3b8" : "#cbd5e1", cursor: "pointer", userSelect: "none", padding: "0.1rem 0.25rem", borderRadius: "0.25rem" }}>
+            {item.quantity != null ? `× ${item.quantity}` : "—"}
+          </span>
+        )}
+
+        {/* Unité */}
+        {editingUnit ? (
+          <select
+            value={item.unitId ?? ""}
+            onChange={async (e) => {
+              setEditingUnit(false);
+              const unitId = e.target.value === "" ? null : e.target.value;
+              if (unitId === (item.unitId ?? null)) return;
+              await fetch(`/api/transitionitem/${item.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ householdId: HOUSEHOLD_ID, status: item.status, unitId }),
+              });
+              router.refresh();
+            }}
+            onBlur={() => setEditingUnit(false)}
+            autoFocus
+            style={{ fontSize: "0.75rem", border: "1px solid #47ebbf", borderRadius: "0.375rem", padding: "0.1rem 0.2rem", outline: "none" }}
+          >
+            <option value="">—</option>
+            {unitsList.map((u) => <option key={u.id} value={u.id}>{u.abbr}</option>)}
+          </select>
+        ) : (
+          <span
+            onClick={async () => { const units = await fetchUnitsOnce(); setUnitsList(units); setEditingUnit(true); }}
+            title="Modifier l'unité"
+            style={{ fontSize: "0.75rem", fontWeight: 600, color: item.unitAbbr != null ? "#94a3b8" : "#cbd5e1", cursor: "pointer", userSelect: "none", padding: "0.1rem 0.25rem", borderRadius: "0.25rem" }}
+          >
+            {item.unitAbbr ?? "u."}
+          </span>
+        )}
+      </div>
 
       <button
         type="button"

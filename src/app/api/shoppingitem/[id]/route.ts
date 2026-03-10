@@ -15,6 +15,7 @@ const PatchSchema = z.object({
       if (Number.isNaN(n)) return null;
       return n;
     }),
+  unitId: z.string().min(1).nullish(),
 });
 
 export async function PATCH(
@@ -36,7 +37,7 @@ export async function PATCH(
       );
     }
 
-    const { householdId, status: explicitStatus, quantity } = parseResult.data;
+    const { householdId, status: explicitStatus, quantity, unitId } = parseResult.data;
 
     const item = await prisma.shoppingItem.findUnique({
       where: { id },
@@ -61,6 +62,7 @@ export async function PATCH(
 
     const updateData: Record<string, unknown> = { status: newStatus };
     if (quantity !== undefined) updateData.quantity = quantity;
+    if (unitId !== undefined) updateData.unitId = unitId;
 
     const updated = await prisma.shoppingItem.update({
       where: { id },

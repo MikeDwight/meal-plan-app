@@ -14,6 +14,7 @@ function toRow(item: {
   status: string;
   createdAt: Date;
   updatedAt: Date;
+  unit?: { abbr: string } | null;
 }): TransitionItemRow {
   return {
     id: item.id,
@@ -22,6 +23,7 @@ function toRow(item: {
     label: item.label,
     quantity: item.quantity,
     unitId: item.unitId,
+    unitAbbr: item.unit?.abbr ?? null,
     aisleId: item.aisleId,
     status: item.status as "TODO" | "DONE",
     createdAt: item.createdAt.toISOString(),
@@ -77,6 +79,7 @@ export async function GET(request: NextRequest) {
     const items = await prisma.transitionItem.findMany({
       where,
       orderBy: { createdAt: "asc" },
+      include: { unit: { select: { abbr: true } } },
     });
 
     return NextResponse.json(items.map(toRow), { status: 200 });

@@ -7,6 +7,7 @@ export interface TransitionItemRow {
   label: string;
   quantity: Decimal | null;
   unitId: string | null;
+  unitAbbr: string | null;
   aisleId: string | null;
   status: "TODO" | "DONE";
   createdAt: string;

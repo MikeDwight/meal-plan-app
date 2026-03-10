@@ -43,10 +43,12 @@ export default async function ShoppingPage() {
 
   const transitionItems: TransitionItemProps[] = transitionRes.ok
     ? (await transitionRes.json()).map(
-        (ti: { id: string; label: string; quantity: string | number | null; status: string }) => ({
+        (ti: { id: string; label: string; quantity: string | number | null; status: string; unitId: string | null; unitAbbr: string | null }) => ({
           id: ti.id,
           label: ti.label,
           quantity: ti.quantity != null ? String(ti.quantity) : null,
+          unitId: ti.unitId,
+          unitAbbr: ti.unitAbbr,
           status: ti.status as "TODO" | "DONE",
         })
       )
@@ -74,6 +76,7 @@ export default async function ShoppingPage() {
       id: item.id,
       label: item.label,
       quantity: item.quantity != null ? String(item.quantity) : null,
+      unitId: item.unitId,
       unitAbbr: item.unitAbbr,
       status: item.status,
     })),

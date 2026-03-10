@@ -10,8 +10,17 @@ export interface ShoppingItemProps {
   id: string;
   label: string;
   quantity: string | null;
+  unitId: string | null;
   unitAbbr: string | null;
   status: "TODO" | "DONE";
+}
+
+let cachedUnits: { id: string; abbr: string }[] | null = null;
+async function fetchUnitsOnce(): Promise<{ id: string; abbr: string }[]> {
+  if (cachedUnits) return cachedUnits;
+  const res = await fetch(`/api/units?householdId=${HOUSEHOLD_ID}`);
+  if (res.ok) cachedUnits = await res.json();
+  return cachedUnits ?? [];
 }
 
 export interface AisleGroup {
@@ -265,12 +274,9 @@ function ShoppingItemRow({ item }: { item: ShoppingItemProps }) {
   const router = useRouter();
   const [editingQty, setEditingQty] = useState(false);
   const [qtyDraft, setQtyDraft] = useState("");
+  const [editingUnit, setEditingUnit] = useState(false);
+  const [unitsList, setUnitsList] = useState<{ id: string; abbr: string }[]>([]);
   const isDone = item.status === "DONE";
-
-  function startEdit() {
-    setQtyDraft(item.quantity ?? "");
-    setEditingQty(true);
-  }
 
   async function saveQty() {
     setEditingQty(false);
@@ -285,6 +291,47 @@ function ShoppingItemRow({ item }: { item: ShoppingItemProps }) {
     });
     router.refresh();
   }
+
+  async function startEditUnit() {
+    const units = await fetchUnitsOnce();
+    setUnitsList(units);
+    setEditingUnit(true);
+  }
+
+  async function saveUnit(newUnitId: string) {
+    setEditingUnit(false);
+    const unitId = newUnitId === "" ? null : newUnitId;
+    if (unitId === (item.unitId ?? null)) return;
+    await fetch(`/api/shoppingitem/${item.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID, status: item.status, unitId }),
+    });
+    router.refresh();
+  }
+
+  const inlineInputStyle = {
+    width: "3.5rem",
+    padding: "0.1rem 0.35rem",
+    fontSize: "0.75rem",
+    fontWeight: 700,
+    border: "1px solid #47ebbf",
+    borderRadius: "0.375rem",
+    outline: "none",
+    textAlign: "right" as const,
+  };
+
+  const badgeStyle = (hasValue: boolean) => ({
+    fontSize: "0.75rem",
+    fontWeight: 700 as const,
+    color: isDone ? "#94a3b8" : hasValue ? "#47ebbf" : "#cbd5e1",
+    background: isDone ? "transparent" : hasValue ? "rgba(71,235,191,0.1)" : "transparent",
+    padding: "0.15rem 0.4rem",
+    borderRadius: "0.375rem",
+    whiteSpace: "nowrap" as const,
+    cursor: "pointer",
+    userSelect: "none" as const,
+  });
 
   return (
     <div style={{
@@ -301,62 +348,43 @@ function ShoppingItemRow({ item }: { item: ShoppingItemProps }) {
     }}>
       <ToggleItemButton itemId={item.id} householdId={HOUSEHOLD_ID} currentStatus={item.status} />
 
-      <div style={{ flex: 1, display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "0.5rem" }}>
-        <span style={{
-          fontWeight: 600,
-          fontSize: "0.925rem",
-          color: isDone ? "#94a3b8" : "#0f172a",
-          textDecoration: isDone ? "line-through" : "none",
-        }}>
-          {item.label}
-        </span>
+      <span style={{ flex: 1, fontWeight: 600, fontSize: "0.925rem", color: isDone ? "#94a3b8" : "#0f172a", textDecoration: isDone ? "line-through" : "none" }}>
+        {item.label}
+      </span>
 
+      <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+        {/* Quantité */}
         {editingQty ? (
-          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-            <input
-              type="number"
-              value={qtyDraft}
-              onChange={(e) => setQtyDraft(e.target.value)}
-              onBlur={saveQty}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") saveQty();
-                if (e.key === "Escape") setEditingQty(false);
-              }}
-              autoFocus
-              style={{
-                width: "3.5rem",
-                padding: "0.1rem 0.35rem",
-                fontSize: "0.75rem",
-                fontWeight: 700,
-                border: "1px solid #47ebbf",
-                borderRadius: "0.375rem",
-                outline: "none",
-                textAlign: "right",
-              }}
-            />
-            {item.unitAbbr && (
-              <span style={{ fontSize: "0.75rem", color: "#47ebbf", fontWeight: 700 }}>
-                {item.unitAbbr}
-              </span>
-            )}
-          </div>
+          <input
+            type="number"
+            value={qtyDraft}
+            onChange={(e) => setQtyDraft(e.target.value)}
+            onBlur={saveQty}
+            onKeyDown={(e) => { if (e.key === "Enter") saveQty(); if (e.key === "Escape") setEditingQty(false); }}
+            autoFocus
+            style={inlineInputStyle}
+          />
         ) : (
-          <span
-            onClick={startEdit}
-            title="Modifier la quantité"
-            style={{
-              fontSize: "0.75rem",
-              fontWeight: 700,
-              color: isDone ? "#94a3b8" : item.quantity != null ? "#47ebbf" : "#cbd5e1",
-              background: isDone ? "transparent" : item.quantity != null ? "rgba(71,235,191,0.1)" : "transparent",
-              padding: "0.15rem 0.5rem",
-              borderRadius: "0.375rem",
-              whiteSpace: "nowrap",
-              cursor: "pointer",
-              userSelect: "none",
-            }}
+          <span onClick={() => { setQtyDraft(item.quantity ?? ""); setEditingQty(true); }} title="Modifier la quantité" style={badgeStyle(item.quantity != null)}>
+            {item.quantity ?? "—"}
+          </span>
+        )}
+
+        {/* Unité */}
+        {editingUnit ? (
+          <select
+            value={item.unitId ?? ""}
+            onChange={(e) => saveUnit(e.target.value)}
+            onBlur={() => setEditingUnit(false)}
+            autoFocus
+            style={{ fontSize: "0.75rem", border: "1px solid #47ebbf", borderRadius: "0.375rem", padding: "0.1rem 0.2rem", outline: "none" }}
           >
-            {item.quantity != null ? `${item.quantity}${item.unitAbbr ? ` ${item.unitAbbr}` : ""}` : "—"}
+            <option value="">—</option>
+            {unitsList.map((u) => <option key={u.id} value={u.id}>{u.abbr}</option>)}
+          </select>
+        ) : (
+          <span onClick={startEditUnit} title="Modifier l'unité" style={badgeStyle(item.unitAbbr != null)}>
+            {item.unitAbbr ?? "u."}
           </span>
         )}
       </div>
