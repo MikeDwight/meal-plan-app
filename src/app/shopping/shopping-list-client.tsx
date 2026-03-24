@@ -50,7 +50,7 @@ export function ShoppingListClient({
   const [purging, setPurging] = useState(false);
   const [purgeError, setPurgeError] = useState<string | null>(null);
 
-  const [hideDone, setHideDone] = useState(false);
+  const [hideDone, setHideDone] = useState(true);
   const busy = isBuilding || isArchiving || purging || isPurging;
 
   async function handleBuild() {
