@@ -18,6 +18,8 @@ export function getCurrentMondayString(): string {
   const dow = now.getUTCDay();
   const diff = dow === 0 ? -6 : 1 - dow;
   const monday = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + diff));
+  // Si on est après lundi (mardi→dimanche), cibler S+1
+  if (dow !== 1) monday.setUTCDate(monday.getUTCDate() + 7);
   const y = monday.getUTCFullYear();
   const m = String(monday.getUTCMonth() + 1).padStart(2, "0");
   const d = String(monday.getUTCDate()).padStart(2, "0");
