@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
+import { SelectSheet } from "../components/select-sheet";
 
 interface Unit {
   id: string;
@@ -261,16 +262,14 @@ export function PantryClient({ householdId, initialItems, units }: PantryClientP
               onChange={(e) => setAddQuantity(e.target.value)}
               style={inputStyle}
             />
-            <select
-              value={addUnitId}
-              onChange={(e) => setAddUnitId(e.target.value)}
+            <SelectSheet
+              value={units.find((u) => u.id === addUnitId)?.abbr ?? ""}
+              onChange={() => {}}
+              items={units.map((u) => ({ id: u.id, label: u.abbr }))}
+              onSelect={(item) => setAddUnitId(item.id)}
+              placeholder="— Unité —"
               style={{ ...inputStyle, background: "#fff" }}
-            >
-              <option value="">— Unité —</option>
-              {units.map((u) => (
-                <option key={u.id} value={u.id}>{u.abbr}</option>
-              ))}
-            </select>
+            />
           </div>
 
           {addError && (

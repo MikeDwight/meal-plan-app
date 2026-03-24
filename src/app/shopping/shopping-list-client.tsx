@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ToggleItemButton } from "./toggle-button";
 import { TransitionListClient } from "./transition-list-client";
 import type { TransitionItemProps } from "./transition-list-client";
+import { SelectSheet } from "../components/select-sheet";
 
 export interface ShoppingItemProps {
   id: string;
@@ -372,16 +373,15 @@ function ShoppingItemRow({ item }: { item: ShoppingItemProps }) {
 
         {/* Unité */}
         {editingUnit ? (
-          <select
-            value={item.unitId ?? ""}
-            onChange={(e) => saveUnit(e.target.value)}
-            onBlur={() => setEditingUnit(false)}
-            autoFocus
-            style={{ fontSize: "0.75rem", border: "1px solid #47ebbf", borderRadius: "0.375rem", padding: "0.1rem 0.2rem", outline: "none" }}
-          >
-            <option value="">—</option>
-            {unitsList.map((u) => <option key={u.id} value={u.id}>{u.abbr}</option>)}
-          </select>
+          <SelectSheet
+            value={item.unitAbbr ?? ""}
+            onChange={() => {}}
+            items={[{ id: "", label: "—" }, ...unitsList.map((u) => ({ id: u.id, label: u.abbr }))]}
+            onSelect={(selected) => saveUnit(selected.id)}
+            onClose={() => setEditingUnit(false)}
+            placeholder="Unité…"
+            autoOpen
+          />
         ) : (
           <span onClick={startEditUnit} title="Modifier l'unité" style={badgeStyle(item.unitAbbr != null)}>
             {item.unitAbbr ?? "u."}

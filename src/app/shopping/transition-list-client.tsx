@@ -2,6 +2,7 @@
 
 import { useState, useTransition, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { SelectSheet } from "../components/select-sheet";
 
 export interface TransitionItemProps {
   id: string;
@@ -730,11 +731,13 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
 
         {/* Unité */}
         {editingUnit ? (
-          <select
-            value={item.unitId ?? ""}
-            onChange={async (e) => {
+          <SelectSheet
+            value={item.unitAbbr ?? ""}
+            onChange={() => {}}
+            items={[{ id: "", label: "—" }, ...unitsList.map((u) => ({ id: u.id, label: u.abbr }))]}
+            onSelect={async (selected) => {
               setEditingUnit(false);
-              const unitId = e.target.value === "" ? null : e.target.value;
+              const unitId = selected.id === "" ? null : selected.id;
               if (unitId === (item.unitId ?? null)) return;
               await fetch(`/api/transitionitem/${item.id}`, {
                 method: "PATCH",
@@ -743,13 +746,10 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
               });
               router.refresh();
             }}
-            onBlur={() => setEditingUnit(false)}
-            autoFocus
-            style={{ fontSize: "0.75rem", border: "1px solid #47ebbf", borderRadius: "0.375rem", padding: "0.1rem 0.2rem", outline: "none" }}
-          >
-            <option value="">—</option>
-            {unitsList.map((u) => <option key={u.id} value={u.id}>{u.abbr}</option>)}
-          </select>
+            onClose={() => setEditingUnit(false)}
+            placeholder="Unité…"
+            autoOpen
+          />
         ) : (
           <span
             onClick={async () => { const units = await fetchUnitsOnce(); setUnitsList(units); setEditingUnit(true); }}
