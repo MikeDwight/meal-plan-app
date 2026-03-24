@@ -165,7 +165,7 @@ export function RecipeForm() {
   );
 
   const addIngredientLine = useCallback(() => {
-    setIngredientLines((prev) => [...prev, emptyLine()]);
+    setIngredientLines((prev) => [emptyLine(), ...prev]);
   }, []);
 
   const searchIngredients = useCallback(async (query: string) => {

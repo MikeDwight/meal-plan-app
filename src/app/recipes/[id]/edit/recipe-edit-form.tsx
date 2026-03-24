@@ -147,7 +147,7 @@ export function RecipeEditForm({
   }, []);
 
   const addIngredientLine = useCallback(() => {
-    setIngredientLines((prev) => [...prev, { ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "" }]);
+    setIngredientLines((prev) => [{ ingredientId: "", ingredientName: "", quantity: "", unitId: "", unitLabel: "", aisleId: "", aisleName: "" }, ...prev]);
   }, []);
 
   const removeIngredientLine = useCallback((index: number) => {
