@@ -43,6 +43,7 @@ jobs:
             mkdir -p /opt/meal-plan-app
             echo 'DATABASE_URL=postgresql://postgres:postgres@postgres:5432/mealplan?schema=public' > /opt/meal-plan-app/.env
             echo 'OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}' >> /opt/meal-plan-app/.env
+            echo 'APP_PASSWORD=2603' >> /opt/meal-plan-app/.env
             F=/opt/meal-plan-app/docker-compose.yml
             echo 'name: meal-plan-app' > $F
             echo 'services:' >> $F
