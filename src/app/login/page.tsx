@@ -6,11 +6,13 @@ import { useRouter } from 'next/navigation'
 export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setError(false)
+    setLoading(true)
 
     const res = await fetch('/api/auth', {
       method: 'POST',
@@ -19,8 +21,9 @@ export default function LoginPage() {
     })
 
     if (res.ok) {
-      router.push('/')
+      window.location.href = '/'
     } else {
+      setLoading(false)
       setError(true)
       setPassword('')
     }
@@ -50,9 +53,10 @@ export default function LoginPage() {
           )}
           <button
             type="submit"
-            className="bg-primary text-bg-dark font-semibold rounded-xl px-4 py-3 hover:opacity-90 transition-opacity"
+            disabled={loading}
+            className="bg-primary text-bg-dark font-semibold rounded-xl px-4 py-3 hover:opacity-90 transition-opacity disabled:opacity-60"
           >
-            Entrer
+            {loading ? 'Connexion...' : 'Entrer'}
           </button>
         </form>
       </div>
