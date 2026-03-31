@@ -1,10 +1,16 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 import { loginAction } from './actions'
 
 export default function LoginPage() {
-  const [state, action, pending] = useActionState(loginAction, { error: false })
+  const [state, action, pending] = useActionState(loginAction, { error: false, success: false })
+
+  useEffect(() => {
+    if (state.success) {
+      window.location.href = '/'
+    }
+  }, [state.success])
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-bg-light">
@@ -29,10 +35,10 @@ export default function LoginPage() {
           )}
           <button
             type="submit"
-            disabled={pending}
+            disabled={pending || state.success}
             className="bg-primary text-bg-dark font-semibold rounded-xl px-4 py-3 hover:opacity-90 transition-opacity disabled:opacity-60"
           >
-            {pending ? 'Connexion...' : 'Entrer'}
+            {pending || state.success ? 'Connexion...' : 'Entrer'}
           </button>
         </form>
       </div>
