@@ -1,5 +1,5 @@
 import type { GetWeekPlanResponse } from "@/lib/mealplan/types";
-import { getCurrentMondayString } from "@/lib/mealplan/utils";
+import { addWeeks, getCurrentMondayString } from "@/lib/mealplan/utils";
 import { GenerateButton } from "./generate-button";
 import { MealList } from "./meal-list";
 import { WeekNav } from "./week-nav";
@@ -12,9 +12,13 @@ export default async function WeekPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const params = await searchParams;
+  const currentMonday = getCurrentMondayString();
   const weekStart =
     (typeof params.weekStart === "string" ? params.weekStart : undefined) ??
-    getCurrentMondayString();
+    currentMonday;
+
+  const generateWeekStart =
+    weekStart === currentMonday ? addWeeks(weekStart, 1) : weekStart;
 
   const url = `${process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"}/api/mealplan?householdId=${HOUSEHOLD_ID}&weekStart=${weekStart}`;
   const res = await fetch(url, { cache: "no-store" });
@@ -30,7 +34,7 @@ export default async function WeekPage({
 
       <GenerateButton
         householdId={HOUSEHOLD_ID}
-        weekStart={weekStart}
+        weekStart={generateWeekStart}
         variant={data?.items?.length ? "regenerate" : "generate"}
       />
 
