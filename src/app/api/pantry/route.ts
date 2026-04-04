@@ -41,6 +41,21 @@ export async function GET(request: NextRequest) {
   }
 }
 
+export async function DELETE(request: NextRequest) {
+  const householdId = request.nextUrl.searchParams.get("householdId");
+  if (!householdId) {
+    return NextResponse.json({ error: "householdId is required" }, { status: 400 });
+  }
+
+  try {
+    await prisma.pantryItem.deleteMany({ where: { householdId } });
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    console.error("Unexpected error in DELETE /api/pantry:", error);
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();

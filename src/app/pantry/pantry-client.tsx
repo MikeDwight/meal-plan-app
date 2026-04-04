@@ -45,6 +45,7 @@ export function PantryClient({ householdId, initialItems, units }: PantryClientP
   const [items, setItems] = useState<PantryItemRow[]>(initialItems);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [stepping, setStepping] = useState<string | null>(null);
+  const [clearing, setClearing] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   // Search / filter
@@ -160,6 +161,20 @@ export function PantryClient({ householdId, initialItems, units }: PantryClientP
     }
   };
 
+  const handleClearAll = async () => {
+    if (!confirm("Vider tout le garde-manger ?")) return;
+    setClearing(true);
+    setError(null);
+    try {
+      await fetch(`/api/pantry?householdId=${householdId}`, { method: "DELETE" });
+      setItems([]);
+    } catch {
+      setError("Erreur lors de la suppression.");
+    } finally {
+      setClearing(false);
+    }
+  };
+
   const handleDelete = async (id: string) => {
     if (!confirm("Supprimer cet item du garde-manger ?")) return;
     setDeleting(id);
@@ -182,13 +197,25 @@ export function PantryClient({ householdId, initialItems, units }: PantryClientP
       {/* Header */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "2rem 0 1.5rem" }}>
         <h1 style={{ margin: 0, fontSize: "1.75rem", fontWeight: 700, color: "#0f172a" }}>Garde-manger</h1>
-        <button
-          type="button"
-          onClick={() => { setShowSearch((v) => !v); setSearchQuery(""); }}
-          style={{ background: "rgba(71,235,191,0.2)", border: "none", borderRadius: "999px", width: "2.5rem", height: "2.5rem", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#47ebbf" }}
-        >
-          <span className="material-symbols-outlined" style={{ fontSize: "1.3rem" }}>search</span>
-        </button>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          <button
+            type="button"
+            onClick={() => { setShowSearch((v) => !v); setSearchQuery(""); }}
+            style={{ background: "rgba(71,235,191,0.2)", border: "none", borderRadius: "999px", width: "2.5rem", height: "2.5rem", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "#47ebbf" }}
+          >
+            <span className="material-symbols-outlined" style={{ fontSize: "1.3rem" }}>search</span>
+          </button>
+          {items.length > 0 && (
+            <button
+              type="button"
+              onClick={handleClearAll}
+              disabled={clearing}
+              style={{ background: "rgba(248,113,113,0.12)", border: "none", borderRadius: "999px", width: "2.5rem", height: "2.5rem", display: "flex", alignItems: "center", justifyContent: "center", cursor: clearing ? "wait" : "pointer", color: "#f87171" }}
+            >
+              <span className="material-symbols-outlined" style={{ fontSize: "1.3rem" }}>delete_sweep</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Search bar */}
