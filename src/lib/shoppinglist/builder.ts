@@ -18,22 +18,23 @@ export class ShoppingListBuilderError extends Error {
   }
 }
 
-function currentMondayUTC(): Date {
+function nextMondayUTC(): Date {
   const now = new Date();
   const dow = now.getUTCDay();
   const diff = dow === 0 ? -6 : 1 - dow;
   const monday = new Date(
     Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + diff)
   );
+  monday.setUTCDate(monday.getUTCDate() + 7);
   return monday;
 }
 
 async function loadActiveWeekPlans(householdId: string) {
-  const monday = currentMondayUTC();
+  const nextMonday = nextMondayUTC();
   return prisma.weekPlan.findMany({
     where: {
       householdId,
-      weekStart: { gte: monday },
+      weekStart: nextMonday,
     },
     select: { id: true },
   });
