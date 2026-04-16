@@ -61,6 +61,28 @@ export function GenerateButton({
     setError(null);
 
     try {
+      const listRes = await fetch(`/api/shoppinglist?householdId=${householdId}`);
+      if (listRes.ok) {
+        const listData = await listRes.json();
+        const doneCount: number = listData?.meta?.done ?? 0;
+        if (doneCount > 0) {
+          const purge = window.confirm(
+            `Supprimer les ${doneCount} article${doneCount > 1 ? "s" : ""} cochés de la liste de courses ?`
+          );
+          if (purge) {
+            await fetch("/api/shoppinglist/archive-done", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ householdId }),
+            });
+          }
+        }
+      }
+    } catch {
+      // si la vérification échoue, on continue quand même
+    }
+
+    try {
       const genRes = await fetch("/api/mealplan/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
