@@ -3,7 +3,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { getCurrentMondayString } from "@/lib/mealplan/utils";
+import { getCurrentMondayString, addWeeks } from "@/lib/mealplan/utils";
 
 const HOUSEHOLD_ID = "home-household";
 
@@ -31,6 +31,7 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   const router = useRouter();
   const [search, setSearch] = useState("");
   const [addingRecipeId, setAddingRecipeId] = useState<string | null>(null);
+  const [pickingRecipeId, setPickingRecipeId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ recipeId: string; text: string; isError?: boolean } | null>(null);
   const [weekRecipeIds, setWeekRecipeIds] = useState<Set<string>>(new Set());
 
@@ -47,10 +48,10 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   }, []);
 
   const handleAddToList = useCallback(
-    async (recipe: RecipeRow) => {
+    async (recipe: RecipeRow, weekStart: string, isCurrentWeek: boolean) => {
       setAddingRecipeId(recipe.id);
+      setPickingRecipeId(null);
       setFeedback(null);
-      const weekStart = getCurrentMondayString();
       try {
         const planRes = await fetch(
           `/api/mealplan?householdId=${encodeURIComponent(HOUSEHOLD_ID)}&weekStart=${encodeURIComponent(weekStart)}`
@@ -69,8 +70,8 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
           const body = await res.json().catch(() => null);
           throw new Error((body as { error?: string } | null)?.error ?? `Erreur ${res.status}`);
         }
-        setWeekRecipeIds((prev) => new Set([...prev, recipe.id]));
-        setFeedback({ recipeId: recipe.id, text: "Ajouté !" });
+        if (isCurrentWeek) setWeekRecipeIds((prev) => new Set([...prev, recipe.id]));
+        setFeedback({ recipeId: recipe.id, text: isCurrentWeek ? "Ajouté à la semaine en cours !" : "Ajouté à la semaine prochaine !" });
         setTimeout(() => setFeedback(null), 2500);
         router.refresh();
       } catch (e: unknown) {
@@ -253,7 +254,31 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
                       {recipeFeedback.text}
                     </span>
                   )}
-                  {weekRecipeIds.has(recipe.id) ? (
+                  {pickingRecipeId === recipe.id ? (
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.375rem" }}>
+                      <button
+                        type="button"
+                        onClick={() => handleAddToList(recipe, getCurrentMondayString(), true)}
+                        style={{ padding: "0.3rem 0.625rem", fontSize: "0.7rem", fontWeight: 700, border: "1px solid #47ebbf", borderRadius: "999px", background: "#47ebbf", color: "#0f172a", cursor: "pointer", whiteSpace: "nowrap" }}
+                      >
+                        Semaine en cours
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleAddToList(recipe, addWeeks(getCurrentMondayString(), 1), false)}
+                        style={{ padding: "0.3rem 0.625rem", fontSize: "0.7rem", fontWeight: 700, border: "1px solid #e2e8f0", borderRadius: "999px", background: "#fff", color: "#475569", cursor: "pointer", whiteSpace: "nowrap" }}
+                      >
+                        Semaine prochaine
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setPickingRecipeId(null)}
+                        style={{ padding: "0.3rem 0.5rem", fontSize: "0.7rem", fontWeight: 600, border: "none", borderRadius: "999px", background: "none", color: "#94a3b8", cursor: "pointer" }}
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                  ) : weekRecipeIds.has(recipe.id) ? (
                     <span style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem", padding: "0.3rem 0.75rem", fontSize: "0.7rem", fontWeight: 700, borderRadius: "999px", background: "rgba(71,235,191,0.15)", color: "#0f766e", whiteSpace: "nowrap" }}>
                       <span className="material-symbols-outlined" style={{ fontSize: "0.8rem" }}>check</span>
                       Planifiée
@@ -261,19 +286,9 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
                   ) : (
                     <button
                       type="button"
-                      onClick={() => handleAddToList(recipe)}
+                      onClick={() => setPickingRecipeId(recipe.id)}
                       disabled={isAdding}
-                      style={{
-                        padding: "0.3rem 0.75rem",
-                        fontSize: "0.75rem",
-                        fontWeight: 600,
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "999px",
-                        background: isAdding ? "#f1f5f9" : "#fff",
-                        color: "#475569",
-                        cursor: isAdding ? "wait" : "pointer",
-                        whiteSpace: "nowrap",
-                      }}
+                      style={{ padding: "0.3rem 0.75rem", fontSize: "0.75rem", fontWeight: 600, border: "1px solid #e2e8f0", borderRadius: "999px", background: isAdding ? "#f1f5f9" : "#fff", color: "#475569", cursor: isAdding ? "wait" : "pointer", whiteSpace: "nowrap" }}
                     >
                       {isAdding ? "…" : "+ Semaine"}
                     </button>
