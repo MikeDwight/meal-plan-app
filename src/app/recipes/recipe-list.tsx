@@ -187,23 +187,28 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
                 display: "flex",
                 flexDirection: "column",
                 gap: "0.625rem",
+                position: "relative",
               }}
             >
+              <Link
+                href={`/recipes/${recipe.id}`}
+                style={{ position: "absolute", inset: 0, zIndex: 0, borderRadius: "0.75rem" }}
+                aria-label={recipe.title}
+              />
+
               {/* Title row */}
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "0.5rem" }}>
-                <Link
-                  href={`/recipes/${recipe.id}`}
+                <span
                   style={{
                     fontWeight: 700,
                     fontSize: "0.95rem",
                     color: "#0f172a",
-                    textDecoration: "none",
                     lineHeight: 1.35,
                     flex: 1,
                   }}
                 >
                   {recipe.title}
-                </Link>
+                </span>
                 <span className="material-symbols-outlined" style={{ fontSize: "1.2rem", color: "#cbd5e1", flexShrink: 0 }}>
                   chevron_right
                 </span>
@@ -236,7 +241,7 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
               )}
 
               {/* Footer: ingredient count + add button */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "relative", zIndex: 1 }}>
                 <span style={{ fontSize: "0.75rem", color: "#94a3b8", display: "flex", alignItems: "center", gap: "0.3rem" }}>
                   <span className="material-symbols-outlined" style={{ fontSize: "0.9rem" }}>grocery</span>
                   {recipe.ingredientCount} ingrédient{recipe.ingredientCount !== 1 ? "s" : ""}

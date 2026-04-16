@@ -69,6 +69,12 @@ export function MealCard({ position, recipe, onReplace, onDelete, isDeleting }: 
         {position + 1}
       </div>
 
+      <Link
+        href={`/recipes/${recipe.id}`}
+        style={{ position: "absolute", inset: 0, zIndex: 0, borderRadius: "0.75rem" }}
+        aria-label={recipe.title}
+      />
+
       <div style={{ flex: 1, minWidth: 0 }}>
         <div
           style={{
@@ -81,9 +87,7 @@ export function MealCard({ position, recipe, onReplace, onDelete, isDeleting }: 
             marginBottom: "0.35rem",
           }}
         >
-          <Link href={`/recipes/${recipe.id}`} style={{ color: "inherit", textDecoration: "none" }}>
-            {recipe.title}
-          </Link>
+          {recipe.title}
         </div>
 
         {recipe.tags.length > 0 && (
@@ -112,7 +116,7 @@ export function MealCard({ position, recipe, onReplace, onDelete, isDeleting }: 
         )}
       </div>
 
-      <div ref={menuRef} style={{ position: "relative", flexShrink: 0 }}>
+      <div ref={menuRef} style={{ position: "relative", flexShrink: 0, zIndex: 1 }}>
         <button
           type="button"
           onClick={() => setMenuOpen((v) => !v)}
