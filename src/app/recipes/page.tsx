@@ -10,6 +10,7 @@ export default async function RecipesPage() {
     where: { householdId: HOUSEHOLD_ID },
     include: {
       tags: { select: { tag: { select: { name: true } } } },
+      ingredients: { select: { ingredient: { select: { name: true } } } },
       _count: { select: { ingredients: true } },
     },
     orderBy: { title: "asc" },
@@ -19,6 +20,7 @@ export default async function RecipesPage() {
     id: r.id,
     title: r.title,
     tags: r.tags.map((rt) => rt.tag.name),
+    ingredients: r.ingredients.map((ri) => ri.ingredient.name),
     ingredientCount: r._count.ingredients,
   }));
 

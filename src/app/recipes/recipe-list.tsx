@@ -24,6 +24,7 @@ interface RecipeRow {
   id: string;
   title: string;
   tags: string[];
+  ingredients: string[];
   ingredientCount: number;
 }
 
@@ -88,7 +89,10 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
     const q = search.trim().toLowerCase();
     if (!q) return recipes;
     return recipes.filter(
-      (r) => r.title.toLowerCase().includes(q) || r.tags.some((t) => t.toLowerCase().includes(q))
+      (r) =>
+        r.title.toLowerCase().includes(q) ||
+        r.tags.some((t) => t.toLowerCase().includes(q)) ||
+        r.ingredients.some((i) => i.toLowerCase().includes(q))
     );
   }, [recipes, search]);
 
@@ -112,7 +116,7 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
         </span>
         <input
           type="search"
-          placeholder="Rechercher par titre ou tag…"
+          placeholder="Rechercher par titre, tag ou ingrédient…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{
