@@ -250,12 +250,11 @@ export async function generatePoolRecipes(
     )
   );
 
-  scoredRecipes.sort((a, b) => {
-    if (b.finalScore !== a.finalScore) {
-      return b.finalScore - a.finalScore;
-    }
-    return Math.random() - 0.5;
-  });
+  for (let i = scoredRecipes.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [scoredRecipes[i], scoredRecipes[j]] = [scoredRecipes[j], scoredRecipes[i]];
+  }
+  scoredRecipes.sort((a, b) => b.finalScore - a.finalScore);
 
   const topN = scoredRecipes.slice(0, count);
 
