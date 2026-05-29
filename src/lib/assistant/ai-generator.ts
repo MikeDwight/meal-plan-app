@@ -1,21 +1,9 @@
 import OpenAI from "openai";
 import { prisma } from "@/lib/prisma";
-import { buildShoppingList } from "@/lib/shoppinglist/builder";
 import { normalizeToMonday } from "@/lib/mealplan/utils";
 import type { GenerateMealPlanResponse, MealPlanItem } from "@/lib/mealplan/types";
 
 const LOOKBACK_WEEKS = 4;
-
-function getNextMonday(): Date {
-  const now = new Date();
-  const dow = now.getUTCDay();
-  const daysUntilMonday = dow === 0 ? 1 : 8 - dow;
-  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilMonday));
-}
-
-function isShoppingWeek(monday: Date): boolean {
-  return monday.getTime() === getNextMonday().getTime();
-}
 
 async function fetchContext(householdId: string, monday: Date) {
   const historyStart = new Date(monday);
@@ -212,10 +200,6 @@ export async function generateMealPlanAI(
         isManual: false,
       })),
     });
-  }
-
-  if (isShoppingWeek(monday)) {
-    await buildShoppingList({ householdId });
   }
 
   const allItems = [...manualItems, ...aiItems].sort((a, b) => a.position - b.position);

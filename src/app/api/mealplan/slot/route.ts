@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { normalizeToMonday } from "@/lib/mealplan/utils";
-import { buildShoppingList } from "@/lib/shoppinglist/builder";
 
 const SlotDeleteRequestSchema = z.object({
   householdId: z.string().min(1, "householdId is required"),
@@ -73,8 +72,6 @@ export async function DELETE(request: NextRequest) {
         },
       });
     });
-
-    await buildShoppingList({ householdId });
 
     return NextResponse.json({ ok: true, deleted: 1 }, { status: 200 });
   } catch (error) {
@@ -160,8 +157,6 @@ export async function PUT(request: NextRequest) {
         },
       });
     }
-
-    await buildShoppingList({ householdId });
 
     const weekStartStr = monday.toISOString().split("T")[0];
 
