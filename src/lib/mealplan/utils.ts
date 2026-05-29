@@ -25,6 +25,20 @@ export function getCurrentMondayString(): string {
 }
 
 /**
+ * Retourne le lundi de la semaine prochaine au format "YYYY-MM-DD" (UTC).
+ */
+export function getNextMondayString(): string {
+  const now = new Date();
+  const dow = now.getUTCDay();
+  const daysUntilMonday = dow === 0 ? 1 : 8 - dow;
+  const next = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilMonday));
+  const y = next.getUTCFullYear();
+  const m = String(next.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(next.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+/**
  * Ajoute `n` semaines (n * 7 jours) à une date "YYYY-MM-DD",
  * en normalisant d'abord au lundi (UTC) pour garantir un résultat toujours lundi.
  */

@@ -6,6 +6,17 @@ import type { GenerateMealPlanResponse, MealPlanItem } from "@/lib/mealplan/type
 
 const LOOKBACK_WEEKS = 4;
 
+function getNextMonday(): Date {
+  const now = new Date();
+  const dow = now.getUTCDay();
+  const daysUntilMonday = dow === 0 ? 1 : 8 - dow;
+  return new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + daysUntilMonday));
+}
+
+function isShoppingWeek(monday: Date): boolean {
+  return monday.getTime() === getNextMonday().getTime();
+}
+
 async function fetchContext(householdId: string, monday: Date) {
   const historyStart = new Date(monday);
   historyStart.setDate(historyStart.getDate() - LOOKBACK_WEEKS * 7);
@@ -203,7 +214,9 @@ export async function generateMealPlanAI(
     });
   }
 
-  await buildShoppingList({ householdId });
+  if (isShoppingWeek(monday)) {
+    await buildShoppingList({ householdId });
+  }
 
   const allItems = [...manualItems, ...aiItems].sort((a, b) => a.position - b.position);
 

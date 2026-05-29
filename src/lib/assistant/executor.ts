@@ -2,7 +2,7 @@ import { ShoppingItemStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { generateMealPlanAI } from "@/lib/assistant/ai-generator";
 import { buildShoppingList } from "@/lib/shoppinglist/builder";
-import { normalizeToMonday, getCurrentMondayString } from "@/lib/mealplan/utils";
+import { normalizeToMonday, getCurrentMondayString, getNextMondayString } from "@/lib/mealplan/utils";
 
 const HOUSEHOLD_ID = "home-household";
 
@@ -191,7 +191,9 @@ async function assignRecipeToSlot(args: { weekStart: string; recipeId: string; p
     });
   }
 
-  await buildShoppingList({ householdId: HOUSEHOLD_ID });
+  if (args.weekStart === getNextMondayString()) {
+    await buildShoppingList({ householdId: HOUSEHOLD_ID });
+  }
 
   return { success: true, position: args.position, title: recipe.title };
 }
