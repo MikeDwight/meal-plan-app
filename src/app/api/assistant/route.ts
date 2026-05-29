@@ -54,6 +54,7 @@ Semaine courante (lundi) : ${currentWeekStart}`;
       const toolResults: OpenAI.ChatCompletionMessageParam[] = [];
 
       for (const toolCall of assistantMsg.tool_calls ?? []) {
+        if (toolCall.type !== "function") continue;
         let result: unknown;
         try {
           const args = JSON.parse(toolCall.function.arguments) as Record<string, unknown>;
