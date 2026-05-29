@@ -171,6 +171,19 @@ export async function generateMealPlanAI(
     usedIds.add(recipeId);
   }
 
+  // Fallback : si l'IA n'a pas rempli tous les slots (IDs invalides ou manquants),
+  // on complète avec des recettes non encore utilisées dans un ordre aléatoire.
+  if (aiItems.length < freePositions.length) {
+    const fallback = recipes
+      .filter((r) => !usedIds.has(r.id))
+      .sort(() => Math.random() - 0.5);
+    for (const recipe of fallback) {
+      if (aiItems.length >= freePositions.length) break;
+      aiItems.push({ position: freePositions[aiItems.length], recipeId: recipe.id });
+      usedIds.add(recipe.id);
+    }
+  }
+
   if (preserveManualPositions) {
     await prisma.weekPlanRecipe.deleteMany({
       where: { weekPlanId: weekPlan.id, isManual: false },
