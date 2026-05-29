@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { BottomNav } from "./bottom-nav";
-import { AssistantChat } from "./components/assistant-chat";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -49,7 +48,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </div>
 
         <BottomNav />
-        <AssistantChat />
       </body>
     </html>
   );
