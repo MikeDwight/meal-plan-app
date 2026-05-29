@@ -1,6 +1,6 @@
 import { ShoppingItemStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
-import { generateMealPlan } from "@/lib/mealplan/generator";
+import { generateMealPlanAI } from "@/lib/assistant/ai-generator";
 import { buildShoppingList } from "@/lib/shoppinglist/builder";
 import { normalizeToMonday, getCurrentMondayString } from "@/lib/mealplan/utils";
 
@@ -42,13 +42,11 @@ async function getWeekPlan(args: { weekStart?: string }) {
 }
 
 async function generateMealPlanTool(args: { weekStart: string; count?: number }) {
-  const result = await generateMealPlan({
-    householdId: HOUSEHOLD_ID,
-    weekStart: args.weekStart,
-    count: args.count ?? 14,
-  });
-
-  await buildShoppingList({ householdId: HOUSEHOLD_ID });
+  const result = await generateMealPlanAI(
+    HOUSEHOLD_ID,
+    args.weekStart,
+    args.count ?? 14
+  );
 
   const recipeIds = result.items.map((i) => i.recipeId);
   const recipes = await prisma.recipe.findMany({
