@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import { UnitsClient } from "./units-client";
 
+export const dynamic = "force-dynamic";
+
 const HOUSEHOLD_ID = "home-household";
 
 export default async function UnitsPage() {
