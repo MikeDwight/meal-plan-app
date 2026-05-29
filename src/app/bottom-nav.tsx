@@ -31,6 +31,15 @@ export function BottomNav() {
             <span className="material-symbols-outlined text-xl" style={{ color: "#47ebbf" }}>grocery</span>
             <span className="text-sm font-medium text-slate-700">Articles</span>
           </Link>
+          <div className="border-t border-slate-100" />
+          <Link
+            href="/units"
+            onClick={() => setPlusOpen(false)}
+            className="flex items-center gap-3 px-5 py-3.5 hover:bg-primary/5 transition-colors"
+          >
+            <span className="material-symbols-outlined text-xl" style={{ color: "#47ebbf" }}>straighten</span>
+            <span className="text-sm font-medium text-slate-700">Unités</span>
+          </Link>
         </div>
       )}
 

@@ -39,6 +39,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <Link href="/recipes" className="text-sm font-medium text-slate-500 hover:text-primary pb-2 pt-1 whitespace-nowrap transition-colors border-b-2 border-transparent hover:border-primary/40">Recettes</Link>
               <Link href="/pantry" className="text-sm font-medium text-slate-500 hover:text-primary pb-2 pt-1 whitespace-nowrap transition-colors border-b-2 border-transparent hover:border-primary/40">Garde-manger</Link>
               <Link href="/ingredients" className="text-sm font-medium text-slate-500 hover:text-primary pb-2 pt-1 whitespace-nowrap transition-colors border-b-2 border-transparent hover:border-primary/40">Articles</Link>
+              <Link href="/units" className="text-sm font-medium text-slate-500 hover:text-primary pb-2 pt-1 whitespace-nowrap transition-colors border-b-2 border-transparent hover:border-primary/40">Unités</Link>
             </div>
           </nav>
         </header>
