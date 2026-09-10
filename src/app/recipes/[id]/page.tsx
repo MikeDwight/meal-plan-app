@@ -44,12 +44,23 @@ function SectionTitle({ children, count }: { children: React.ReactNode; count?: 
   );
 }
 
+function getBackHref(from: string | string[] | undefined): string {
+  if (typeof from === "string" && from.startsWith("/") && !from.startsWith("//")) {
+    return from;
+  }
+  return "/recipes";
+}
+
 export default async function RecipeDetailPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { id } = await params;
+  const { from } = await searchParams;
+  const backHref = getBackHref(from);
 
   const recipe = await prisma.recipe.findUnique({
     where: { id },
@@ -77,7 +88,7 @@ export default async function RecipeDetailPage({
     <main>
       {/* Back link */}
       <Link
-        href="/recipes"
+        href={backHref}
         style={{
           display: "inline-flex",
           alignItems: "center",

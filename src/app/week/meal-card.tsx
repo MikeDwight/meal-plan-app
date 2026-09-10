@@ -17,13 +17,15 @@ function getTagColor(tag: string) {
 interface MealCardProps {
   position: number;
   recipe: { id: string; title: string; tags: string[] };
+  weekStart: string;
   onReplace: () => void;
   onDelete: () => void;
   isDeleting?: boolean;
 }
 
-export function MealCard({ position, recipe, onReplace, onDelete, isDeleting }: MealCardProps) {
+export function MealCard({ position, recipe, weekStart, onReplace, onDelete, isDeleting }: MealCardProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const from = encodeURIComponent(`/week?weekStart=${weekStart}`);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -70,7 +72,7 @@ export function MealCard({ position, recipe, onReplace, onDelete, isDeleting }: 
       </div>
 
       <Link
-        href={`/recipes/${recipe.id}`}
+        href={`/recipes/${recipe.id}?from=${from}`}
         style={{ position: "absolute", inset: 0, zIndex: 0, borderRadius: "0.75rem" }}
         aria-label={recipe.title}
       />

@@ -115,6 +115,7 @@ export function MealList({
             key={item.position}
             position={item.position}
             recipe={item.recipe}
+            weekStart={weekStart}
             onReplace={() => setPickerPosition(item.position)}
             onDelete={() => handleDelete(item.position)}
             isDeleting={deletingPosition === item.position}
