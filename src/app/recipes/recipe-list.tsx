@@ -28,6 +28,8 @@ interface RecipeRow {
   ingredientCount: number;
 }
 
+const LAST_VIEWED_KEY = "recipes:lastViewedId";
+
 export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   const router = useRouter();
   const [search, setSearch] = useState("");
@@ -35,6 +37,21 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
   const [pickingRecipeId, setPickingRecipeId] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<{ recipeId: string; text: string; isError?: boolean } | null>(null);
   const [weekRecipeIds, setWeekRecipeIds] = useState<Set<string>>(new Set());
+  const [highlightId, setHighlightId] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      const id = sessionStorage.getItem(LAST_VIEWED_KEY);
+      if (id) {
+        sessionStorage.removeItem(LAST_VIEWED_KEY);
+        setHighlightId(id);
+        const t = setTimeout(() => setHighlightId(null), 1500);
+        return () => clearTimeout(t);
+      }
+    } catch {
+      // sessionStorage indisponible, tant pis
+    }
+  }, []);
 
   useEffect(() => {
     const weekStart = getCurrentMondayString();
@@ -180,23 +197,33 @@ export function RecipeList({ recipes }: { recipes: RecipeRow[] }) {
           const isAdding = addingRecipeId === recipe.id;
           const recipeFeedback = feedback?.recipeId === recipe.id ? feedback : null;
 
+          const isHighlighted = highlightId === recipe.id;
+
           return (
             <div
               key={recipe.id}
               style={{
-                background: "#fff",
+                background: isHighlighted ? "rgba(71,235,191,0.14)" : "#fff",
                 borderRadius: "0.75rem",
-                border: "1px solid rgba(71,235,191,0.08)",
-                boxShadow: "0 4px 20px -2px rgba(71,235,191,0.08)",
+                border: isHighlighted ? "1px solid rgba(71,235,191,0.5)" : "1px solid rgba(71,235,191,0.08)",
+                boxShadow: isHighlighted ? "0 0 0 3px rgba(71,235,191,0.3)" : "0 4px 20px -2px rgba(71,235,191,0.08)",
                 padding: "1rem",
                 display: "flex",
                 flexDirection: "column",
                 gap: "0.625rem",
                 position: "relative",
+                transition: "background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease",
               }}
             >
               <Link
                 href={`/recipes/${recipe.id}`}
+                onClick={() => {
+                  try {
+                    sessionStorage.setItem(LAST_VIEWED_KEY, recipe.id);
+                  } catch {
+                    // sessionStorage indisponible, tant pis
+                  }
+                }}
                 style={{ position: "absolute", inset: 0, zIndex: 0, borderRadius: "0.75rem" }}
                 aria-label={recipe.title}
               />
