@@ -18,6 +18,12 @@ function addDecimalNullSafe(
   return null;
 }
 
+function mergeComments(a: string | null, b: string | null): string | null {
+  if (!a) return b;
+  if (!b || a === b) return a;
+  return `${a} · ${b}`;
+}
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -75,6 +81,7 @@ export async function POST(request: NextRequest) {
               where: { id: existing.id },
               data: {
                 quantity: newQuantity,
+                comment: mergeComments(existing.comment, ti.comment),
                 archivedAt: null,
               },
             });
@@ -86,6 +93,7 @@ export async function POST(request: NextRequest) {
                 weekPlanId: null,
                 ingredientId: ti.ingredientId,
                 label: ti.label,
+                comment: ti.comment,
                 quantity: ti.quantity,
                 unitId: ti.unitId,
                 aisleId: ti.aisleId,
@@ -103,6 +111,7 @@ export async function POST(request: NextRequest) {
               weekPlanId: null,
               ingredientId: null,
               label: ti.label,
+              comment: ti.comment,
               quantity: ti.quantity,
               unitId: ti.unitId,
               aisleId: ti.aisleId,

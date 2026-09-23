@@ -43,9 +43,10 @@ export default async function ShoppingPage() {
 
   const transitionItems: TransitionItemProps[] = transitionRes.ok
     ? (await transitionRes.json()).map(
-        (ti: { id: string; label: string; quantity: string | number | null; status: string; unitId: string | null; unitAbbr: string | null }) => ({
+        (ti: { id: string; label: string; comment: string | null; quantity: string | number | null; status: string; unitId: string | null; unitAbbr: string | null }) => ({
           id: ti.id,
           label: ti.label,
+          comment: ti.comment,
           quantity: ti.quantity != null ? String(ti.quantity) : null,
           unitId: ti.unitId,
           unitAbbr: ti.unitAbbr,
@@ -75,6 +76,7 @@ export default async function ShoppingPage() {
     items: items.map((item) => ({
       id: item.id,
       label: item.label,
+      comment: item.comment,
       quantity: item.quantity != null ? String(item.quantity) : null,
       unitId: item.unitId,
       unitAbbr: item.unitAbbr,

@@ -37,6 +37,7 @@
 - **Persistance rayon/unité à la création inline** : quand un ingrédient est créé inline depuis le formulaire recette, ses `defaultUnitId` et `defaultAisleId` sont PATCHés au submit avec les valeurs saisies dans la ligne.
 - **Exposition publique via domaine** : `meal.mikealvs.fr` exposé via Nginx reverse proxy (HTTPS Let's Encrypt + Basic Auth). Configuration serveur : `/etc/nginx/sites-available/meal.mikealvs.fr`, `/etc/nginx/.htpasswd`. Port 3000 bloqué depuis internet via règle iptables `DOCKER-USER` (persistante via `iptables-persistent`).
 
+- **Commentaires sur les articles de courses** : commentaire libre par ligne (ex. « Danette, Activia ») sur la liste de courses et les articles ponctuels, éditable inline (composant `src/app/shopping/comment-field.tsx`). Champ `comment` sur `ShoppingItem` et `TransitionItem` ; le commentaire suit l'article ponctuel lors de l'application en liste (fusion « a · b » si la ligne en avait déjà un).
 ## In Progress
 
 - Aucun chantier actif

@@ -280,6 +280,7 @@ model ShoppingItem {
   householdId  String
   ingredientId String?
   label        String
+  comment      String?
   quantity     Decimal?           @db.Decimal(10, 3)
   unitId       String?
   aisleId      String?
@@ -316,6 +317,7 @@ model TransitionItem {
   householdId  String
   ingredientId String?
   label        String
+  comment      String?
   quantity     Decimal?             @db.Decimal(10, 3)
   unitId       String?
   aisleId      String?

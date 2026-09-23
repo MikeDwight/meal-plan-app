@@ -8,6 +8,7 @@ function toRow(item: {
   householdId: string;
   ingredientId: string | null;
   label: string;
+  comment: string | null;
   quantity: import("@prisma/client/runtime/library").Decimal | null;
   unitId: string | null;
   aisleId: string | null;
@@ -20,6 +21,7 @@ function toRow(item: {
     householdId: item.householdId,
     ingredientId: item.ingredientId,
     label: item.label,
+    comment: item.comment,
     quantity: item.quantity,
     unitId: item.unitId,
     unitAbbr: null,
@@ -49,6 +51,11 @@ const PatchSchema = z.object({
     }),
   unitId: z.string().min(1).nullish(),
   aisleId: z.string().min(1).nullish(),
+  comment: z
+    .string()
+    .max(200)
+    .nullish()
+    .transform((v) => (v == null ? v : v.trim() || null)),
   ingredientId: z.string().min(1).nullish(),
 });
 
@@ -107,6 +114,9 @@ export async function PATCH(
     }
     if ("aisleId" in fields) {
       updateData.aisleId = fields.aisleId ?? null;
+    }
+    if ("comment" in fields && fields.comment !== undefined) {
+      updateData.comment = fields.comment;
     }
     if ("ingredientId" in fields) {
       updateData.ingredientId = fields.ingredientId ?? null;

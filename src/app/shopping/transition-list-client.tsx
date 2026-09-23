@@ -3,10 +3,12 @@
 import { useState, useTransition, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { SelectSheet } from "../components/select-sheet";
+import { CommentField } from "./comment-field";
 
 export interface TransitionItemProps {
   id: string;
   label: string;
+  comment: string | null;
   quantity: string | null;
   unitId: string | null;
   unitAbbr: string | null;
@@ -664,6 +666,15 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
     router.refresh();
   }
 
+  async function saveComment(comment: string | null) {
+    await fetch(`/api/transitionitem/${item.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID, status: item.status, comment }),
+    });
+    router.refresh();
+  }
+
   return (
     <div style={{
       display: "flex",
@@ -701,15 +712,17 @@ function TransitionRow({ item }: { item: TransitionItemProps }) {
         )}
       </button>
 
-      <span style={{
-        flex: 1,
-        fontWeight: 600,
-        fontSize: "0.9rem",
-        color: isDone ? "#94a3b8" : "#0f172a",
-        textDecoration: isDone ? "line-through" : "none",
-      }}>
-        {item.label}
-      </span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <span style={{
+          fontWeight: 600,
+          fontSize: "0.9rem",
+          color: isDone ? "#94a3b8" : "#0f172a",
+          textDecoration: isDone ? "line-through" : "none",
+        }}>
+          {item.label}
+        </span>
+        <CommentField comment={item.comment} isDone={isDone} onSave={saveComment} />
+      </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
         {/* Quantité */}

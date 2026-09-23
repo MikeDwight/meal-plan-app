@@ -8,6 +8,7 @@ export interface ShoppingItemRow {
   id: string;
   ingredientId: string | null;
   label: string;
+  comment: string | null;
   quantity: Decimal | null;
   unitId: string | null;
   unitAbbr: string | null;

@@ -371,6 +371,7 @@ export async function buildShoppingList(
     id: item.id,
     ingredientId: item.ingredientId,
     label: item.label,
+    comment: item.comment,
     quantity: item.quantity,
     unitId: item.unitId,
     unitAbbr: item.unit?.abbr ?? null,

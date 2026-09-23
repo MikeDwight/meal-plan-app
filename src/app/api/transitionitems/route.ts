@@ -8,6 +8,7 @@ function toRow(item: {
   householdId: string;
   ingredientId: string | null;
   label: string;
+  comment: string | null;
   quantity: import("@prisma/client/runtime/library").Decimal | null;
   unitId: string | null;
   aisleId: string | null;
@@ -21,6 +22,7 @@ function toRow(item: {
     householdId: item.householdId,
     ingredientId: item.ingredientId,
     label: item.label,
+    comment: item.comment,
     quantity: item.quantity,
     unitId: item.unitId,
     unitAbbr: item.unit?.abbr ?? null,
@@ -111,6 +113,11 @@ const CreateSchema = z.object({
     }),
   unitId: z.string().min(1).nullish(),
   aisleId: z.string().min(1).nullish(),
+  comment: z
+    .string()
+    .max(200)
+    .nullish()
+    .transform((v) => (v == null ? v : v.trim() || null)),
 });
 
 export async function POST(request: NextRequest) {
@@ -145,6 +152,7 @@ export async function POST(request: NextRequest) {
         householdId: data.householdId,
         ingredientId: data.ingredientId ?? null,
         label: data.label,
+        comment: data.comment ?? null,
         quantity: data.quantity,
         unitId: data.unitId ?? null,
         aisleId: data.aisleId ?? null,

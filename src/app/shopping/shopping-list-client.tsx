@@ -6,10 +6,12 @@ import { ToggleItemButton } from "./toggle-button";
 import { TransitionListClient } from "./transition-list-client";
 import type { TransitionItemProps } from "./transition-list-client";
 import { SelectSheet } from "../components/select-sheet";
+import { CommentField } from "./comment-field";
 
 export interface ShoppingItemProps {
   id: string;
   label: string;
+  comment: string | null;
   quantity: string | null;
   unitId: string | null;
   unitAbbr: string | null;
@@ -311,6 +313,15 @@ function ShoppingItemRow({ item }: { item: ShoppingItemProps }) {
     router.refresh();
   }
 
+  async function saveComment(comment: string | null) {
+    await fetch(`/api/shoppingitem/${item.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ householdId: HOUSEHOLD_ID, status: item.status, comment }),
+    });
+    router.refresh();
+  }
+
   const inlineInputStyle = {
     width: "3.5rem",
     padding: "0.1rem 0.35rem",
@@ -349,9 +360,12 @@ function ShoppingItemRow({ item }: { item: ShoppingItemProps }) {
     }}>
       <ToggleItemButton itemId={item.id} householdId={HOUSEHOLD_ID} currentStatus={item.status} />
 
-      <span style={{ flex: 1, fontWeight: 600, fontSize: "0.925rem", color: isDone ? "#94a3b8" : "#0f172a", textDecoration: isDone ? "line-through" : "none" }}>
-        {item.label}
-      </span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <span style={{ fontWeight: 600, fontSize: "0.925rem", color: isDone ? "#94a3b8" : "#0f172a", textDecoration: isDone ? "line-through" : "none" }}>
+          {item.label}
+        </span>
+        <CommentField comment={item.comment} isDone={isDone} onSave={saveComment} />
+      </div>
 
       <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
         {/* Quantité */}

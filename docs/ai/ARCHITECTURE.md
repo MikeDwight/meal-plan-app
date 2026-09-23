@@ -91,7 +91,7 @@ meal-app/
 | POST | `/api/shoppinglist/build` | Construire/rebuilder la liste |
 | POST | `/api/shoppinglist/archive-done` | Archiver les articles DONE |
 | POST | `/api/shoppinglist/purge` | Purger la liste |
-| PATCH | `/api/shoppingitem/[id]` | Toggle/set status d'un article |
+| PATCH | `/api/shoppingitem/[id]` | Toggle/set status, quantité, unité, commentaire d'un article |
 | DELETE | `/api/shoppingitem/[id]` | Supprimer un article |
 
 ### Garde-manger
