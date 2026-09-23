@@ -82,5 +82,10 @@ jobs:
             cd /opt/meal-plan-app
             docker compose pull
             docker compose up -d
-            sleep 3
-            curl -f http://localhost:3000/health | grep -q ok
+            for i in $(seq 1 30); do
+              curl -sf http://localhost:3000/health | grep -q ok && exit 0
+              sleep 2
+            done
+            echo "Health check failed after 60s"
+            docker compose logs --tail 50 app
+            exit 1
